@@ -29,9 +29,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorSchemeSeed: ColorScheme.fromSeed(seedColor: Colors.indigo).inversePrimary,
+        colorSchemeSeed: ColorScheme.fromSeed(seedColor: Colors.indigo).primary,
         useMaterial3: true,
+        brightness: Brightness.dark
       ),
+      debugShowCheckedModeBanner: false,
       home: WorkoutHistoryPage()
     );
   }

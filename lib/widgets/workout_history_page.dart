@@ -11,14 +11,16 @@ class WorkoutHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(ListView.separated(
+    return CommonScaffold(content:
+    
+    ListView.separated(
       itemCount: sampleWorkouts.length,
       itemBuilder: (context, index) =>
           _WorkoutHistoryEntry(sampleWorkouts[index]),
       separatorBuilder: (context, index) => SizedBox(
         height: 50,
       ),
-    ), title: 'Workout History',);
+    ), title: "Workout History",);
   }
 }
 

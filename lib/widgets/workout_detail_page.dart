@@ -12,7 +12,7 @@ class WorkoutDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      ListView.separated(
+      content: ListView.separated(
           itemBuilder: (context, index) =>
               _ResultDetails(workout.results[index]),
           separatorBuilder: (context, index) => SizedBox(height: 50),

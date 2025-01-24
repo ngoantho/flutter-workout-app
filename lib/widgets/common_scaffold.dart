@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CommonScaffold extends StatelessWidget {
-  final Widget widget;
+  final Widget content;
   final String title;
 
-  const CommonScaffold(this.widget, {super.key, required this.title});
+  const CommonScaffold({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class CommonScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Center(child: Text(title)),
       ),
-      body: widget,
+      body: content,
     );
   }
 }
