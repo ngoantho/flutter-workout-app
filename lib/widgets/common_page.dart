@@ -11,7 +11,8 @@ abstract class CommonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(title)),
+        title: Text(title),
+        centerTitle: true,
       ),
       body: content(context),
     );
