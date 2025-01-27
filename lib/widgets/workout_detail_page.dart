@@ -32,7 +32,7 @@ class _ResultDetails extends StatelessWidget {
       children: [
         Text(result.exercise.name),
         Text('Actual Output: ${result.actualOutput}'),
-        Text(isSuccessful(
+        Text(outputIsSuccessful(
                 actual: result.actualOutput,
                 target: result.exercise.targetOutput)
             ? 'Successful Result ✔️'

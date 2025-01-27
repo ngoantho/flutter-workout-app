@@ -60,14 +60,13 @@ class _SuccessfulResults extends StatefulWidget {
 }
 
 class _SuccessfulResultsState extends State<_SuccessfulResults> {
-  late int count;
+  int count = 0;
 
   @override
   void initState() {
     super.initState();
-    count = 0;
     for (var result in widget.results) {
-      if (isSuccessful(
+      if (outputIsSuccessful(
           actual: result.actualOutput, target: result.exercise.targetOutput)) {
         count += 1;
       }
