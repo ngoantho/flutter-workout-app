@@ -18,7 +18,7 @@ class WorkoutDetailsPage extends CommonPage {
   }
 
   @override
-  String get title => 'Workout: ${workout.date}';
+  String get title => 'Workout: ${workout.dateToString()}';
 }
 
 class _ResultDetails extends StatelessWidget {
