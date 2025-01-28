@@ -30,9 +30,10 @@ class _ResultDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(result.exercise.name),
+        Text('Name: ${result.exercise.name}'),
+        Text('Target Output: ${result.exercise.targetOutput}'),
         Text('Actual Output: ${result.actualOutput}'),
-        Text(outputIsSuccessful(
+        Text(Output.isSuccessful(
                 actual: result.actualOutput,
                 target: result.exercise.targetOutput)
             ? 'Successful Result ✔️'

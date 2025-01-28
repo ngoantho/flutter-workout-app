@@ -8,4 +8,8 @@ class Workout {
     required this.date,
     required this.results,
   });
+  
+  String dateToString() {
+    return '${date.year}-${date.month}-${date.day}';
+  }
 }

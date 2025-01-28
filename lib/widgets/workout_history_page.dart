@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/sample_workouts.dart';
+import 'package:homework/examples/sample_workouts.dart';
 import 'package:homework/widgets/common_page.dart';
 import 'package:homework/widgets/workout_detail_page.dart';
 
@@ -41,7 +41,7 @@ class _WorkoutHistoryEntry extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Workout: ${workout.date.toString()}",
+              "Workout: ${workout.dateToString()}",
             ),
             Text('Exercise Results: ${workout.results.length}'),
             _SuccessfulResults(workout.results)
@@ -66,7 +66,7 @@ class _SuccessfulResultsState extends State<_SuccessfulResults> {
   void initState() {
     super.initState();
     for (var result in widget.results) {
-      if (outputIsSuccessful(
+      if (Output.isSuccessful(
           actual: result.actualOutput, target: result.exercise.targetOutput)) {
         count += 1;
       }
