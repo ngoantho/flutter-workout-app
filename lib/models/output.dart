@@ -1,5 +1,14 @@
-typedef Output = int;
+class Output {
+  final int value;
 
-bool outputIsSuccessful({required Output actual, required Output target}) {
-  return actual >= target;
+  const Output(this.value);
+
+  static bool isSuccessful({required Output actual, required Output target}) {
+    return actual.value >= target.value;
+  }
+
+  @override
+  String toString() {
+    return value.toString();
+  }
 }

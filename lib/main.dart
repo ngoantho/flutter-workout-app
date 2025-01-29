@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/models/output.dart';
 import 'package:homework/widgets/workout_history_page.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/exercise_result.dart';
@@ -15,67 +16,67 @@ final sampleWorkouts = [
     ExerciseResult(
         exercise: Exercise(
             name: "Run 200 meters",
-            targetOutput: 200,
+            targetOutput: Output(200),
             measurementUnit: MeasurementUnit.meters),
-        actualOutput: 100),
+        actualOutput: Output(100)),
         ExerciseResult(
         exercise: Exercise(
             name: "Run 100 meters",
-            targetOutput: 100,
+            targetOutput: Output(100),
             measurementUnit: MeasurementUnit.meters),
-        actualOutput: 200),
+        actualOutput: Output(200)),
   ]),
   Workout(date: DateTime(2024, 1, 17), results: [
     ExerciseResult(
         exercise: Exercise(
             name: "Do 20 pushups",
-            targetOutput: 20,
+            targetOutput: Output(20),
             measurementUnit: MeasurementUnit.repetitions),
-        actualOutput: 25)
+        actualOutput: Output(25))
   ])
 ];
 
 final sampleWorkoutPlan = WorkoutPlan(name: 'February 2025', exercises: [
   Exercise(
       name: 'Run 100 meters',
-      targetOutput: 100,
+      targetOutput: Output(100),
       measurementUnit: MeasurementUnit.meters),
   Exercise(
       name: 'Run 200 meters',
-      targetOutput: 200,
+      targetOutput: Output(200),
       measurementUnit: MeasurementUnit.meters),
   Exercise(
       name: 'Run 400 meters',
-      targetOutput: 400,
+      targetOutput: Output(400),
       measurementUnit: MeasurementUnit.meters),
   Exercise(
     name: 'Squat for 15 seconds',
-    targetOutput: 15,
+    targetOutput: Output(15),
     measurementUnit: MeasurementUnit.seconds,
   ),
   Exercise(
     name: 'Squat for 30 seconds',
-    targetOutput: 30,
+    targetOutput: Output(30),
     measurementUnit: MeasurementUnit.seconds,
   ),
   Exercise(
     name: 'Squat for 60 seconds',
-    targetOutput: 60,
+    targetOutput: Output(60),
     measurementUnit: MeasurementUnit.seconds,
   ),
   Exercise(
     name: 'Do 10 pushups',
-    targetOutput: 10,
+    targetOutput: Output(10),
     measurementUnit: MeasurementUnit.repetitions,
   ),
   Exercise(
     name: 'Do 20 pushups',
-    targetOutput: 20,
+    targetOutput: Output(20),
     measurementUnit: MeasurementUnit.repetitions,
   ),
   Exercise(
     name: 'Do 30 pushups',
-    targetOutput: 30,
+    targetOutput: Output(30),
     measurementUnit: MeasurementUnit.repetitions,
   ),
 ]);
