@@ -6,7 +6,3 @@ class WorkoutPlan {
 
   const WorkoutPlan({required this.name, required this.exercises});
 }
-
-const sampleWorkoutPlan = WorkoutPlan(name: 'February 2025', exercises: [
-  
-]);

@@ -11,5 +11,7 @@ class ExerciseResult {
     required this.actualOutput
   });
 
+  String get exerciseName => exercise.name;
+  Output get targetOutput => exercise.targetOutput;
   MeasurementUnit get measurementUnit => exercise.measurementUnit;
 }

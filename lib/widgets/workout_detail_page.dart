@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/widgets/common_page.dart';
+import 'package:homework/mixins/common_scaffold.dart';
 
-class WorkoutDetailsPage extends CommonPage {
+class WorkoutDetailsPage extends StatelessWidget with CommonScaffold {
   final Workout workout;
 
   const WorkoutDetailsPage(this.workout, {super.key});
 
   @override
-  Widget content(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) => _ResultDetails(workout.results[index]),
-        separatorBuilder: (context, index) => SizedBox(height: 50),
-        itemCount: workout.results.length);
+  Widget build(BuildContext context) {
+    return scaffold(
+        title: 'Workout: ${workout.dateToString()}',
+        content: ListView.separated(
+            itemBuilder: (context, index) =>
+                _ResultDetails(workout.results[index]),
+            separatorBuilder: (context, index) => SizedBox(height: 50),
+            itemCount: workout.results.length));
   }
-
-  @override
-  String get title => 'Workout: ${workout.dateToString()}';
 }
 
 class _ResultDetails extends StatelessWidget {
@@ -31,7 +31,8 @@ class _ResultDetails extends StatelessWidget {
     return Column(
       children: [
         Text('Name: ${result.exercise.name}'),
-        Text('Target Output: ${result.exercise.targetOutput} ${result.measurementUnit}'),
+        Text(
+            'Target Output: ${result.exercise.targetOutput} ${result.measurementUnit}'),
         Text('Actual Output: ${result.actualOutput} ${result.measurementUnit}'),
         Text(outputIsSuccessful(
                 actual: result.actualOutput,
