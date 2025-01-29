@@ -1,9 +1,11 @@
 enum MeasurementUnit {
   seconds,
   repetitions,
-  meters
+  meters;
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
-const meters = MeasurementUnit.meters;
-const seconds = MeasurementUnit.seconds;
-const repetitions = MeasurementUnit.repetitions;

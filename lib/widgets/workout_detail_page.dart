@@ -31,9 +31,9 @@ class _ResultDetails extends StatelessWidget {
     return Column(
       children: [
         Text('Name: ${result.exercise.name}'),
-        Text('Target Output: ${result.exercise.targetOutput}'),
-        Text('Actual Output: ${result.actualOutput}'),
-        Text(Output.isSuccessful(
+        Text('Target Output: ${result.exercise.targetOutput} ${result.measurementUnit}'),
+        Text('Actual Output: ${result.actualOutput} ${result.measurementUnit}'),
+        Text(outputIsSuccessful(
                 actual: result.actualOutput,
                 target: result.exercise.targetOutput)
             ? 'Successful Result ✔️'

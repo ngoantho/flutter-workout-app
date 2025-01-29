@@ -66,7 +66,7 @@ class _SuccessfulResultsState extends State<_SuccessfulResults> {
   void initState() {
     super.initState();
     for (var result in widget.results) {
-      if (Output.isSuccessful(
+      if (outputIsSuccessful(
           actual: result.actualOutput, target: result.exercise.targetOutput)) {
         count += 1;
       }
