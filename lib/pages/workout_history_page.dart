@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/mixins/common_scaffold.dart';
-import 'package:homework/widgets/workout_detail_page.dart';
+import 'package:homework/widgets/common_scaffold.dart';
+import 'package:homework/pages/workout_detail_page.dart';
 
-class WorkoutHistoryPage extends StatelessWidget with CommonScaffold {
+class WorkoutHistoryPage extends StatelessWidget {
   final List<Workout> workouts;
 
   const WorkoutHistoryPage(this.workouts, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return scaffold(
+    return CommonScaffold(
         title: 'Workout History',
         content: ListView.separated(
           itemCount: workouts.length,
