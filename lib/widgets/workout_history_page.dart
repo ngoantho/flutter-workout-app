@@ -41,7 +41,7 @@ class _WorkoutHistoryEntry extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Workout: ${workout.dateToString()}",
+              "Workout: ${workout.date}",
             ),
             Text('Exercise Results: ${workout.results.length}'),
             _SuccessfulResults(workout.results)

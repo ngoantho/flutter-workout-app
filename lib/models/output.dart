@@ -1,7 +1,7 @@
 class Output {
-  final int value;
+  int value;
 
-  const Output(this.value);
+  Output(this.value);
 
   static bool isSuccessful({required Output actual, required Output target}) {
     return actual.value >= target.value;

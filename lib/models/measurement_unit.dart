@@ -8,4 +8,3 @@ enum MeasurementUnit {
     return name;
   }
 }
-

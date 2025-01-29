@@ -12,7 +12,7 @@ class WorkoutDetailsPage extends StatelessWidget with CommonScaffold {
   @override
   Widget build(BuildContext context) {
     return scaffold(
-        title: 'Workout: ${workout.dateToString()}',
+        title: 'Workout: ${workout.date}',
         content: ListView.separated(
             itemBuilder: (context, index) =>
                 _ResultDetails(workout.results[index]),
