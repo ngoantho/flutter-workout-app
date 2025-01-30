@@ -1,6 +1,8 @@
 import 'package:date_only/date_only.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/models/exercise.dart';
+import 'package:homework/models/measurement_unit.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/widgets/center_column.dart';
 import 'package:homework/widgets/common_scaffold.dart';
@@ -19,21 +21,26 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
   final _formKey = GlobalKey<FormState>();
   final _workoutDate = DateOnly.today();
 
+  void onSave() {}
+
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
         child: CommonScaffold(
             title: 'Record Workout',
+            floatingActionButton:
+                IconButton.filled(onPressed: onSave, icon: Icon(Icons.save)),
             content: CenterColumn([
               Text('Workout Plan: ${widget.workoutPlan.name}'),
               Text('Workout Date: $_workoutDate'),
-              SizedBoxWithHeight(10),
+              Divider(),
               Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
                 itemBuilder: (context, index) =>
                     _WorkoutRecording(widget.workoutPlan.exercises[index]),
                 itemCount: widget.workoutPlan.exercises.length,
+                separatorBuilder: (context, index) => SizedBoxWithHeight(10),
               ))
             ])));
   }
@@ -48,27 +55,53 @@ class _WorkoutRecording extends StatefulWidget {
   State<_WorkoutRecording> createState() => _WorkoutRecordingState();
 }
 
-class _WorkoutRecordingState extends State<_WorkoutRecording> {
+class _WorkoutRecordingState extends State<_WorkoutRecording>
+    with DropdownMenuItemsMixin {
+  final actualOutputController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListTile(
+      title: TextField(
+        decoration: InputDecoration(labelText: 'Exercise'),
+        focusNode: FocusNode(canRequestFocus: false),
+        controller: TextEditingController(text: widget.exercise.name),
+      ),
+      isThreeLine: true,
+      subtitle: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                    decoration: InputDecoration(labelText: 'Target Output'),
+                    onTap: null,
+                    controller: TextEditingController(
+                        text: widget.exercise.targetOutput.toString())),
+              ),
+              Expanded(
+                  child: TextField(
+                      decoration:
+                          InputDecoration(labelText: 'Measurement Unit'),
+                      onTap: null,
+                      controller: TextEditingController(
+                          text: widget.exercise.measurementUnit.name)))
+            ],
+          )
+        ],
+      ),
+    );
+
+    var test = Column(
       children: [
-        Text('Exercise: ${widget.exercise.name}'),
         Row(
           children: [
             Expanded(
-              child: TextFormField(
-                initialValue: widget.exercise.targetOutput.toString(),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Target Output'),
-              ),
-            ),
-            Expanded(
                 child: TextFormField(
-              initialValue: '0',
+              controller: actualOutputController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'Actual Output'),
-            ))
+            )),
           ],
         ),
       ],
