@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/widgets/common_scaffold.dart';
@@ -38,45 +37,17 @@ class _WorkoutHistoryEntry extends StatelessWidget {
                   builder: (context) => WorkoutDetailsPage(workout)))
             },
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Workout: ${workout.date}",
             ),
             Text('Exercise Results: ${workout.results.length}'),
-            _SuccessfulResults(workout.results)
+            Text('Successful Results: ${workout.results.where(
+                  (exerciseResult) => Output.isSuccessful(
+                      actual: exerciseResult.actualOutput,
+                      target: exerciseResult.targetOutput),
+                ).length}'),
           ],
         ));
-  }
-}
-
-class _SuccessfulResults extends StatefulWidget {
-  final List<ExerciseResult> results;
-
-  const _SuccessfulResults(this.results);
-
-  @override
-  State<_SuccessfulResults> createState() => _SuccessfulResultsState();
-}
-
-class _SuccessfulResultsState extends State<_SuccessfulResults> {
-  int count = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    for (var result in widget.results) {
-      if (Output.isSuccessful(
-          actual: result.actualOutput, target: result.exercise.targetOutput)) {
-        count += 1;
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Successful Results: $count',
-    );
   }
 }

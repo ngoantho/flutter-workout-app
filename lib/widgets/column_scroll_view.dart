@@ -30,7 +30,7 @@ class CenterColumnScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: CenterColumn(children)
+      child: CenterColumn(children: children)
     );
   }
 }

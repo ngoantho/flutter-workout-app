@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CenterColumn extends StatelessWidget {
   final List<Widget> children;
 
-  const CenterColumn(this.children, {super.key});
+  const CenterColumn({super.key, required this.children});
 
   @override
   Widget build(BuildContext context) {
