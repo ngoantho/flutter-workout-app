@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homework/widgets/center_column.dart';
 
 class ColumnScrollView extends StatelessWidget {
   final List<Widget> children;
@@ -29,8 +28,6 @@ class CenterColumnScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: CenterColumn(children: children)
-    );
+    return ColumnScrollView(children, mainAxisAlignment: MainAxisAlignment.center,);
   }
 }
