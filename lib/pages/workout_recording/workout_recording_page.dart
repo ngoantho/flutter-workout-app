@@ -1,6 +1,6 @@
 import 'package:date_only/date_only.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/mixins/readonly_textfield.dart';
+import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/models/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording.dart';
@@ -15,7 +15,7 @@ class WorkoutRecordingPage extends StatefulWidget {
   State<WorkoutRecordingPage> createState() => _WorkoutRecordingPageState();
 }
 
-class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with ReadonlyTextFieldMixin {
+class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
   final _formKey = GlobalKey<FormState>();
   final _workoutDate = DateOnly.today();
   late List<ExerciseResultController> _exerciseResultControllers;
@@ -52,8 +52,8 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with Readon
                 IconButton.filled(onPressed: onSave, icon: Icon(Icons.save)),
             content: Column(children: [
               ListTile(
-                title: readOnlyTextField(labelText: 'Workout Plan', value: widget.workoutPlan.name),
-                subtitle: readOnlyTextField(labelText: 'Workout Date', value: _workoutDate.toString()),
+                title: ReadonlyTextField(labelText: 'Workout Plan', value: widget.workoutPlan.name),
+                subtitle: ReadonlyTextField(labelText: 'Workout Date', value: _workoutDate.toString()),
               ),
               Expanded(
                   child: ListView.builder(

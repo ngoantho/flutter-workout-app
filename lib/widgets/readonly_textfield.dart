@@ -5,11 +5,18 @@ class DisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
-mixin ReadonlyTextFieldMixin {
-  TextFormField readOnlyTextField({
-    required String labelText,
-    required String value,
-  }) {
+class ReadonlyTextField extends StatelessWidget {
+  final String labelText;
+  final String value;
+
+  const ReadonlyTextField({
+    super.key,
+    required this.labelText,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(labelText: labelText),
       initialValue: value,
