@@ -12,3 +12,9 @@ class Output {
     return value.toString();
   }
 }
+
+extension StringToOutput on String {
+  Output toOutput() {
+    return Output(int.parse(this));
+  }
+}
