@@ -14,42 +14,34 @@ class WorkoutRecordingInput extends StatefulWidget {
 }
 
 class _WorkoutRecordingInputState extends State<WorkoutRecordingInput> {
+  final focusNode = FocusNode();
+  
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: TextFormField(
-                controller: widget.actualOutputController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: 'Actual Output',
-                    suffixIcon: IconButton(
-                        onPressed: widget.actualOutputController.clear,
-                        icon: Icon(Icons.clear))),
-                validator: validateOutput)),
-        switch (widget.measurementUnit) {
-          MeasurementUnit.meters => Wrap(
-              children: ['-100', '-10', '-1', '+1', '+10', '+100']
-                  .map((action) => WorkoutRecordingInputAction(
-                      actualOutputController: widget.actualOutputController,
-                      action: action))
-                  .toList()),
-          MeasurementUnit.repetitions => Wrap(
-              children: ['-10', '-5', '-1', '+1', '+5', '+10']
-                  .map((action) => WorkoutRecordingInputAction(
-                      actualOutputController: widget.actualOutputController,
-                      action: action))
-                  .toList()),
-          MeasurementUnit.seconds => Wrap(
-              children: ['-30', '-15', '-1', '+1', '+15', '+30']
-                  .map((action) => WorkoutRecordingInputAction(
-                      actualOutputController: widget.actualOutputController,
-                      action: action))
-                  .toList()),
-        }
-      ],
-    );
+    return TextFormField(
+        controller: widget.actualOutputController,
+        keyboardType: TextInputType.number,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+            labelText: 'Actual Output',
+            suffix: switch (widget.measurementUnit) {
+              MeasurementUnit.meters => WorkoutRecordingInputAction(
+                  actualOutputController: widget.actualOutputController,
+                  focusNode: focusNode,
+                  values: [1, 10, 100]),
+              MeasurementUnit.repetitions => WorkoutRecordingInputAction(
+                  actualOutputController: widget.actualOutputController,
+                  focusNode: focusNode,
+                  values: [1, 5, 10]),
+              MeasurementUnit.seconds => WorkoutRecordingInputAction(
+                  actualOutputController: widget.actualOutputController,
+                  focusNode: focusNode,
+                  values: [1, 15, 30]),
+            },
+            suffixIcon: IconButton(
+                onPressed: widget.actualOutputController.clear,
+                icon: Icon(Icons.clear))),
+        validator: validateOutput);
   }
 
   String? validateOutput(String? input) {
