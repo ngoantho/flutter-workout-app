@@ -84,18 +84,18 @@ class _WorkoutRecordingState extends State<_WorkoutRecording> {
               readOnly: true,
             )),
             SizedBox(
-              width: 50,
+                width: 50,
                 child: TextFormField(
                     decoration: InputDecoration(labelText: 'Target'),
                     initialValue: widget.exercise.targetOutput.toString(),
                     readOnly: true)),
             SizedBox(
-              width: 100,
+                width: 100,
                 child: TextFormField(
-              decoration: InputDecoration(labelText: 'Unit'),
-              initialValue: widget.exercise.measurementUnit.name,
-              readOnly: true,
-            )),
+                  decoration: InputDecoration(labelText: 'Unit'),
+                  initialValue: widget.exercise.measurementUnit.name,
+                  readOnly: true,
+                )),
           ],
         ),
         subtitle: Row(
