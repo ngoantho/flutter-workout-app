@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/widgets/center_row.dart';
+import 'package:homework/widgets/centering/center_row.dart';
 import 'package:homework/widgets/common_scaffold.dart';
 
 class WorkoutDetailsPage extends StatelessWidget {
