@@ -10,7 +10,6 @@ class ExerciseResult {
     required this.exercise,
     required this.actualOutput
   });
-  ExerciseResult.fromExercise(this.exercise): actualOutput = Output.empty();
 
   String get exerciseName => exercise.name;
   set exerciseName(String name) => exercise.name = name; 
