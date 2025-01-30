@@ -1,5 +1,7 @@
 import 'package:date_only/date_only.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/models/exercise_result.dart';
+import 'package:homework/models/workout.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/models/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -17,7 +19,7 @@ class WorkoutRecordingPage extends StatefulWidget {
 
 class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
   final _formKey = GlobalKey<FormState>();
-  final _workoutDate = DateOnly.today();
+  final _today = DateOnly.today();
   late List<ExerciseResultController> _exerciseResultControllers;
 
   void onSave() {
@@ -25,10 +27,13 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
       return;
     }
 
-    for (var composite in _exerciseResultControllers) {
-      debugPrint(
-          'Exercise: ${composite.exercise.name}, output: ${composite.actualOutput.toString()}');
-    }
+    final workout = Workout(
+        date: _today,
+        results: _exerciseResultControllers
+            .map((controller) => ExerciseResult(
+                exercise: controller.exercise,
+                actualOutput: controller.actualOutput))
+            .toList());
   }
 
   @override
@@ -45,15 +50,16 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: CommonScaffold(
             title: 'Record Workout',
             floatingActionButton:
                 IconButton.filled(onPressed: onSave, icon: Icon(Icons.save)),
             content: Column(children: [
               ListTile(
-                title: ReadonlyTextField(labelText: 'Workout Plan', value: widget.workoutPlan.name),
-                subtitle: ReadonlyTextField(labelText: 'Workout Date', value: _workoutDate.toString()),
+                title: ReadonlyTextField(
+                    labelText: 'Workout Plan', value: widget.workoutPlan.name),
+                subtitle: ReadonlyTextField(
+                    labelText: 'Workout Date', value: _today.toString()),
               ),
               Expanded(
                   child: ListView.builder(
