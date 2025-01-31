@@ -79,7 +79,6 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
   void setBaseOutput(int value) {
     setState(() {
       selectedBase = value;
-      widget.controller.clear(); // clear first
       widget.controller.output = value;
     });
   }
@@ -89,10 +88,8 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
   }
 
   void modifyActualOutput(int value) {
-    Output currentOutput = widget.controller.text.toOutput();
     setState(() {
-      currentOutput.value += value;
-      widget.controller.text = currentOutput.toString();
+      widget.controller.output += value;
     });
   }
 }

@@ -12,7 +12,7 @@ class MinusValuePlusMethod extends StatefulWidget {
   State<MinusValuePlusMethod> createState() => _MinusValuePlusMethodState();
 }
 
-class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> with ValidateOutputMixin {
+class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
   @override
   void initState() {
     super.initState();
@@ -20,7 +20,7 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> with Valida
       widget.controller.output = 0;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -41,10 +41,9 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> with Valida
           textAlign: TextAlign.center,
           decoration: InputDecoration(
               suffixText: 'reps',
-              suffixIcon: widget.controller.hasOutput ? IconButton(
-                  onPressed: clearOutput,
-                  icon: Icon(Icons.clear)) : null),
-          validator: validateOutput,
+              suffixIcon: widget.controller.hasOutput
+                  ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
+                  : null),
         )),
         Wrap(
           children: [1, 10]
@@ -58,14 +57,10 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> with Valida
   }
 
   void clearOutput() {
-    setState(() => widget.controller.clear());
+    setState(() => widget.controller.output = 0);
   }
 
   void modifyActualOutput(int value) {
-    Output currentOutput = widget.controller.text.toOutput();
-    setState(() {
-      currentOutput += value;
-      widget.controller.text = currentOutput.toString();
-    });
+    setState(() => widget.controller.output += value);
   }
 }

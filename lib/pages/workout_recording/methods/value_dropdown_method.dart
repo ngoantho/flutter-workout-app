@@ -65,10 +65,8 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
   }
 
   void modifyActualOutput(int value) {
-    Output currentOutput = widget.controller.text.toOutput();
     setState(() {
-      currentOutput += value;
-      widget.controller.text = currentOutput.toString();
+      widget.controller.output += value;
     });
   }
 }

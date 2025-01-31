@@ -21,17 +21,10 @@ class WorkoutRecordingPage extends StatefulWidget {
 class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
   final _formKey = GlobalKey<FormState>();
   final _today = DateOnly.today();
+  bool validated = false;
   late List<ExerciseResultController> _exerciseResultControllers;
 
   void onSave() {
-    if (!_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const CenterText('Outputs are incomplete'),
-        duration: Duration(seconds: 1),
-      ));
-      return;
-    }
-
     final _ = Workout(
         date: _today,
         results: _exerciseResultControllers
@@ -55,6 +48,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
     return Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: () => setState(() => validated = _formKey.currentState!.validate(),),
         child: CommonScaffold(
             title: 'Record Workout',
             content: Column(children: [
@@ -71,7 +65,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
                           _exerciseResultControllers[index].controller),
                       itemCount: _exerciseResultControllers.length)),
               TextButton.icon(
-                onPressed: onSave,
+                onPressed: validated ? onSave : null,
                 label: Text('Save Workout'),
                 icon: Icon(Icons.save),
               )

@@ -13,10 +13,6 @@ class Output {
   String toString() {
     return value.toString();
   }
-
-  Output operator + (int value) {
-    return Output(this.value + value);
-  }
 }
 
 extension StringToOutput on String {
@@ -28,8 +24,8 @@ extension StringToOutput on String {
 
 extension ControllerToOutput on TextEditingController {
   set output(int value) {
-    Output currentOutput = text.toOutput();
-    currentOutput += value;
+    final currentOutput = text.toOutput();
+    currentOutput.value = value;
     text = currentOutput.toString();
   }
 
