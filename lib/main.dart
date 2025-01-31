@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:homework/examples/sample_workout_plan.dart';
-import 'package:homework/pages/workout_history_page.dart';
+import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
 
 void main() {

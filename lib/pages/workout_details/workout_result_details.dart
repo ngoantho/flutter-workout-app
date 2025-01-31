@@ -1,31 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
-import 'package:homework/models/workout.dart';
 import 'package:homework/widgets/centering/center_row.dart';
-import 'package:homework/widgets/common_scaffold.dart';
 
-class WorkoutDetailsPage extends StatelessWidget {
-  final Workout workout;
-
-  const WorkoutDetailsPage(this.workout, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CommonScaffold(
-        title: 'Workout: ${workout.date}',
-        content: ListView.separated(
-            itemBuilder: (context, index) =>
-                _ResultDetails(workout.results[index]),
-            separatorBuilder: (context, index) => SizedBox(height: 50),
-            itemCount: workout.results.length));
-  }
-}
-
-class _ResultDetails extends StatelessWidget {
+class WorkoutDetails extends StatelessWidget {
   final ExerciseResult result;
 
-  const _ResultDetails(this.result);
+  const WorkoutDetails(this.result, {super.key});
 
   @override
   Widget build(BuildContext context) {
