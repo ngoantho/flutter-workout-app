@@ -27,7 +27,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
       return;
     }
 
-    final workout = Workout(
+    final _ = Workout(
         date: _today,
         results: _exerciseResultControllers
             .map((controller) => ExerciseResult(
