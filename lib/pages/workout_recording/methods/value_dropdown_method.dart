@@ -26,9 +26,8 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
           controller: widget.controller,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              suffixText: 'meters',
               suffixIcon: widget.controller.hasOutput
-                  ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
+                  ? IconButton(onPressed: clearOutput, icon: Icon(Icons.backspace))
                   : null),
           validator: validateOutput,
           onChanged: (_) => setState(() {}), // show clear button

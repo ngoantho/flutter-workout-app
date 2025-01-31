@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/disabled_focus_node.dart';
-import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
 
 class MinusValuePlusMethod extends StatefulWidget {
@@ -40,8 +39,7 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
           focusNode: DisabledFocusNode(),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
-              suffixText: 'reps',
-              suffixIcon: widget.controller.hasOutput
+              suffixIcon: widget.controller.output != 0
                   ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
                   : null),
         )),

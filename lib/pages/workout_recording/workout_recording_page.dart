@@ -66,7 +66,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
                       itemCount: _exerciseResultControllers.length)),
               TextButton.icon(
                 onPressed: validated ? onSave : null,
-                label: Text('Save Workout'),
+                label: CenterText('Save Workout'),
                 icon: Icon(Icons.save),
               )
             ])));
