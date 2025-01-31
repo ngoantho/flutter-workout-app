@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
-import 'package:homework/models/exercise_result_controller.dart';
+import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:homework/pages/workout_recording/workout_recording.dart';
+import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/widgets/common_scaffold.dart';
 
 class WorkoutRecordingPage extends StatefulWidget {
@@ -63,7 +63,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
               ),
               Expanded(
                   child: ListView.builder(
-                      itemBuilder: (context, index) => WorkoutRecording(
+                      itemBuilder: (context, index) => WorkoutRecordingCard(
                           _exerciseResultControllers[index].exercise,
                           _exerciseResultControllers[index]
                               .actualOutputController),

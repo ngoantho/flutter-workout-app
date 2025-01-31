@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Output {
   int value;
 
@@ -22,4 +24,14 @@ extension StringToOutput on String {
     if (this == '') return Output(0);
     return Output(int.parse(this));
   }
+}
+
+extension ControllerToOutput on TextEditingController {
+  set output(int value) {
+    Output currentOutput = text.toOutput();
+    currentOutput += value;
+    text = currentOutput.toString();
+  }
+
+  int get output => int.parse(text.toString());
 }

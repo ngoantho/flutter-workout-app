@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-class DisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
-}
+import 'package:homework/classes/disabled_focus_node.dart';
 
 class ReadonlyTextField extends StatelessWidget {
   final String labelText;

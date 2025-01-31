@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:homework/models/measurement_unit.dart';
+import 'package:homework/pages/workout_recording/methods/stopwatch_method.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/pages/workout_recording/workout_recording_input.dart';
 
-class WorkoutRecording extends StatefulWidget {
+class WorkoutRecordingCard extends StatefulWidget {
   final Exercise exercise;
   final TextEditingController actualOutputController;
 
-  const WorkoutRecording(this.exercise, this.actualOutputController,
+  const WorkoutRecordingCard(this.exercise, this.actualOutputController,
       {super.key});
 
   @override
-  State<WorkoutRecording> createState() => _WorkoutRecordingState();
+  State<WorkoutRecordingCard> createState() => _WorkoutRecordingCardState();
 }
 
-class _WorkoutRecordingState extends State<WorkoutRecording> {
+class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
   @override
   Widget build(BuildContext context) {
     return Card.filled(
@@ -36,8 +38,11 @@ class _WorkoutRecordingState extends State<WorkoutRecording> {
                       value: widget.exercise.measurementUnit.name))
             ],
           ),
-          subtitle: WorkoutRecordingInput(
-              widget.actualOutputController, widget.exercise.measurementUnit)),
+          subtitle: switch (widget.exercise.measurementUnit) {
+            MeasurementUnit.seconds => StopwatchMethod(actualOutputController: widget.actualOutputController,), // stopwatch
+            MeasurementUnit.meters => null,
+            MeasurementUnit.repetitions => null
+          }),
     );
   }
 }
