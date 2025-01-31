@@ -2,6 +2,7 @@ import 'package:date_only/date_only.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
+import 'package:homework/widgets/centering/center_text.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -24,6 +25,10 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
 
   void onSave() {
     if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const CenterText('Outputs are incomplete'),
+        duration: Duration(seconds: 1),
+      ));
       return;
     }
 
@@ -41,8 +46,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
     super.initState();
     _exerciseResultControllers = widget.workoutPlan.exercises
         .map((exercise) => ExerciseResultController(
-            exercise: exercise,
-            controller: TextEditingController()))
+            exercise: exercise, controller: TextEditingController()))
         .toList();
   }
 
@@ -53,8 +57,6 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: CommonScaffold(
             title: 'Record Workout',
-            floatingActionButton:
-                IconButton.filled(onPressed: onSave, icon: Icon(Icons.save)),
             content: Column(children: [
               ListTile(
                 title: ReadonlyTextField(
@@ -66,9 +68,13 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
                   child: ListView.builder(
                       itemBuilder: (context, index) => WorkoutRecordingCard(
                           _exerciseResultControllers[index].exercise,
-                          _exerciseResultControllers[index]
-                              .controller),
-                      itemCount: _exerciseResultControllers.length))
+                          _exerciseResultControllers[index].controller),
+                      itemCount: _exerciseResultControllers.length)),
+              TextButton.icon(
+                onPressed: onSave,
+                label: Text('Save Workout'),
+                icon: Icon(Icons.save),
+              )
             ])));
   }
 }

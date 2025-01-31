@@ -3,6 +3,7 @@ import 'package:homework/classes/disabled_focus_node.dart';
 import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
+import 'package:homework/widgets/sized_box/sized_box_with_width.dart';
 
 class BasePlusMinusMethod extends StatefulWidget {
   final TextEditingController controller;
@@ -27,18 +28,18 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
             child: DropdownButtonFormField(
           items: toDropdownMenuItemList(units),
           onChanged: (value) => setBaseOutput(value),
-          decoration: InputDecoration(labelText: 'Base'),
+          decoration: InputDecoration(labelText: 'Base', suffixText: 's'),
         )),
         SizedBox(
           width: 50,
           child: Column(
             children: [
-              IconButton.outlined(
+              IconButton.filledTonal(
                   onPressed: selectedBase != null
                       ? () => modifyActualOutput(selectedMod)
                       : null,
                   icon: Icon(Icons.add)),
-              IconButton.outlined(
+              IconButton.filledTonal(
                   onPressed:
                       selectedBase != null && widget.controller.output > 0
                           ? () => modifyActualOutput(-selectedMod)
@@ -54,20 +55,22 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           onChanged: (value) => setState(
             () => selectedMod = value,
           ),
-          decoration:
-              InputDecoration(labelText: 'Modifier'),
+          decoration: InputDecoration(labelText: 'Modifier', suffixText: 's'),
         )),
+        SizedBoxWithWidth(10),
         Flexible(
             child: TextFormField(
           controller: widget.controller,
           focusNode: DisabledFocusNode(),
           decoration: InputDecoration(
             labelText: 'Output',
+            suffixText: 's',
             suffixIcon: widget.controller.hasOutput
                 ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
                 : null,
           ),
-          validator: validateOutput,
+          validator: (output) =>
+              validateOutput(output, incomplete: 'Select base unit'),
         ))
       ],
     );

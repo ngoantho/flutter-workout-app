@@ -4,12 +4,14 @@ class CommonScaffold extends StatelessWidget {
   final String title;
   final Widget content;
   final Widget? floatingActionButton;
+  final Widget? bottomSheet;
 
   const CommonScaffold(
       {super.key,
       required this.title,
       required this.content,
-      this.floatingActionButton});
+      this.floatingActionButton,
+      this.bottomSheet});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class CommonScaffold extends StatelessWidget {
       ),
       body: content,
       floatingActionButton: floatingActionButton,
+      bottomSheet: bottomSheet,
     );
   }
 }

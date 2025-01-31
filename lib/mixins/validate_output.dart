@@ -1,9 +1,11 @@
 mixin ValidateOutputMixin {
-  String? validateOutput(String? input) {
+  String? validateOutput(String? input,
+      {String incomplete = 'Output is incomplete',
+      String lessThanZero = 'Output must be ≥ 0'}) {
     if (input == null || input.isEmpty) {
-      return 'Output is incomplete';
+      return incomplete;
     } else if (int.parse(input) < 0) {
-      return 'Output must be ≥ 0';
+      return lessThanZero;
     }
     return null;
   }
