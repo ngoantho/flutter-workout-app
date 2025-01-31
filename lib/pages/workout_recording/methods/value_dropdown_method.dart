@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/disabled_focus_node.dart';
 import 'package:homework/mixins/to_dropdown.dart';
+import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
+import 'package:homework/widgets/sized_box/sized_box_with_height%20copy.dart';
 
 class ValueDropdownMethod extends StatefulWidget {
-  final TextEditingController actualOutputController;
+  final TextEditingController controller;
 
-  const ValueDropdownMethod(this.actualOutputController, {super.key});
+  const ValueDropdownMethod(this.controller, {super.key});
 
   @override
   State<ValueDropdownMethod> createState() => _ValueDropdownMethodState();
 }
 
 class _ValueDropdownMethodState extends State<ValueDropdownMethod>
-    with DropdownMenuItemsMixin {
+    with DropdownMenuItemsMixin, ValidateOutputMixin {
   int? selectedValue;
 
   @override
@@ -22,32 +24,32 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
       children: [
         Expanded(
             child: TextFormField(
-                controller: widget.actualOutputController,
-                keyboardType: TextInputType.number,
-                focusNode: DisabledFocusNode(),
-                decoration: InputDecoration(
-                    suffixText: 'meters',
-                    suffixIcon: IconButton(
-                        onPressed: widget.actualOutputController.clear,
-                        icon: Icon(Icons.clear))),
-                validator: validateOutput)),
+          controller: widget.controller,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+              suffixText: 'meters',
+              suffixIcon: widget.controller.hasOutput
+                  ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
+                  : null),
+          validator: validateOutput,
+          onChanged: (_) => setState(() {}), // show clear button
+        )),
+        SizedBoxWithWidth(10),
         SizedBox(
             width: 100,
             child: DropdownButtonFormField(
                 decoration: InputDecoration(labelText: 'Add/Sub'),
                 items: toDropdownMenuItemList([1, 10, 100]),
                 onChanged: (value) => dropdownOnChanged(value))),
-        SizedBox(
-            width: 50,
+        IntrinsicWidth(
             child: TextButton(
                 onPressed: selectedValue != null
                     ? () => modifyActualOutput(selectedValue!)
                     : null,
                 child: Icon(Icons.add))),
-        SizedBox(
-            width: 50,
+        IntrinsicWidth(
             child: TextButton(
-                onPressed: selectedValue != null
+                onPressed: selectedValue != null && widget.controller.output > 0
                     ? () => modifyActualOutput(-selectedValue!)
                     : null,
                 child: Icon(Icons.remove)))
@@ -59,20 +61,15 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
     setState(() => selectedValue = value);
   }
 
-  void modifyActualOutput(int value) {
-    Output currentOutput = widget.actualOutputController.text.toOutput();
-    setState(() {
-      currentOutput += value;
-      widget.actualOutputController.text = currentOutput.toString();
-    });
+  void clearOutput() {
+    setState(() => widget.controller.clear());
   }
 
-  String? validateOutput(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Enter an output ≥ 0';
-    } else if (int.parse(input) < 0) {
-      return 'Output must be ≥ 0';
-    }
-    return null;
+  void modifyActualOutput(int value) {
+    Output currentOutput = widget.controller.text.toOutput();
+    setState(() {
+      currentOutput += value;
+      widget.controller.text = currentOutput.toString();
+    });
   }
 }

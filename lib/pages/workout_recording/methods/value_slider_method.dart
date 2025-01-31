@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ValueSliderMethod extends StatefulWidget {
-  final TextEditingController actualOutputController;
+  final TextEditingController controller;
 
-  const ValueSliderMethod(this.actualOutputController, {super.key});
+  const ValueSliderMethod(this.controller, {super.key});
 
   @override
   State<ValueSliderMethod> createState() => _ValueSliderMethodState();

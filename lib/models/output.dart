@@ -34,4 +34,6 @@ extension ControllerToOutput on TextEditingController {
   }
 
   int get output => text.toOutput().value;
+
+  bool get hasOutput => text.isNotEmpty;
 }

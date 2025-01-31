@@ -4,9 +4,9 @@ import 'package:homework/models/output.dart';
 
 class ExerciseResultController {
   Exercise exercise;
-  TextEditingController actualOutputController;
+  TextEditingController controller;
 
-  ExerciseResultController({required this.exercise, required this.actualOutputController});
+  ExerciseResultController({required this.exercise, required this.controller});
 
-  Output get actualOutput => actualOutputController.text.toOutput();
+  Output get actualOutput => controller.text.toOutput();
 }

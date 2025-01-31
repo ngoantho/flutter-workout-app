@@ -42,7 +42,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
     _exerciseResultControllers = widget.workoutPlan.exercises
         .map((exercise) => ExerciseResultController(
             exercise: exercise,
-            actualOutputController: TextEditingController()))
+            controller: TextEditingController()))
         .toList();
   }
 
@@ -66,7 +66,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> {
                       itemBuilder: (context, index) => WorkoutRecordingCard(
                           _exerciseResultControllers[index].exercise,
                           _exerciseResultControllers[index]
-                              .actualOutputController),
+                              .controller),
                       itemCount: _exerciseResultControllers.length))
             ])));
   }

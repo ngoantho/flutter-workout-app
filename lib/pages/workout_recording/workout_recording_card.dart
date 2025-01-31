@@ -8,9 +8,9 @@ import 'package:homework/models/exercise.dart';
 
 class WorkoutRecordingCard extends StatefulWidget {
   final Exercise exercise;
-  final TextEditingController actualOutputController;
+  final TextEditingController controller;
 
-  const WorkoutRecordingCard(this.exercise, this.actualOutputController,
+  const WorkoutRecordingCard(this.exercise, this.controller,
       {super.key});
 
   @override
@@ -41,11 +41,11 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
           ),
           subtitle: switch (widget.exercise.measurementUnit) {
             MeasurementUnit.seconds => ValueSliderMethod(
-                widget.actualOutputController), // value slider +/-
+                widget.controller), // value slider +/-
             MeasurementUnit.meters => ValueDropdownMethod(
-                widget.actualOutputController), // value dropdown +/-
+                widget.controller), // value dropdown +/-
             MeasurementUnit.repetitions =>
-              MinusValuePlusMethod(widget.actualOutputController) // - value +
+              MinusValuePlusMethod(widget.controller) // - value +
           }),
     );
   }
