@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/measurement_unit.dart';
 import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
 import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
-import 'package:homework/pages/workout_recording/methods/value_slider_method.dart';
+import 'package:homework/pages/workout_recording/methods/base_plus_minus_method.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/models/exercise.dart';
 
@@ -40,8 +40,8 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
             ],
           ),
           subtitle: switch (widget.exercise.measurementUnit) {
-            MeasurementUnit.seconds => ValueSliderMethod(
-                widget.controller), // value slider +/-
+            MeasurementUnit.seconds => BasePlusMinusMethod(
+                widget.controller), // base +/- modifier
             MeasurementUnit.meters => ValueDropdownMethod(
                 widget.controller), // value dropdown +/-
             MeasurementUnit.repetitions =>

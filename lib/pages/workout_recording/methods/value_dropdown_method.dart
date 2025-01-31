@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:homework/classes/disabled_focus_node.dart';
 import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
-import 'package:homework/widgets/sized_box/sized_box_with_height%20copy.dart';
+import 'package:homework/widgets/sized_box/sized_box_with_width.dart';
 
 class ValueDropdownMethod extends StatefulWidget {
   final TextEditingController controller;
@@ -41,13 +40,13 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
                 decoration: InputDecoration(labelText: 'Add/Sub'),
                 items: toDropdownMenuItemList([1, 10, 100]),
                 onChanged: (value) => dropdownOnChanged(value))),
-        IntrinsicWidth(
+        SizedBox(
             child: TextButton(
                 onPressed: selectedValue != null
                     ? () => modifyActualOutput(selectedValue!)
                     : null,
                 child: Icon(Icons.add))),
-        IntrinsicWidth(
+        SizedBox(
             child: TextButton(
                 onPressed: selectedValue != null && widget.controller.output > 0
                     ? () => modifyActualOutput(-selectedValue!)
