@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/disabled_focus_node.dart';
+import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
 
 class MinusValuePlusMethod extends StatefulWidget {
@@ -11,7 +12,7 @@ class MinusValuePlusMethod extends StatefulWidget {
   State<MinusValuePlusMethod> createState() => _MinusValuePlusMethodState();
 }
 
-class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
+class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> with ValidateOutputMixin {
   @override
   void initState() {
     super.initState();
@@ -43,6 +44,7 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
               suffixIcon: widget.controller.hasOutput ? IconButton(
                   onPressed: clearOutput,
                   icon: Icon(Icons.clear)) : null),
+          validator: validateOutput,
         )),
         Wrap(
           children: [1, 10]
