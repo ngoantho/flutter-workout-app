@@ -33,12 +33,12 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           width: 50,
           child: Column(
             children: [
-              IconButton(
+              IconButton.outlined(
                   onPressed: selectedBase != null
                       ? () => modifyActualOutput(selectedMod)
                       : null,
                   icon: Icon(Icons.add)),
-              IconButton(
+              IconButton.outlined(
                   onPressed:
                       selectedBase != null && widget.controller.output > 0
                           ? () => modifyActualOutput(-selectedMod)

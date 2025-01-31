@@ -41,17 +41,17 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
                 items: toDropdownMenuItemList([1, 10, 100]),
                 onChanged: (value) => dropdownOnChanged(value))),
         SizedBox(
-            child: TextButton(
+            child: IconButton.outlined(
                 onPressed: selectedValue != null
                     ? () => modifyActualOutput(selectedValue!)
                     : null,
-                child: Icon(Icons.add))),
+                icon: Icon(Icons.add))),
         SizedBox(
-            child: TextButton(
+            child: IconButton.outlined(
                 onPressed: selectedValue != null && widget.controller.output > 0
                     ? () => modifyActualOutput(-selectedValue!)
                     : null,
-                child: Icon(Icons.remove)))
+                icon: Icon(Icons.remove)))
       ],
     );
   }
