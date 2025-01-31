@@ -27,7 +27,7 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
                   child: ReadonlyTextField(
                       labelText: 'Exercise', value: widget.exercise.name)),
               SizedBox(
-                  width: 100,
+                  width: 75,
                   child: ReadonlyTextField(
                       labelText: 'Target',
                       value: widget.exercise.targetOutput.toString())),

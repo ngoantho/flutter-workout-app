@@ -33,5 +33,5 @@ extension ControllerToOutput on TextEditingController {
     text = currentOutput.toString();
   }
 
-  int get output => int.parse(text.toString());
+  int get output => text.toOutput().value;
 }
