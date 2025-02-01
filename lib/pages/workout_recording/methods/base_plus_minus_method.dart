@@ -64,6 +64,7 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           focusNode: DisabledFocusNode(),
           decoration: InputDecoration(
             labelText: 'Output',
+            border: InputBorder.none,
             suffixIcon: widget.controller.hasOutput && widget.controller.output != selectedBase
                 ? IconButton(onPressed: clearOutput, icon: Icon(Icons.settings_backup_restore))
                 : null,

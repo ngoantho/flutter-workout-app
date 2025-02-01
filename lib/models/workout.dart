@@ -1,8 +1,7 @@
 import 'package:homework/models/exercise_result.dart';
-import 'package:date_only/date_only.dart';
 
 class Workout {
-  DateOnly date;
+  DateTime date;
   List<ExerciseResult> results;
 
   Workout({

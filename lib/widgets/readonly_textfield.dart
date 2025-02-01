@@ -14,7 +14,10 @@ class ReadonlyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(labelText: labelText),
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: InputBorder.none
+      ),
       initialValue: value,
       focusNode: DisabledFocusNode(),
     );

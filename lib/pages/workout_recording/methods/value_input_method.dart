@@ -26,7 +26,6 @@ class _ValueInputMethodState extends State<ValueInputMethod>
               ? IconButton(onPressed: clearOutput, icon: Icon(Icons.backspace))
               : null),
       validator: validateOutput,
-      onChanged: (_) => setState(() {}), // show clear button
     );
   }
 

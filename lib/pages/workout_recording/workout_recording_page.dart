@@ -1,7 +1,8 @@
-import 'package:date_only/date_only.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/navigate_to.dart';
+import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
+import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/test_page.dart';
 import 'package:homework/providers/workout_provider.dart';
@@ -22,15 +23,22 @@ class WorkoutRecordingPage extends StatefulWidget {
   State<WorkoutRecordingPage> createState() => _WorkoutRecordingPageState();
 }
 
-class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with NavigateMixin {
+class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with NavigateMixin, ValidateOutputMixin {
   final _formKey = GlobalKey<FormState>();
-  final _today = DateOnly.today();
+  final _today = DateTime.now();
+  final yearController = TextEditingController();
+  final monthController = TextEditingController();
+  final dayController = TextEditingController();
   bool validated = false;
   late List<ExerciseResultController> _exerciseResultControllers;
 
   void onSave() {
     final workout = Workout(
-        date: _today,
+        date: DateTime(
+          yearController.text.toOutput().value, 
+          monthController.text.toOutput().value, 
+          dayController.text.toOutput().value
+        ),
         results: _exerciseResultControllers
             .map((controller) => ExerciseResult(
                 exercise: controller.exercise,
@@ -47,6 +55,9 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with Naviga
         .map((exercise) => ExerciseResultController(
             exercise: exercise, controller: TextEditingController()))
         .toList();
+    yearController.text = _today.year.toString();
+    monthController.text = _today.month.toString();
+    dayController.text = _today.day.toString();
   }
 
   @override
@@ -65,8 +76,32 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with Naviga
           ListTile(
             title: ReadonlyTextField(
                 labelText: 'Workout Plan', value: widget.workoutPlan.name),
-            subtitle: ReadonlyTextField(
-                labelText: 'Workout Date', value: _today.toString()),
+            subtitle: Row(children: [
+              Flexible(child: 
+                TextFormField(
+                  controller: yearController, 
+                  decoration: InputDecoration(labelText: 'year'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                )
+              ),
+              Flexible(child: 
+                TextFormField(
+                  controller: monthController, 
+                  decoration: InputDecoration(labelText: 'month'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                )
+              ),
+              Flexible(child: 
+                TextFormField(
+                  controller: dayController, 
+                  decoration: InputDecoration(labelText: 'day'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                )
+              )
+            ],)
           ),
           Expanded(
               child: ListView.builder(

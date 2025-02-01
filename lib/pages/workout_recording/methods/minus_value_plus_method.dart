@@ -26,7 +26,7 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
       children: [
         Wrap(
           children: [1, 10]
-              .map((val) => TextButton(
+              .map((val) => FilledButton.tonal(
                   onPressed: widget.controller.output > 0
                       ? () => modifyActualOutput(-val)
                       : null,
@@ -39,13 +39,14 @@ class _MinusValuePlusMethodState extends State<MinusValuePlusMethod> {
           focusNode: DisabledFocusNode(),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
+              border: InputBorder.none,
               suffixIcon: widget.controller.output != 0
                   ? IconButton(onPressed: clearOutput, icon: Icon(Icons.clear))
                   : null),
         )),
         Wrap(
           children: [1, 10]
-              .map((val) => TextButton(
+              .map((val) => FilledButton.tonal(
                   onPressed: () => modifyActualOutput(val),
                   child: Text('+$val')))
               .toList(),
