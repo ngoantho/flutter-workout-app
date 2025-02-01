@@ -52,30 +52,32 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with Naviga
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        onChanged: () => setState(
-              () => validated = _formKey.currentState!.validate(),
-            ),
-        child: CommonScaffold(
-            title: 'Record Workout',
-            content: Column(children: [
-              ListTile(
-                title: ReadonlyTextField(
-                    labelText: 'Workout Plan', value: widget.workoutPlan.name),
-                subtitle: ReadonlyTextField(
-                    labelText: 'Workout Date', value: _today.toString()),
-              ),
-              Expanded(
-                  child: ListView.builder(
-                      itemBuilder: (context, index) => WorkoutRecordingCard(
-                          _exerciseResultControllers[index].exercise,
-                          _exerciseResultControllers[index].controller),
-                      itemCount: _exerciseResultControllers.length)),
-              FilledButton(
-                onPressed: validated ? onSave : null,
-                child: CenterText('Save Workout'),
-              )
-            ])));
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: () => {
+        setState(
+          () => validated = _formKey.currentState!.validate(),
+        )
+      },
+      child: CommonScaffold(
+        title: 'Record Workout',
+        content: Column(children: [
+          ListTile(
+            title: ReadonlyTextField(
+                labelText: 'Workout Plan', value: widget.workoutPlan.name),
+            subtitle: ReadonlyTextField(
+                labelText: 'Workout Date', value: _today.toString()),
+          ),
+          Expanded(
+              child: ListView.builder(
+                  itemBuilder: (context, index) => WorkoutRecordingCard(
+                      _exerciseResultControllers[index].exercise,
+                      _exerciseResultControllers[index].controller),
+                  itemCount: _exerciseResultControllers.length)),
+          FilledButton(
+            onPressed: validated ? onSave : null,
+            child: CenterText('Save Workout'),
+          )
+      ])));
   }
 }
