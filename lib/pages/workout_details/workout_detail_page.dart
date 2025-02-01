@@ -11,7 +11,7 @@ class WorkoutDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-        title: 'Workout: ${workout.date}',
+        title: 'Workout: ${workout.date.formatMonthDayYear()}',
         content: ListView.separated(
             itemBuilder: (context, index) =>
                 WorkoutDetails(workout.results[index]),

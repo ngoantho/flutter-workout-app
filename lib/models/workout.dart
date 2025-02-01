@@ -14,3 +14,9 @@ class Workout {
     return 'Workout: $date\n${results.join('\n')}';
   }
 }
+
+extension MonthDayYearFormat on DateTime {
+  String formatMonthDayYear() {
+    return '$month/$day/$year';
+  }
+}

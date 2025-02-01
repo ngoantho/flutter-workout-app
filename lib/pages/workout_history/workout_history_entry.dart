@@ -18,7 +18,7 @@ class WorkoutHistoryEntry extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Workout: ${workout.date}",
+              "Workout: ${workout.date.formatMonthDayYear()}",
             ),
             Text('Exercise Results: ${workout.results.length}'),
             Text('Successful Results: ${workout.results.where(
