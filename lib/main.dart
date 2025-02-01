@@ -1,12 +1,15 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
-import 'package:homework/examples/sample_workout_plan.dart';
+// import 'package:homework/examples/sample_workout_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/pages/workout_recording/workout_recording_page.dart';
+// import 'package:homework/pages/workout_recording/workout_recording_page.dart';
+import 'package:homework/providers/workout_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (_) => WorkoutProvider(),
+    child: const MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +18,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final workouts = context.watch<WorkoutProvider>().workouts;
+
     return MaterialApp(
         title: 'Homework',
         theme: ThemeData(
@@ -38,6 +43,6 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             brightness: Brightness.dark),
         debugShowCheckedModeBanner: false,
-        home: WorkoutRecordingPage(sampleWorkoutPlan));
+        home: WorkoutHistoryPage(workouts));
   }
 }
