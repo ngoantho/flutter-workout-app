@@ -19,4 +19,9 @@ class ExerciseResult {
 
   MeasurementUnit get measurementUnit => exercise.measurementUnit;
   set measurementUnit(MeasurementUnit unit) => exercise.measurementUnit = unit;
+
+  @override
+  String toString() {
+    return 'Exercise: ($exercise), actual: $actualOutput';
+  }
 }

@@ -11,4 +11,9 @@ class Exercise {
     required this.targetOutput,
     required this.measurementUnit
   });
+
+  @override
+  String toString() {
+    return '$name, target: $targetOutput, unit: $measurementUnit';
+  }
 }

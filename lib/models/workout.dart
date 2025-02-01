@@ -9,4 +9,9 @@ class Workout {
     required this.date,
     required this.results,
   });
+
+  @override
+  String toString() {
+    return 'Workout: $date\n${results.join('\n')}';
+  }
 }
