@@ -4,7 +4,7 @@ import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/providers/workout_provider.dart';
+import 'package:homework/providers/workout_list_provider.dart';
 import 'package:homework/widgets/centering/center_text.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
@@ -43,7 +43,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage> with Naviga
                 exercise: controller.exercise,
                 actualOutput: controller.actualOutput))
             .toList());
-    context.read<WorkoutProvider>().add(workout);
+    context.read<WorkoutListProvider>().add(workout);
     navigateBack(context: context);
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/output.dart';
-import 'package:homework/providers/workout_provider.dart';
+import 'package:homework/providers/workout_list_provider.dart';
 import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget {
@@ -10,7 +10,7 @@ class RecentPerformance extends StatelessWidget {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final sevenDaysAgo = today.subtract(Duration(days: 7));
-    final workouts = context.watch<WorkoutProvider>().workouts;
+    final workouts = context.watch<WorkoutListProvider>().workouts;
 
     final workoutsPastSevenDays = workouts.where((workout) {
       final date = workout.date;

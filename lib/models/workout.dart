@@ -13,10 +13,6 @@ class Workout {
   String toString() {
     return 'Workout: $date\n${results.join('\n')}';
   }
-
-  addExerciseResult(ExerciseResult value) {
-    results.add(value);
-  }
 }
 
 extension MonthDayYearFormat on DateTime {
