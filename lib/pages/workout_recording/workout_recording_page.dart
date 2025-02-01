@@ -17,7 +17,7 @@ class WorkoutRecordingPage extends StatefulWidget {
   final WorkoutPlan workoutPlan;
   final List<ExerciseResultController>? controllers;
 
-  const WorkoutRecordingPage(this.workoutPlan, [this.controllers]);
+  const WorkoutRecordingPage(this.workoutPlan, {this.controllers, super.key});
 
   @override
   State<WorkoutRecordingPage> createState() => _WorkoutRecordingPageState();

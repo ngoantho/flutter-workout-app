@@ -43,8 +43,11 @@ void main() {
 
     await tester.pumpWidget(ChangeNotifierProvider.value(
         value: workoutsProvider,
-        child:
-            MaterialApp(home: WorkoutRecordingPage(workoutPlan, controllers))));
+        child: MaterialApp(
+            home: WorkoutRecordingPage(
+          workoutPlan,
+          controllers: controllers,
+        ))));
 
     expect(find.byType(BasePlusMinusMethod), findsOne);
     expect(find.byType(MinusValuePlusMethod), findsOne);
@@ -68,8 +71,9 @@ void main() {
 
     await tester.pumpWidget(ChangeNotifierProvider.value(
         value: workoutsProvider,
-        child:
-            MaterialApp(home: WorkoutRecordingPage(workoutPlan, controllers))));
+        child: MaterialApp(
+            home:
+                WorkoutRecordingPage(workoutPlan, controllers: controllers))));
 
     // find validate button
     final validateBtn = find.byKey(Key('validateFormBtnKey'));
