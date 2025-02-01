@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
-import 'package:homework/widgets/centering/center_row.dart';
 
 class WorkoutDetails extends StatelessWidget {
   final ExerciseResult result;
@@ -18,11 +17,13 @@ class WorkoutDetails extends StatelessWidget {
         Text('Actual Output: ${result.actualOutput} ${result.measurementUnit}'),
         if (Output.isSuccessful(
             actual: result.actualOutput, target: result.targetOutput))
-          CenterRow(
+          Wrap(
+            alignment: WrapAlignment.center,
             children: [Text('Successful Result'), Icon(Icons.check)],
           )
         else
-          CenterRow(
+          Wrap(
+            alignment: WrapAlignment.center,
             children: [Text('Failed Result'), Icon(Icons.close)],
           )
       ],

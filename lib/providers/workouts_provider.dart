@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/workout.dart';
 
-class WorkoutListProvider with ChangeNotifier {
+class WorkoutsProvider with ChangeNotifier {
   final List<Workout> workouts = [];
 
   add(Workout workout) {

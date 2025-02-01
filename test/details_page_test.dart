@@ -4,40 +4,44 @@ import 'package:homework/models/exercise.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/measurement_unit.dart';
 import 'package:homework/models/output.dart';
-import 'package:homework/models/workout.dart';
-import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/providers/workout_list_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:homework/pages/workout_details/workout_result_details.dart';
 
 void main() {
-  testWidgets(
+  group(
       "WorkoutDetails shows specifics of which exercises were done and what the actual output was while doing those exercises",
-      (tester) async {
-    final workoutProvider = WorkoutListProvider();
-    
-    await tester.pumpWidget(
-      ChangeNotifierProvider.value(
-        value: workoutProvider,
-        child: MaterialApp(home: WorkoutHistoryPage(),)
-      )
-    );
+      () {
+    testWidgets("Successful Result", (tester) async {
+      var passingExerciseResult = ExerciseResult(
+          exercise: Exercise(
+              name: 'Run 100 meters',
+              targetOutput: Output(100),
+              measurementUnit: meters),
+          actualOutput: Output(100));
 
-    workoutProvider.add(Workout(date: DateTime.now(), results: [
-      ExerciseResult(
-        exercise: Exercise(name: '100 meters', targetOutput: Output(100), measurementUnit: meters),
-        actualOutput: Output(100)
-      ),
-      ExerciseResult(
-        exercise: Exercise(name: '10 jumps', targetOutput: Output(10), measurementUnit: repetitions),
-        actualOutput: Output(5)
-      )
-    ]));
-    await tester.pumpAndSettle();
+      await tester
+          .pumpWidget(MaterialApp(home: WorkoutDetails(passingExerciseResult)));
 
-    final btnFinder = find.byType(ElevatedButton);
-    expect(btnFinder, findsOne); // verify
-    await tester.tap(btnFinder);
+      expect(find.text('Name: Run 100 meters'), findsOne);
+      expect(find.text('Target Output: 100 meters'), findsOne);
+      expect(find.text('Actual Output: 100 meters'), findsOne);
+      expect(find.textContaining('Successful Result'), findsOne);
+    });
 
-    expect(find.text('Name: 100 meters'), findsOne);
+    testWidgets("Failed Result", (tester) async {
+      var passingExerciseResult = ExerciseResult(
+          exercise: Exercise(
+              name: 'Jump 10 times',
+              targetOutput: Output(10),
+              measurementUnit: repetitions),
+          actualOutput: Output(5));
+
+      await tester
+          .pumpWidget(MaterialApp(home: WorkoutDetails(passingExerciseResult)));
+
+      expect(find.text('Name: Jump 10 times'), findsOne);
+      expect(find.text('Target Output: 10 repetitions'), findsOne);
+      expect(find.text('Actual Output: 5 repetitions'), findsOne);
+      expect(find.textContaining('Failed Result'), findsOne);
+    });
   });
 }

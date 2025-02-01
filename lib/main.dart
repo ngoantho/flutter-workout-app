@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 // import 'package:homework/examples/sample_workout_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 // import 'package:homework/pages/workout_recording/workout_recording_page.dart';
-import 'package:homework/providers/workout_list_provider.dart';
+import 'package:homework/providers/workouts_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (_) => WorkoutListProvider(),
-    child: const MyApp()
-  ));
+      create: (_) => WorkoutsProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
