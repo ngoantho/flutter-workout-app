@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/providers/workout_provider.dart';
-import 'package:homework/widgets/centering/center_text.dart';
-import 'package:homework/widgets/sized_box/sized_box_with_width.dart';
 import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget {
