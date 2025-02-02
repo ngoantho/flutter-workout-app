@@ -30,7 +30,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   final yearController = TextEditingController();
   final monthController = TextEditingController();
   final dayController = TextEditingController();
-  bool validated = true;
+  bool validated = false;
   late List<ExerciseResultController> controllers;
 
   void onSave() {
