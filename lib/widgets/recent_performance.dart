@@ -33,7 +33,7 @@ class RecentPerformance extends StatelessWidget {
     return BottomAppBar(
         child: ListTile(
             title: Text(
-              'Recent Performance of over past 7 days',
+              'Recent Performance over past 7 days',
               textAlign: TextAlign.center,
             ),
             subtitle: Text(
