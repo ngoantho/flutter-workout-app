@@ -5,16 +5,16 @@ class CommonScaffold extends StatelessWidget {
   final String title;
   final Widget content;
   final Widget? floatingActionButton;
-  final List<Widget> appBarActions;
   final Widget? appBarAction;
+  final List<Widget>? bottomButtons;
 
   const CommonScaffold(
       {super.key,
       required this.title,
       required this.content,
       this.floatingActionButton,
-      this.appBarActions = const [],
-      this.appBarAction});
+      this.appBarAction,
+      this.bottomButtons});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,11 @@ class CommonScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         centerTitle: true,
-        actions: appBarAction != null ? [appBarAction!] : appBarActions,
+        actions: appBarAction != null ? [appBarAction!] : null,
       ),
       body: content,
       floatingActionButton: floatingActionButton,
+      persistentFooterButtons: bottomButtons,
       bottomNavigationBar: RecentPerformance(),
     );
   }
