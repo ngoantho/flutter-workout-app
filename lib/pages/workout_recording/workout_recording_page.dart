@@ -5,7 +5,6 @@ import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/providers/workouts_provider.dart';
-import 'package:homework/widgets/centering/center_text.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -30,10 +29,13 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   final yearController = TextEditingController();
   final monthController = TextEditingController();
   final dayController = TextEditingController();
-  bool validated = true;
   late List<ExerciseResultController> controllers;
 
   void onSave() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     final workout = Workout(
         date: DateTime(
             yearController.text.toOutput().value,
@@ -67,14 +69,13 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        autovalidateMode: AutovalidateMode.always,
-        onChanged: () => {
-              setState(
-                () => validated = _formKey.currentState!.validate(),
-              )
-            },
         child: CommonScaffold(
             title: 'Record Workout',
+            appBarAction: FilledButton(
+              onPressed: onSave,
+              key: Key('validateFormBtnKey'),
+              child: Text('Save Workout'),
+            ),
             content: Column(children: [
               ListTile(
                   title: ReadonlyTextField(
@@ -111,11 +112,6 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
                           controllers[index].exercise,
                           controllers[index].controller),
                       itemCount: controllers.length)),
-              FilledButton(
-                onPressed: validated ? onSave : null,
-                key: Key('validateFormBtnKey'),
-                child: CenterText('Save Workout'),
-              )
             ])));
   }
 }

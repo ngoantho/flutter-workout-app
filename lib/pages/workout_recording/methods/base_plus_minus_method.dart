@@ -28,7 +28,7 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
             child: DropdownButtonFormField(
           items: toDropdownMenuItemList(units),
           onChanged: (value) => setBaseOutput(value),
-          decoration: InputDecoration(labelText: 'Base'),
+          decoration: InputDecoration(labelText: 'Output'),
         )),
         SizedBox(
           width: 50,
@@ -55,7 +55,7 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           onChanged: (value) => setState(
             () => selectedMod = value,
           ),
-          decoration: InputDecoration(labelText: 'Modifier'),
+          decoration: InputDecoration(labelText: 'Add/Sub'),
         )),
         SizedBoxWithWidth(10),
         Flexible(
@@ -63,7 +63,7 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           controller: widget.controller,
           focusNode: DisabledFocusNode(),
           decoration: InputDecoration(
-            labelText: 'Output',
+            labelText: 'Final',
             border: InputBorder.none,
             suffixIcon: widget.controller.hasOutput && widget.controller.output != selectedBase
                 ? IconButton(onPressed: clearOutput, icon: Icon(Icons.settings_backup_restore))
