@@ -16,7 +16,7 @@ import 'package:homework/pages/workout_details/workout_detail_page.dart';
 import 'package:homework/pages/workout_details/workout_result_details.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/pages/workout_recording/methods/base_plus_minus_method.dart';
+import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
 import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
 import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
