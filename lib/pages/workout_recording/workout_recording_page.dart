@@ -71,7 +71,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
         key: _formKey,
         child: CommonScaffold(
             title: 'Record Workout',
-            appBarAction: FilledButton(
+            bottomWidget: FilledButton(
               onPressed: onSave,
               key: Key('validateFormBtnKey'),
               child: Text('Save Workout'),

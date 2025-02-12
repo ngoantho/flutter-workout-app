@@ -3,7 +3,7 @@ import 'package:homework/models/output.dart';
 import 'package:homework/providers/workouts_provider.dart';
 import 'package:provider/provider.dart';
 
-class RecentPerformance extends StatelessWidget {
+class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   const RecentPerformance({super.key});
 
   @override
@@ -30,15 +30,17 @@ class RecentPerformance extends StatelessWidget {
           .length;
     }
 
-    return BottomAppBar(
-        child: ListTile(
-            title: Text(
-              'Recent Performance over past 7 days',
-              textAlign: TextAlign.center,
-            ),
-            subtitle: Text(
-              '$successful successful results',
-              textAlign: TextAlign.center,
-            )));
+    return ListTile(
+        title: Text(
+          'Recent Performance over past 7 days',
+          textAlign: TextAlign.center,
+        ),
+        subtitle: Text(
+          '$successful successful results',
+          textAlign: TextAlign.center,
+        ));
   }
+  
+  @override
+  Size get preferredSize => Size.fromHeight(50);
 }

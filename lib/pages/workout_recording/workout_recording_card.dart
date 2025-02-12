@@ -10,8 +10,7 @@ class WorkoutRecordingCard extends StatefulWidget {
   final Exercise exercise;
   final TextEditingController controller;
 
-  const WorkoutRecordingCard(this.exercise, this.controller,
-      {super.key});
+  const WorkoutRecordingCard(this.exercise, this.controller, {super.key});
 
   @override
   State<WorkoutRecordingCard> createState() => _WorkoutRecordingCardState();
@@ -40,10 +39,10 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
             ],
           ),
           subtitle: switch (widget.exercise.measurementUnit) {
-            MeasurementUnit.seconds => BasePlusMinusMethod(
-                widget.controller), // base +/- modifier
-            MeasurementUnit.meters => ValueInputMethod(
-                widget.controller), // value dropdown +/-
+            MeasurementUnit.seconds =>
+              BasePlusMinusMethod(widget.controller), // base +/- modifier
+            MeasurementUnit.meters =>
+              ValueInputMethod(widget.controller), // value dropdown +/-
             MeasurementUnit.repetitions =>
               MinusValuePlusMethod(widget.controller) // - value +
           }),

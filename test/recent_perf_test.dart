@@ -19,7 +19,7 @@ void main() {
         value: workoutsProvider,
         child: MaterialApp(
             home: Scaffold(
-          bottomNavigationBar: RecentPerformance(),
+          appBar: RecentPerformance(),
         ))));
 
     var workout1 =
@@ -59,7 +59,7 @@ void main() {
         value: workoutsProvider,
         child: MaterialApp(
             home: Scaffold(
-          bottomNavigationBar: RecentPerformance(),
+          appBar: RecentPerformance(),
         ))));
 
     var pastWorkout =

@@ -16,13 +16,13 @@ class WorkoutHistoryPage extends StatelessWidget with NavigateMixin {
 
     return CommonScaffold(
       title: 'Workout History',
-      appBarAction: FilledButton(
-          onPressed: () => {
-                navigateTo(
-                    context: context,
-                    widget: WorkoutRecordingPage(sampleWorkoutPlan))
-              },
-          child: Text('New Workout')),
+      bottomWidget: FilledButton(
+            onPressed: () => {
+                  navigateTo(
+                      context: context,
+                      widget: WorkoutRecordingPage(sampleWorkoutPlan))
+                },
+            child: Text('New Workout')),
       content: Column(
         children: [
           Expanded(
