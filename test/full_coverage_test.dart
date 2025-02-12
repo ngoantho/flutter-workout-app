@@ -22,10 +22,6 @@ import 'package:homework/pages/workout_recording/methods/value_input_method.dart
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
 import 'package:homework/providers/workouts_provider.dart';
-import 'package:homework/widgets/centering/center_column.dart';
-import 'package:homework/widgets/centering/center_row.dart';
-import 'package:homework/widgets/centering/center_text.dart';
-import 'package:homework/widgets/column_scroll_view.dart';
 import 'package:homework/widgets/common_scaffold.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/widgets/recent_performance.dart';
