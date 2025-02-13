@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/to_dropdown.dart';
+import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/output.dart';
 
 class BasePlusMinusMethod extends StatefulWidget {
@@ -12,7 +13,7 @@ class BasePlusMinusMethod extends StatefulWidget {
 }
 
 class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
-    with DropdownMenuItemsMixin<int> {
+    with DropdownMenuItemsMixin<int>, ValidateOutputMixin {
   final units = [for (var i = 1; i <= 60; i++) i];
 
   void onChanged(int value) {
@@ -29,7 +30,7 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
+    final dropdown = DropdownButtonFormField(
       items: toDropdownMenuItemList(units),
       value: switch (widget.controller.hasOutput) {
         true => widget.controller.output,
@@ -45,6 +46,16 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
           false => null
         },
       ),
+    );
+    return Stack(
+      children: [
+        TextFormField(
+          controller: widget.controller,
+          validator: validateOutput,
+          style: TextStyle(color: Colors.transparent)
+        ),
+        dropdown,
+      ],
     );
   }
 }
