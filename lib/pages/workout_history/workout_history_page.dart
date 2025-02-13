@@ -23,7 +23,7 @@ class WorkoutHistoryPage extends StatelessWidget with NavigateMixin, FlatButtonS
                     context: context,
                     widget: WorkoutRecordingPage(sampleWorkoutPlan))
               },
-          style: flatButtonStyle(),
+          style: flatButtonStyle,
           child: Text('New Workout')),
       content: Column(
         children: [

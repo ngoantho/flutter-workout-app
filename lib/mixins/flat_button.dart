@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 mixin FlatButtonStyle {
-  ButtonStyle flatButtonStyle() {
+  ButtonStyle get flatButtonStyle {
     return ButtonStyle(
-        shape: WidgetStateProperty.all(RoundedRectangleBorder()));
+        shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.zero)));
   }
 }

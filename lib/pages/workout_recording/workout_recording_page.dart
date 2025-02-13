@@ -75,7 +75,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
             bottomWidget: FilledButton(
               onPressed: onSave,
               key: Key('validateFormBtnKey'),
-              style: flatButtonStyle(),
+              style: flatButtonStyle,
               child: Text('Save Workout'),
             ),
             content: Column(children: [
