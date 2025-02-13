@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
@@ -23,7 +24,7 @@ class WorkoutRecordingPage extends StatefulWidget {
 }
 
 class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
-    with NavigateMixin, ValidateOutputMixin {
+    with NavigateMixin, ValidateOutputMixin, FlatButtonStyle {
   final _formKey = GlobalKey<FormState>();
   final _today = DateTime.now();
   final yearController = TextEditingController();
@@ -74,6 +75,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
             bottomWidget: FilledButton(
               onPressed: onSave,
               key: Key('validateFormBtnKey'),
+              style: flatButtonStyle(),
               child: Text('Save Workout'),
             ),
             content: Column(children: [
