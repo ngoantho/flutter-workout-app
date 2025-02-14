@@ -48,7 +48,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
                 actualOutput: controller.actualOutput))
             .toList());
     context.read<WorkoutsProvider>().add(workout);
-    navigateBack(context: context);
+    navigate(context).back();
   }
 
   @override
@@ -66,54 +66,52 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
     dayController.text = _today.day.toString();
   }
 
+  Column get formContent => Column(children: [
+        ListTile(
+            title: ReadonlyTextField(
+                labelText: 'Workout Plan', value: widget.workoutPlan.name),
+            subtitle: Row(
+              children: [
+                Flexible(
+                    child: TextFormField(
+                  controller: yearController,
+                  decoration: InputDecoration(labelText: 'year'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                )),
+                Flexible(
+                    child: TextFormField(
+                  controller: monthController,
+                  decoration: InputDecoration(labelText: 'month'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                )),
+                Flexible(
+                    child: TextFormField(
+                  controller: dayController,
+                  decoration: InputDecoration(labelText: 'day'),
+                  keyboardType: TextInputType.number,
+                  validator: validateOutput,
+                ))
+              ],
+            )),
+        Expanded(
+            child: ListView.builder(
+                itemBuilder: (context, index) => WorkoutRecordingCard(
+                    controllers[index].exercise, controllers[index].controller),
+                itemCount: controllers.length)),
+      ]);
+
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: CommonScaffold(
-            title: 'Record Workout',
-            bottomWidget: FilledButton(
-              onPressed: onSave,
-              key: Key('validateFormBtnKey'),
-              style: flatButtonStyle,
-              child: Text('Save Workout'),
-            ),
-            content: Column(children: [
-              ListTile(
-                  title: ReadonlyTextField(
-                      labelText: 'Workout Plan',
-                      value: widget.workoutPlan.name),
-                  subtitle: Row(
-                    children: [
-                      Flexible(
-                          child: TextFormField(
-                        controller: yearController,
-                        decoration: InputDecoration(labelText: 'year'),
-                        keyboardType: TextInputType.number,
-                        validator: validateOutput,
-                      )),
-                      Flexible(
-                          child: TextFormField(
-                        controller: monthController,
-                        decoration: InputDecoration(labelText: 'month'),
-                        keyboardType: TextInputType.number,
-                        validator: validateOutput,
-                      )),
-                      Flexible(
-                          child: TextFormField(
-                        controller: dayController,
-                        decoration: InputDecoration(labelText: 'day'),
-                        keyboardType: TextInputType.number,
-                        validator: validateOutput,
-                      ))
-                    ],
-                  )),
-              Expanded(
-                  child: ListView.builder(
-                      itemBuilder: (context, index) => WorkoutRecordingCard(
-                          controllers[index].exercise,
-                          controllers[index].controller),
-                      itemCount: controllers.length)),
-            ])));
+    return CommonScaffold(
+        title: 'Record Workout',
+        bottomWidget: FilledButton(
+          onPressed: onSave,
+          key: Key('validateFormBtnKey'),
+          style: flatButtonStyle,
+          child: Text('Save Workout'),
+        ),
+        content: Form(key: _formKey, child: formContent));
   }
 }

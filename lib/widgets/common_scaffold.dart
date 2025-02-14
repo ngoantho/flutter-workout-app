@@ -21,14 +21,17 @@ class CommonScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(
-          title: Text(title),
-          centerTitle: true,
-          actions: appBarActions,
-          bottom: RecentPerformance()),
+      appBar:
+          AppBar(title: Text(title), centerTitle: true, actions: appBarActions),
       body: content,
       floatingActionButton: floatingActionButton,
-      bottomNavigationBar: bottomWidget,
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (bottomWidget != null) bottomWidget!,
+          RecentPerformance()
+        ],
+      ),
     ));
   }
 }

@@ -11,9 +11,7 @@ void main() async {
 
   final windowSize = Size(480, 900);
   final windowOptions = WindowOptions(
-    size: windowSize,
-    minimumSize: windowSize
-  );
+      size: windowSize, minimumSize: windowSize, maximumSize: windowSize);
 
   await windowManager.waitUntilReadyToShow(windowOptions);
   await windowManager.show();
