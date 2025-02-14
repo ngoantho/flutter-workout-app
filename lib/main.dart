@@ -1,21 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/providers/workouts_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await windowManager.ensureInitialized();
+  if (!kIsWeb && (Platform.isWindows)) {
+    await windowManager.ensureInitialized();
 
-  final windowSize = Size(480, 900);
-  final windowOptions = WindowOptions(
-      size: windowSize, minimumSize: windowSize, maximumSize: windowSize);
+    final windowSize = Size(480, 900);
+    final windowOptions = WindowOptions(
+        size: windowSize, minimumSize: windowSize, maximumSize: windowSize);
 
-  await windowManager.waitUntilReadyToShow(windowOptions);
-  await windowManager.show();
-  await windowManager.focus();
+    await windowManager.waitUntilReadyToShow(windowOptions);
+    await windowManager.show();
+    await windowManager.focus();
+  }
 
   runApp(ChangeNotifierProvider(
       create: (_) => WorkoutsProvider(), child: const MyApp()));

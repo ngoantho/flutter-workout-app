@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.2
   full_coverage: ^1.0.0
   window_manager: ^0.4.3
+  validators: ^3.0.0
 
 dev_dependencies:
   flutter_test:
