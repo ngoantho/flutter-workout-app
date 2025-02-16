@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:homework/examples/sample_workout_plan.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
-import 'package:homework/pages/download_plan.dart';
+import 'package:homework/models/workout.dart';
+import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
 import 'package:homework/providers/workouts_provider.dart';
@@ -19,39 +20,44 @@ class WorkoutHistoryPage extends StatelessWidget
 
     return CommonScaffold(
       title: 'Workout History',
-      bottomWidget: NavigationBar(
-          onDestinationSelected: (destination) {
-            switch (destination) {
-              case 0:
-                navigate(context).to(DownloadPlanPage());
-                break;
-              case 1:
-                navigate(context).to(WorkoutRecordingPage(sampleWorkoutPlan));
-                break;
-            }
-          },
-          indicatorColor: Colors.transparent,
-          selectedIndex: 1,
-          destinations: [
-            NavigationDestination(
-                icon: Icon(Icons.download), label: 'Download Plan'),
-            NavigationDestination(
-                icon: Icon(Icons.add), label: 'Record Workout'),
-          ]),
-      content: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              itemCount: workouts.length,
-              itemBuilder: (context, index) =>
-                  WorkoutHistoryEntry(workouts[index]),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 50,
-              ),
+      bottomWidget: navMenu(context),
+      content: listContent(workouts),
+    );
+  }
+
+  Row navMenu(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        OutlinedButton.icon(
+          onPressed: () => navigate(context).to(DownloadPlanPage()),
+          label: Text("Download Plan"),
+          icon: Icon(Icons.download),
+        ),
+        OutlinedButton.icon(
+          onPressed: () =>
+              navigate(context).to(WorkoutRecordingPage(sampleWorkoutPlan)),
+          label: Text("Record Workout"),
+          icon: Icon(Icons.run_circle_outlined),
+        )
+      ],
+    );
+  }
+
+  Column listContent(List<Workout> workouts) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.separated(
+            itemCount: workouts.length,
+            itemBuilder: (context, index) =>
+                WorkoutHistoryEntry(workouts[index]),
+            separatorBuilder: (context, index) => SizedBox(
+              height: 50,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

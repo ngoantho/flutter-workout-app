@@ -6,19 +6,16 @@ class ExerciseResult {
   Exercise exercise;
   Output actualOutput;
 
-  ExerciseResult({
-    required this.exercise,
-    required this.actualOutput
-  });
+  ExerciseResult({required this.exercise, required this.actualOutput});
 
   String get exerciseName => exercise.name;
-  set exerciseName(String name) => exercise.name = name; 
+  set exerciseName(String name) => exercise.name = name;
 
-  Output get targetOutput => exercise.targetOutput;
-  set targetOutput(Output output) => exercise.targetOutput = output;
+  Output get targetOutput => exercise.target;
+  set targetOutput(Output output) => exercise.target = output;
 
-  MeasurementUnit get measurementUnit => exercise.measurementUnit;
-  set measurementUnit(MeasurementUnit unit) => exercise.measurementUnit = unit;
+  MeasurementUnit get measurementUnit => exercise.unit;
+  set measurementUnit(MeasurementUnit unit) => exercise.unit = unit;
 
   @override
   String toString() {

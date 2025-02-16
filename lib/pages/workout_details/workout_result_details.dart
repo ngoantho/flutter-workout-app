@@ -13,7 +13,7 @@ class WorkoutDetails extends StatelessWidget {
       children: [
         Text('Name: ${result.exercise.name}'),
         Text(
-            'Target Output: ${result.exercise.targetOutput} ${result.measurementUnit}'),
+            'Target Output: ${result.exercise.target} ${result.measurementUnit}'),
         Text('Actual Output: ${result.actualOutput} ${result.measurementUnit}'),
         if (Output.isSuccessful(
             actual: result.actualOutput, target: result.targetOutput))

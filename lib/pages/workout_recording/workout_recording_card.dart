@@ -30,15 +30,14 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
                   width: 75,
                   child: ReadonlyTextField(
                       labelText: 'Target',
-                      value: widget.exercise.targetOutput.toString())),
+                      value: widget.exercise.target.toString())),
               SizedBox(
                   width: 100,
                   child: ReadonlyTextField(
-                      labelText: 'Unit',
-                      value: widget.exercise.measurementUnit.name))
+                      labelText: 'Unit', value: widget.exercise.unit.name))
             ],
           ),
-          subtitle: switch (widget.exercise.measurementUnit) {
+          subtitle: switch (widget.exercise.unit) {
             MeasurementUnit.seconds =>
               BasePlusMinusMethod(widget.controller), // base +/- modifier
             MeasurementUnit.meters =>

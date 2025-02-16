@@ -5,11 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Chrome",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "deviceId": "chrome"
+    },
+    {
       "name": "Android",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "args": ["--no-enable-impeller"],
+      "args": [
+        "--no-enable-impeller"
+      ],
       "deviceId": "emulator-5554"
     },
     {

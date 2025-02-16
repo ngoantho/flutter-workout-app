@@ -66,41 +66,43 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
     dayController.text = _today.day.toString();
   }
 
-  Column get formContent => Column(children: [
-        ListTile(
-            title: ReadonlyTextField(
-                labelText: 'Workout Plan', value: widget.workoutPlan.name),
-            subtitle: Row(
-              children: [
-                Flexible(
-                    child: TextFormField(
-                  controller: yearController,
-                  decoration: InputDecoration(labelText: 'year'),
-                  keyboardType: TextInputType.number,
-                  validator: validateOutput,
-                )),
-                Flexible(
-                    child: TextFormField(
-                  controller: monthController,
-                  decoration: InputDecoration(labelText: 'month'),
-                  keyboardType: TextInputType.number,
-                  validator: validateOutput,
-                )),
-                Flexible(
-                    child: TextFormField(
-                  controller: dayController,
-                  decoration: InputDecoration(labelText: 'day'),
-                  keyboardType: TextInputType.number,
-                  validator: validateOutput,
-                ))
-              ],
-            )),
-        Expanded(
-            child: ListView.builder(
-                itemBuilder: (context, index) => WorkoutRecordingCard(
-                    controllers[index].exercise, controllers[index].controller),
-                itemCount: controllers.length)),
-      ]);
+  Column get formContent {
+    return Column(children: [
+      ListTile(
+          title: ReadonlyTextField(
+              labelText: 'Workout Plan', value: widget.workoutPlan.name),
+          subtitle: Row(
+            children: [
+              Flexible(
+                  child: TextFormField(
+                controller: yearController,
+                decoration: InputDecoration(labelText: 'year'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              )),
+              Flexible(
+                  child: TextFormField(
+                controller: monthController,
+                decoration: InputDecoration(labelText: 'month'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              )),
+              Flexible(
+                  child: TextFormField(
+                controller: dayController,
+                decoration: InputDecoration(labelText: 'day'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              ))
+            ],
+          )),
+      Expanded(
+          child: ListView.builder(
+              itemBuilder: (context, index) => WorkoutRecordingCard(
+                  controllers[index].exercise, controllers[index].controller),
+              itemCount: controllers.length)),
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {

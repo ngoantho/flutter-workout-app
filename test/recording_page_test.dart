@@ -22,22 +22,18 @@ void main() {
     final controllers = <ExerciseResultController>[
       ExerciseResultController(
         exercise: Exercise(
-            name: 'Jump 10 times',
-            targetOutput: Output(10),
-            measurementUnit: repetitions),
+            name: 'Jump 10 times', target: Output(10), unit: repetitions),
         controller: TextEditingController(text: ''),
       ),
       ExerciseResultController(
           exercise: Exercise(
-              name: 'Run 100 meters',
-              targetOutput: Output(100),
-              measurementUnit: meters),
+              name: 'Run 100 meters', target: Output(100), unit: meters),
           controller: TextEditingController(text: '')),
       ExerciseResultController(
           exercise: Exercise(
               name: 'Hold breath for 15 seconds',
-              targetOutput: Output(15),
-              measurementUnit: seconds),
+              target: Output(15),
+              unit: seconds),
           controller: TextEditingController(text: ''))
     ];
 
@@ -64,9 +60,7 @@ void main() {
       ExerciseResultController(
           controller: TextEditingController(text: Output(10).toString()),
           exercise: Exercise(
-              name: 'Jump 10 times',
-              targetOutput: Output(10),
-              measurementUnit: repetitions))
+              name: 'Jump 10 times', target: Output(10), unit: repetitions))
     ];
 
     await tester.pumpWidget(ChangeNotifierProvider.value(

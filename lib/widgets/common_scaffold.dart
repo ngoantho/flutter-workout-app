@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/widgets/min_height_column.dart';
 import 'package:homework/widgets/recent_performance.dart';
 
 class CommonScaffold extends StatelessWidget {
@@ -25,12 +26,8 @@ class CommonScaffold extends StatelessWidget {
           AppBar(title: Text(title), centerTitle: true, actions: appBarActions),
       body: content,
       floatingActionButton: floatingActionButton,
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (bottomWidget != null) bottomWidget!,
-          RecentPerformance()
-        ],
+      bottomNavigationBar: MinHeightColumn(
+        [if (bottomWidget != null) bottomWidget!, RecentPerformance()],
       ),
     ));
   }

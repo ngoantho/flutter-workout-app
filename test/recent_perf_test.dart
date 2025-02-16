@@ -25,10 +25,8 @@ void main() {
     var workout1 =
         Workout(date: DateTime.now().subtract(Duration(days: 1)), results: [
       ExerciseResult(
-          exercise: Exercise(
-              name: '10 seconds',
-              targetOutput: Output(10),
-              measurementUnit: seconds),
+          exercise:
+              Exercise(name: '10 seconds', target: Output(10), unit: seconds),
           actualOutput: Output(10)),
     ]);
 
@@ -39,10 +37,8 @@ void main() {
     var workout2 =
         Workout(date: DateTime.now().subtract(Duration(days: 1)), results: [
       ExerciseResult(
-          exercise: Exercise(
-              name: 'Row 10 meters',
-              targetOutput: Output(10),
-              measurementUnit: meters),
+          exercise:
+              Exercise(name: 'Row 10 meters', target: Output(10), unit: meters),
           actualOutput: Output(10)),
     ]);
     workoutsProvider.add(workout2);
@@ -65,10 +61,8 @@ void main() {
     var pastWorkout =
         Workout(date: DateTime.now().subtract(Duration(days: 8)), results: [
       ExerciseResult(
-          exercise: Exercise(
-              name: '10 seconds',
-              targetOutput: Output(10),
-              measurementUnit: seconds),
+          exercise:
+              Exercise(name: '10 seconds', target: Output(10), unit: seconds),
           actualOutput: Output(10)),
     ]);
     workoutsProvider.add(pastWorkout);

@@ -13,9 +13,7 @@ void main() {
     testWidgets("Successful Result", (tester) async {
       var passingExerciseResult = ExerciseResult(
           exercise: Exercise(
-              name: 'Run 100 meters',
-              targetOutput: Output(100),
-              measurementUnit: meters),
+              name: 'Run 100 meters', target: Output(100), unit: meters),
           actualOutput: Output(100));
 
       await tester
@@ -30,9 +28,7 @@ void main() {
     testWidgets("Failed Result", (tester) async {
       var passingExerciseResult = ExerciseResult(
           exercise: Exercise(
-              name: 'Jump 10 times',
-              targetOutput: Output(10),
-              measurementUnit: repetitions),
+              name: 'Jump 10 times', target: Output(10), unit: repetitions),
           actualOutput: Output(5));
 
       await tester
