@@ -25,10 +25,4 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
       - name: Build Web App
-        run: flutter build web --release --base-href="/<REPO_NAME>/"
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/web
-          force_orphan: true
+        run: flutter build web --release
