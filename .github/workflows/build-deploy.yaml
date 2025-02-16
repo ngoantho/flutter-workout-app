@@ -26,3 +26,7 @@ jobs:
         run: flutter pub get
       - name: Build Web App
         run: flutter build web --release
+      - name: Move build/web to docs
+        run: |
+          mkdir docs
+          mv build/web docs
