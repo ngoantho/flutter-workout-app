@@ -34,8 +34,7 @@ class _DownloadPlanPageState extends State<DownloadPlanPage>
     var client = http.Client();
     try {
       final url = Uri.parse(controller.text);
-      final response =
-          await client.get(url, headers: {"Access-Control-Allow-Origin": "*"});
+      final response = await client.get(url);
       return switch (response.statusCode) {
         200 => (response.body, null),
         404 => (null, "workout plan not found"),
