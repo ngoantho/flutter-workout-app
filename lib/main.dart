@@ -27,7 +27,9 @@ Future<void> main() async {
     Provider(create: (_) => database.workoutDao),
     Provider(
       create: (_) => database.exerciseResultDao,
-    )
+    ),
+    Provider(create: (_) => database.exerciseDao),
+    Provider(create: (_) => database.workoutPlanDao),
   ], child: const MyApp()));
 }
 

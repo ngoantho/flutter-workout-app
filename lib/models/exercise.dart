@@ -27,6 +27,14 @@ class Exercise {
       required this.target,
       required this.unit});
 
+  factory Exercise.fromJson(Map<String, dynamic> json) {
+    return Exercise(
+      name: json['name'],
+      target: json['target'],
+      unit: MeasurementUnit.fromString(json['unit']),
+    );
+  }
+
   @override
   String toString() {
     return '$name, target: $target, unit: $unit';

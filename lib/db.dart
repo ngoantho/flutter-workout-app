@@ -1,5 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/dao/exercises.dart';
+import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/exercise.dart';
@@ -16,4 +18,6 @@ part 'db.g.dart';
 abstract class AppDatabase extends FloorDatabase {
   WorkoutDao get workoutDao;
   ExerciseResultDao get exerciseResultDao;
+  ExerciseDao get exerciseDao;
+  WorkoutPlanDao get workoutPlanDao;
 }

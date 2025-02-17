@@ -76,6 +76,10 @@ class _$AppDatabase extends AppDatabase {
 
   ExerciseResultDao? _exerciseResultDaoInstance;
 
+  ExerciseDao? _exerciseDaoInstance;
+
+  WorkoutPlanDao? _workoutPlanDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -104,7 +108,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `workout_plan` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `workout` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workoutDay` INTEGER NOT NULL, `workoutMonth` INTEGER NOT NULL, `workoutYear` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `workout` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workout_day` INTEGER NOT NULL, `workout_month` INTEGER NOT NULL, `workout_year` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -122,6 +126,17 @@ class _$AppDatabase extends AppDatabase {
     return _exerciseResultDaoInstance ??=
         _$ExerciseResultDao(database, changeListener);
   }
+
+  @override
+  ExerciseDao get exerciseDao {
+    return _exerciseDaoInstance ??= _$ExerciseDao(database, changeListener);
+  }
+
+  @override
+  WorkoutPlanDao get workoutPlanDao {
+    return _workoutPlanDaoInstance ??=
+        _$WorkoutPlanDao(database, changeListener);
+  }
 }
 
 class _$WorkoutDao extends WorkoutDao {
@@ -134,9 +149,9 @@ class _$WorkoutDao extends WorkoutDao {
             'workout',
             (Workout item) => <String, Object?>{
                   'id': item.id,
-                  'workoutDay': item.workoutDay,
-                  'workoutMonth': item.workoutMonth,
-                  'workoutYear': item.workoutYear
+                  'workout_day': item.workoutDay,
+                  'workout_month': item.workoutMonth,
+                  'workout_year': item.workoutYear
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -152,9 +167,20 @@ class _$WorkoutDao extends WorkoutDao {
     return _queryAdapter.queryList('SELECT * FROM workout',
         mapper: (Map<String, Object?> row) => Workout(
             id: row['id'] as int?,
-            workoutDay: row['workoutDay'] as int,
-            workoutMonth: row['workoutMonth'] as int,
-            workoutYear: row['workoutYear'] as int));
+            workoutDay: row['workout_day'] as int,
+            workoutMonth: row['workout_month'] as int,
+            workoutYear: row['workout_year'] as int));
+  }
+
+  @override
+  Future<Workout?> getWorkoutById(int id) async {
+    return _queryAdapter.query('SELECT * FROM workout WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => Workout(
+            id: row['id'] as int?,
+            workoutDay: row['workout_day'] as int,
+            workoutMonth: row['workout_month'] as int,
+            workoutYear: row['workout_year'] as int),
+        arguments: [id]);
   }
 
   @override
@@ -209,5 +235,90 @@ class _$ExerciseResultDao extends ExerciseResultDao {
   Future<int> addExerciseResult(ExerciseResult exerciseResult) {
     return _exerciseResultInsertionAdapter.insertAndReturnId(
         exerciseResult, OnConflictStrategy.abort);
+  }
+}
+
+class _$ExerciseDao extends ExerciseDao {
+  _$ExerciseDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _exerciseInsertionAdapter = InsertionAdapter(
+            database,
+            'exercise',
+            (Exercise item) => <String, Object?>{
+                  'id': item.id,
+                  'workout_plan_id': item.workoutPlanId,
+                  'name': item.name,
+                  'target': item.target,
+                  'unit': item.unit.index
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Exercise> _exerciseInsertionAdapter;
+
+  @override
+  Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM exercise WHERE workout_plan_id = ?1',
+        mapper: (Map<String, Object?> row) => Exercise(
+            id: row['id'] as int?,
+            workoutPlanId: row['workout_plan_id'] as int?,
+            name: row['name'] as String,
+            target: row['target'] as int,
+            unit: MeasurementUnit.values[row['unit'] as int]),
+        arguments: [workoutPlanId]);
+  }
+
+  @override
+  Future<int> addExercise(Exercise exercise) {
+    return _exerciseInsertionAdapter.insertAndReturnId(
+        exercise, OnConflictStrategy.abort);
+  }
+}
+
+class _$WorkoutPlanDao extends WorkoutPlanDao {
+  _$WorkoutPlanDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _workoutPlanInsertionAdapter = InsertionAdapter(
+            database,
+            'workout_plan',
+            (WorkoutPlan item) =>
+                <String, Object?>{'id': item.id, 'name': item.name});
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<WorkoutPlan> _workoutPlanInsertionAdapter;
+
+  @override
+  Future<List<WorkoutPlan>> getAllWorkoutPlans() async {
+    return _queryAdapter.queryList('SELECT * FROM workout_plan',
+        mapper: (Map<String, Object?> row) =>
+            WorkoutPlan(id: row['id'] as int?, name: row['name'] as String));
+  }
+
+  @override
+  Future<WorkoutPlan?> getWorkoutPlanById(int id) async {
+    return _queryAdapter.query('SELECT * FROM workout_plan WHERE id = ?1',
+        mapper: (Map<String, Object?> row) =>
+            WorkoutPlan(id: row['id'] as int?, name: row['name'] as String),
+        arguments: [id]);
+  }
+
+  @override
+  Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {
+    return _workoutPlanInsertionAdapter.insertAndReturnId(
+        workoutPlan, OnConflictStrategy.abort);
   }
 }

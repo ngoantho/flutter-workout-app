@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homework/typedefs/output.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +7,25 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: context.read<WorkoutDao>().getAllWorkouts(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return buildListTile('Loading...');
+        }
+
+        if (snapshot.hasError) {
+          return buildListTile('Error: ${snapshot.error}');
+        }
+
+        final workouts = snapshot.data;
+        return buildListTile('Workouts: ${workouts?.length}');
+      },
+    );
+
+    /*
     final today = DateTime.now();
     final sevenDaysAgo = today.subtract(Duration(days: 7));
-    // final workouts = context.watch<WorkoutsProvider>().workouts;
 
     /*
     final workoutsPastSevenDays = workouts.where(
@@ -43,8 +58,17 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
           '$successful successful results',
           textAlign: TextAlign.center,
         ));
+    */
   }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  Widget buildListTile(String s) {
+    return ListTile(
+      title: Text('Recent Performance over past 7 days',
+          textAlign: TextAlign.center),
+      subtitle: Text(s, textAlign: TextAlign.center),
+    );
+  }
 }

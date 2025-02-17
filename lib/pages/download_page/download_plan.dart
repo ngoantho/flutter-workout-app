@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:homework/models/exercise.dart';
+import 'package:homework/models/workout_plan.dart';
+import 'package:homework/pages/download_page/display_plan.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/navigate_to.dart';
@@ -56,9 +59,11 @@ class _DownloadPlanPageState extends State<DownloadPlanPage>
         errorText = null;
         if (isJSON(response)) {
           Map<String, dynamic> json = jsonDecode(response!);
-          // TODO get workout plan by id from insert
-          // final workoutPlan = WorkoutPlan.fromJson(json);
-          // navigate(context).to(DisplayPlanPage(workoutPlan));
+          final workoutPlan = WorkoutPlan.fromJson(json);
+          final exercises = List.from(json['exercises'])
+              .map((e) => Exercise.fromJson(e))
+              .toList();
+          navigate(context).to(DisplayPlanPage(workoutPlan, exercises));
         } else {
           errorText = "response is not JSON";
         }
