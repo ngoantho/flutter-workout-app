@@ -15,27 +15,31 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // final workoutPlan = WorkoutPlan.fromJson(json);
-    //     int workoutPlanId =
-    //         await context.read<WorkoutPlanDao>().addWorkoutPlan(workoutPlan);
-
-    //     for (var e in List.from(json['exercises'])) {
-    //       final exercise = Exercise.fromJson(e);
-    //       exercise.workoutPlanId = workoutPlanId;
-    //       if (mounted) {
-    //         await context.read<ExerciseDao>().addExercise(exercise);
-    //       }
-    //     }
+    final workoutPlanDao = context.read<WorkoutPlanDao>();
+    final exerciseDao = context.read<ExerciseDao>();
+    final messenger = ScaffoldMessenger.of(context);
 
     saveWorkoutPlan() async {
-      final workoutPlanId =
-          await context.read<WorkoutPlanDao>().addWorkoutPlan(workoutPlan);
+      int? workoutPlanId =
+          await workoutPlanDao.getWorkoutPlanByName(workoutPlan.name);
+      if (workoutPlanId != null) {
+        debugPrint("workout plan already exists");
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              "Workout plan already exists",
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(seconds: 1),
+          ),
+        );
+        return;
+      }
 
+      workoutPlanId = await workoutPlanDao.addWorkoutPlan(workoutPlan);
       for (var e in exercises) {
         e.workoutPlanId = workoutPlanId;
-        if (context.mounted) {
-          await context.read<ExerciseDao>().addExercise(e);
-        }
+        await exerciseDao.addExercise(e);
       }
     }
 

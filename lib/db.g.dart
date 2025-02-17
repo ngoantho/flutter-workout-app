@@ -173,14 +173,15 @@ class _$WorkoutDao extends WorkoutDao {
   }
 
   @override
-  Future<Workout?> getWorkoutById(int id) async {
-    return _queryAdapter.query('SELECT * FROM workout WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => Workout(
-            id: row['id'] as int?,
-            workoutDay: row['workout_day'] as int,
-            workoutMonth: row['workout_month'] as int,
-            workoutYear: row['workout_year'] as int),
-        arguments: [id]);
+  Future<List<Workout>> getWorkoutsByDate(
+    int day,
+    int month,
+    int year,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM workout WHERE workout_day = ?1 AND workout_month = ?2 AND workout_year = ?3',
+        mapper: (Map<String, Object?> row) => Workout(id: row['id'] as int?, workoutDay: row['workout_day'] as int, workoutMonth: row['workout_month'] as int, workoutYear: row['workout_year'] as int),
+        arguments: [day, month, year]);
   }
 
   @override
@@ -252,6 +253,17 @@ class _$ExerciseDao extends ExerciseDao {
                   'name': item.name,
                   'target': item.target,
                   'unit': item.unit.index
+                }),
+        _exerciseDeletionAdapter = DeletionAdapter(
+            database,
+            'exercise',
+            ['id'],
+            (Exercise item) => <String, Object?>{
+                  'id': item.id,
+                  'workout_plan_id': item.workoutPlanId,
+                  'name': item.name,
+                  'target': item.target,
+                  'unit': item.unit.index
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -261,6 +273,8 @@ class _$ExerciseDao extends ExerciseDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Exercise> _exerciseInsertionAdapter;
+
+  final DeletionAdapter<Exercise> _exerciseDeletionAdapter;
 
   @override
   Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) async {
@@ -280,6 +294,11 @@ class _$ExerciseDao extends ExerciseDao {
     return _exerciseInsertionAdapter.insertAndReturnId(
         exercise, OnConflictStrategy.abort);
   }
+
+  @override
+  Future<void> deleteExercise(Exercise exercise) async {
+    await _exerciseDeletionAdapter.delete(exercise);
+  }
 }
 
 class _$WorkoutPlanDao extends WorkoutPlanDao {
@@ -291,6 +310,12 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
             database,
             'workout_plan',
             (WorkoutPlan item) =>
+                <String, Object?>{'id': item.id, 'name': item.name}),
+        _workoutPlanDeletionAdapter = DeletionAdapter(
+            database,
+            'workout_plan',
+            ['id'],
+            (WorkoutPlan item) =>
                 <String, Object?>{'id': item.id, 'name': item.name});
 
   final sqflite.DatabaseExecutor database;
@@ -301,6 +326,8 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
 
   final InsertionAdapter<WorkoutPlan> _workoutPlanInsertionAdapter;
 
+  final DeletionAdapter<WorkoutPlan> _workoutPlanDeletionAdapter;
+
   @override
   Future<List<WorkoutPlan>> getAllWorkoutPlans() async {
     return _queryAdapter.queryList('SELECT * FROM workout_plan',
@@ -309,16 +336,20 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
   }
 
   @override
-  Future<WorkoutPlan?> getWorkoutPlanById(int id) async {
-    return _queryAdapter.query('SELECT * FROM workout_plan WHERE id = ?1',
-        mapper: (Map<String, Object?> row) =>
-            WorkoutPlan(id: row['id'] as int?, name: row['name'] as String),
-        arguments: [id]);
+  Future<int?> getWorkoutPlanByName(String name) async {
+    return _queryAdapter.query('SELECT id FROM workout_plan WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [name]);
   }
 
   @override
   Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {
     return _workoutPlanInsertionAdapter.insertAndReturnId(
         workoutPlan, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan) async {
+    await _workoutPlanDeletionAdapter.delete(workoutPlan);
   }
 }

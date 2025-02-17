@@ -7,6 +7,9 @@ abstract class ExerciseDao {
   @Query('SELECT * FROM exercise WHERE workout_plan_id = :workoutPlanId')
   Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId);
 
-  @Insert()
+  @insert
   Future<int> addExercise(Exercise exercise);
+
+  @delete
+  Future<void> deleteExercise(Exercise exercise);
 }
