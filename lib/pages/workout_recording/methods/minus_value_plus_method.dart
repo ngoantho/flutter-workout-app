@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/disabled_focus_node.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/typedefs/output.dart';
 
 class MinusValuePlusMethod extends StatefulWidget {
   final TextEditingController controller;

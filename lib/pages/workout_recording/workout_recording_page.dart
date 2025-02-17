@@ -3,9 +3,9 @@ import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/providers/workouts_provider.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:homework/widgets/readonly_textfield.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -38,16 +38,18 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
     }
 
     final workout = Workout(
-        date: DateTime(
-            yearController.text.toOutput().value,
-            monthController.text.toOutput().value,
-            dayController.text.toOutput().value),
-        results: controllers
-            .map((controller) => ExerciseResult(
-                exercise: controller.exercise,
-                actualOutput: controller.actualOutput))
-            .toList());
-    context.read<WorkoutsProvider>().add(workout);
+      workoutYear: yearController.text.toOutput(),
+      workoutMonth: monthController.text.toOutput(),
+      workoutDay: dayController.text.toOutput(),
+    );
+    final results = controllers
+        .map((controller) => ExerciseResult(
+            targetOutput: controller.exercise.target,
+            exerciseName: controller.exercise.name,
+            measurementUnit: controller.exercise.unit,
+            actualOutput: controller.actualOutput))
+        .toList();
+    // context.read<WorkoutsProvider>().add(workout);
     navigate(context).back();
   }
 
@@ -55,11 +57,12 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   void initState() {
     super.initState();
 
-    controllers = widget.controllers ??
-        widget.workoutPlan.exercises
-            .map((exercise) => ExerciseResultController(
-                exercise: exercise, controller: TextEditingController()))
-            .toList();
+    // TODO get exercises from database
+    // controllers = widget.controllers ??
+    //     widget.workoutPlan.exercises
+    //         .map((exercise) => ExerciseResultController(
+    //             exercise: exercise, controller: TextEditingController()))
+    //         .toList();
 
     yearController.text = _today.year.toString();
     monthController.text = _today.month.toString();

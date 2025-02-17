@@ -1,21 +1,35 @@
 import 'package:homework/models/exercise.dart';
-import 'package:homework/models/measurement_unit.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/enums/measurement_unit.dart';
+import 'package:homework/models/workout.dart';
+import 'package:homework/typedefs/output.dart';
+import 'package:floor/floor.dart';
 
+@Entity(tableName: 'exercise_result', foreignKeys: [
+  ForeignKey(
+      childColumns: ['workout_id'], parentColumns: ['id'], entity: Workout)
+])
 class ExerciseResult {
-  Exercise exercise;
+  @PrimaryKey(autoGenerate: true)
+  int? id;
+
+  @ColumnInfo(name: 'workout_id')
+  int? workoutId;
+
   Output actualOutput;
+  Output targetOutput;
+  String exerciseName;
+  MeasurementUnit measurementUnit;
 
-  ExerciseResult({required this.exercise, required this.actualOutput});
+  ExerciseResult(
+      {this.id,
+      this.workoutId,
+      required this.actualOutput,
+      required this.targetOutput,
+      required this.exerciseName,
+      required this.measurementUnit});
 
-  String get exerciseName => exercise.name;
-  set exerciseName(String name) => exercise.name = name;
-
-  Output get targetOutput => exercise.target;
-  set targetOutput(Output output) => exercise.target = output;
-
-  MeasurementUnit get measurementUnit => exercise.unit;
-  set measurementUnit(MeasurementUnit unit) => exercise.unit = unit;
+  Exercise get exercise =>
+      Exercise(name: exerciseName, target: targetOutput, unit: measurementUnit);
 
   @override
   String toString() {

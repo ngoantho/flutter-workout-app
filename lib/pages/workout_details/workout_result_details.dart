@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/typedefs/output.dart';
 
 class WorkoutDetails extends StatelessWidget {
   final ExerciseResult result;
@@ -15,7 +15,7 @@ class WorkoutDetails extends StatelessWidget {
         Text(
             'Target Output: ${result.exercise.target} ${result.measurementUnit}'),
         Text('Actual Output: ${result.actualOutput} ${result.measurementUnit}'),
-        if (Output.isSuccessful(
+        if (isSuccessful(
             actual: result.actualOutput, target: result.targetOutput))
           Wrap(
             alignment: WrapAlignment.center,

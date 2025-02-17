@@ -4,7 +4,7 @@ import 'package:homework/widgets/recent_performance.dart';
 
 class CommonScaffold extends StatelessWidget {
   final String title;
-  final Widget content;
+  final Widget? content;
   final Widget? floatingActionButton;
   final List<Widget> appBarActions;
   final Widget? bottomWidget;
@@ -12,7 +12,7 @@ class CommonScaffold extends StatelessWidget {
   const CommonScaffold({
     super.key,
     required this.title,
-    required this.content,
+    this.content,
     this.floatingActionButton,
     this.appBarActions = const [],
     this.bottomWidget,

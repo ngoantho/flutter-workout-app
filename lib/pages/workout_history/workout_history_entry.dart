@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
 
@@ -20,12 +20,12 @@ class WorkoutHistoryEntry extends StatelessWidget {
             Text(
               "Workout: ${workout.date.formatMonthDayYear()}",
             ),
-            Text('Exercise Results: ${workout.results.length}'),
-            Text('Successful Results: ${workout.results.where(
-                  (exerciseResult) => Output.isSuccessful(
-                      actual: exerciseResult.actualOutput,
-                      target: exerciseResult.targetOutput),
-                ).length}'),
+            // Text('Exercise Results: ${workout.results.length}'),
+            // Text('Successful Results: ${workout.results.where(
+            //       (exerciseResult) => isSuccessful(
+            //           actual: exerciseResult.actualOutput,
+            //           target: exerciseResult.targetOutput),
+            //     ).length}'),
           ],
         ));
   }

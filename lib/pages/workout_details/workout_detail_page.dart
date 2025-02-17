@@ -12,10 +12,11 @@ class WorkoutDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
         title: 'Workout: ${workout.date.formatMonthDayYear()}',
-        content: ListView.separated(
-            itemBuilder: (context, index) =>
-                WorkoutDetails(workout.results[index]),
-            separatorBuilder: (context, index) => SizedBox(height: 50),
-            itemCount: workout.results.length));
+        content: Placeholder());
+    // content: ListView.separated(
+    //     itemBuilder: (context, index) =>
+    //         WorkoutDetails(workout.results[index]),
+    //     separatorBuilder: (context, index) => SizedBox(height: 50),
+    //     itemCount: workout.results.length));
   }
 }

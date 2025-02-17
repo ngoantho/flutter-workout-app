@@ -6,7 +6,7 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
-import 'package:homework/providers/workouts_provider.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:homework/widgets/common_scaffold.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,12 @@ class WorkoutHistoryPage extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final workouts = context.watch<WorkoutsProvider>().workouts;
+    // final workouts = context.watch<WorkoutsProvider>().workouts;
 
     return CommonScaffold(
       title: 'Workout History',
       bottomWidget: navMenu(context),
-      content: listContent(workouts),
+      // content: listContent(workouts),
     );
   }
 

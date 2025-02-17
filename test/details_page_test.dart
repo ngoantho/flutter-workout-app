@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:homework/models/exercise.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/models/measurement_unit.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/pages/workout_details/workout_result_details.dart';
 
 void main() {
@@ -12,9 +10,10 @@ void main() {
       () {
     testWidgets("Successful Result", (tester) async {
       var passingExerciseResult = ExerciseResult(
-          exercise: Exercise(
-              name: 'Run 100 meters', target: Output(100), unit: meters),
-          actualOutput: Output(100));
+          exerciseName: 'Run 100 meters',
+          targetOutput: 100,
+          measurementUnit: meters,
+          actualOutput: 100);
 
       await tester
           .pumpWidget(MaterialApp(home: WorkoutDetails(passingExerciseResult)));
@@ -27,9 +26,10 @@ void main() {
 
     testWidgets("Failed Result", (tester) async {
       var passingExerciseResult = ExerciseResult(
-          exercise: Exercise(
-              name: 'Jump 10 times', target: Output(10), unit: repetitions),
-          actualOutput: Output(5));
+          exerciseName: 'Jump 10 times',
+          targetOutput: 10,
+          measurementUnit: repetitions,
+          actualOutput: 5);
 
       await tester
           .pumpWidget(MaterialApp(home: WorkoutDetails(passingExerciseResult)));

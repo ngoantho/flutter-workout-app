@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/mixins/validate_output.dart';
-import 'package:homework/models/output.dart';
+import 'package:homework/typedefs/output.dart';
 
 class BasePlusMinusMethod extends StatefulWidget {
   final TextEditingController controller;
@@ -50,10 +50,9 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
     return Stack(
       children: [
         TextFormField(
-          controller: widget.controller,
-          validator: validateOutput,
-          style: TextStyle(color: Colors.transparent)
-        ),
+            controller: widget.controller,
+            validator: validateOutput,
+            style: TextStyle(color: Colors.transparent)),
         dropdown,
       ],
     );

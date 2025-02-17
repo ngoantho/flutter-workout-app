@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/output.dart';
-import 'package:homework/providers/workouts_provider.dart';
+import 'package:homework/typedefs/output.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
@@ -10,25 +10,29 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final sevenDaysAgo = today.subtract(Duration(days: 7));
-    final workouts = context.watch<WorkoutsProvider>().workouts;
+    // final workouts = context.watch<WorkoutsProvider>().workouts;
 
+    /*
     final workoutsPastSevenDays = workouts.where(
       (workout) {
         final date = workout.date;
         return date.compareTo(sevenDaysAgo) >= 0 && date.compareTo(today) <= 0;
       },
     );
+    */
 
     int successful = 0;
+    /*
     for (var workout in workoutsPastSevenDays) {
-      successful += workout.results
-          .where(
-            (exerciseResult) => Output.isSuccessful(
-                actual: exerciseResult.actualOutput,
-                target: exerciseResult.targetOutput),
-          )
-          .length;
+      // successful += workout.results
+      //     .where(
+      //       (exerciseResult) => isSuccessful(
+      //           actual: exerciseResult.actualOutput,
+      //           target: exerciseResult.targetOutput),
+      //     )
+      //     .length;
     }
+    */
 
     return ListTile(
         title: Text(
@@ -40,7 +44,7 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
           textAlign: TextAlign.center,
         ));
   }
-  
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

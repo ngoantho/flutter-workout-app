@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/providers/workouts_provider.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'dart:io';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (!kIsWeb && (Platform.isWindows)) {
@@ -21,8 +22,14 @@ void main() async {
     await windowManager.focus();
   }
 
-  runApp(ChangeNotifierProvider(
-      create: (_) => WorkoutsProvider(), child: const MyApp()));
+  final database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  runApp(MultiProvider(providers: [
+    Provider(create: (_) => database.workoutDao),
+    Provider(
+      create: (_) => database.exerciseResultDao,
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

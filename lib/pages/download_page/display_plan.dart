@@ -10,10 +10,12 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
   const DisplayPlanPage(this.workoutPlan, {super.key});
 
   Widget get dialogContent {
-    return ListView.builder(
-      itemBuilder: (context, index) => _PlanEntry(workoutPlan.exercises[index]),
-      itemCount: workoutPlan.exercises.length,
-    );
+    return Placeholder();
+    // TODO get exercises from database
+    // return ListView.builder(
+    //   itemBuilder: (context, index) => _PlanEntry(workoutPlan.exercises[index]),
+    //   itemCount: workoutPlan.exercises.length,
+    // );
   }
 
   Row navMenu(BuildContext context) {
