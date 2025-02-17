@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/dao/workouts.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'dart:io';
