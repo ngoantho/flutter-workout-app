@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/workout.dart';
@@ -13,12 +14,20 @@ class WorkoutHistoryPage extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    // final workouts = context.watch<WorkoutsProvider>().workouts;
+    return FutureBuilder(
+      future: WorkoutDao.from(context).getAllWorkouts(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
 
-    return CommonScaffold(
-      title: 'Workout History',
-      bottomWidget: navMenu(context),
-      // content: listContent(workouts),
+        List<Workout> workouts = snapshot.data!;
+        return CommonScaffold(
+          title: 'Workout History',
+          bottomWidget: navMenu(context),
+          content: listContent(workouts),
+        );
+      },
     );
   }
 

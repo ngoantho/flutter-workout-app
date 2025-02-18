@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/widgets/min_height_column.dart';
 import 'package:homework/widgets/recent_performance.dart';
 
-class CommonScaffold extends StatelessWidget {
+class CommonScaffold extends StatelessWidget with NavigateMixin {
   final String title;
   final Widget? content;
   final Widget? floatingActionButton;
   final Widget? bottomWidget;
-  final PreferredSizeWidget? topWidget;
+  final String? subtitle;
 
   const CommonScaffold(
       {super.key,
@@ -15,7 +16,22 @@ class CommonScaffold extends StatelessWidget {
       this.content,
       this.floatingActionButton,
       this.bottomWidget,
-      this.topWidget});
+      this.subtitle});
+
+  PreferredSize? get subtitleWidget {
+    return switch (subtitle != null) {
+      true => PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight / 2),
+          child: Transform.translate(
+            offset: Offset(0, -(kToolbarHeight / 4)),
+            child: Text(
+              subtitle!,
+              textAlign: TextAlign.center,
+            ),
+          )),
+      false => null
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +41,7 @@ class CommonScaffold extends StatelessWidget {
         title: Text(title),
         centerTitle: true,
         actions: [backHome(context)],
-        bottom: topWidget,
+        bottom: subtitleWidget,
       ),
       body: content,
       floatingActionButton: floatingActionButton,
@@ -37,13 +53,7 @@ class CommonScaffold extends StatelessWidget {
 
   IconButton backHome(BuildContext context) {
     return IconButton(
-        onPressed: () {
-          Navigator.of(context).popUntil(
-            (route) {
-              return route.isFirst;
-            },
-          );
-        },
+        onPressed: navigate(context).home,
         icon: Icon(Icons.home));
   }
 }

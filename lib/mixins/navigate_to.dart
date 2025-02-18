@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 mixin NavigateMixin {
-  ({void Function() back, void Function(Widget widget) to}) navigate(
-      BuildContext context) {
+  ({void Function() back, void Function() home, void Function(Widget) to})
+      navigate(BuildContext context) {
     void to(Widget widget) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => widget));
     }
@@ -11,6 +11,10 @@ mixin NavigateMixin {
       Navigator.of(context).pop();
     }
 
-    return (to: to, back: back);
+    void home() {
+      Navigator.of(context).pushNamed('/');
+    }
+
+    return (to: to, back: back, home: home);
   }
 }

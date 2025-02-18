@@ -13,7 +13,6 @@ import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
-import 'package:homework/pages/workout_details/workout_result_details.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/enums/measurement_unit.dart';
-import 'package:homework/pages/workout_details/workout_result_details.dart';
+import 'package:homework/pages/workout_details/workout_detail_page.dart';
 
 void main() {
   group(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homework/dao/workouts.dart';
-import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   const RecentPerformance({super.key});
@@ -8,7 +7,7 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.read<WorkoutDao>().getAllWorkouts(),
+      future: WorkoutDao.from(context).getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return buildListTile('Loading...');

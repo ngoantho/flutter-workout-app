@@ -1,5 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/exercise_result.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 @dao
 abstract class ExerciseResultDao {
@@ -8,4 +10,8 @@ abstract class ExerciseResultDao {
 
   @Insert()
   Future<int> addExerciseResult(ExerciseResult exerciseResult);
+
+  static ExerciseResultDao from(BuildContext context) {
+    return context.read<ExerciseResultDao>();
+  }
 }

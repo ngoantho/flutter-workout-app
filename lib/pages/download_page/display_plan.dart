@@ -5,7 +5,6 @@ import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/widgets/common_scaffold.dart';
-import 'package:provider/provider.dart';
 
 class DisplayPlanPage extends StatelessWidget with NavigateMixin {
   final WorkoutPlan workoutPlan;
@@ -15,24 +14,28 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final workoutPlanDao = context.read<WorkoutPlanDao>();
-    final exerciseDao = context.read<ExerciseDao>();
+    final workoutPlanDao = WorkoutPlanDao.from(context);
+    final exerciseDao = ExerciseDao.from(context);
     final messenger = ScaffoldMessenger.of(context);
+
+    showMessage(String message) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
 
     saveWorkoutPlan() async {
       int? workoutPlanId =
           await workoutPlanDao.getWorkoutPlanByName(workoutPlan.name);
       if (workoutPlanId != null) {
         debugPrint("workout plan already exists");
-        messenger.showSnackBar(
-          SnackBar(
-            content: Text(
-              "Workout plan already exists",
-              textAlign: TextAlign.center,
-            ),
-            duration: Duration(seconds: 1),
-          ),
-        );
+        showMessage("'${workoutPlan.name}' already exists");
         return;
       }
 
@@ -41,6 +44,8 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
         e.workoutPlanId = workoutPlanId;
         await exerciseDao.addExercise(e);
       }
+
+      showMessage("'${workoutPlan.name}' added");
     }
 
     return CommonScaffold(

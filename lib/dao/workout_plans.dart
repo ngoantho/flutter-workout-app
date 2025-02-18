@@ -1,5 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/workout_plan.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 @dao
 abstract class WorkoutPlanDao {
@@ -14,4 +16,8 @@ abstract class WorkoutPlanDao {
 
   @delete
   Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan);
+
+  static WorkoutPlanDao from(BuildContext context) {
+    return context.read<WorkoutPlanDao>();
+  }
 }

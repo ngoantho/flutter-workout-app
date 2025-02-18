@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
@@ -11,7 +13,6 @@ import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/widgets/common_scaffold.dart';
-import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
@@ -30,9 +31,8 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   final yearController = TextEditingController();
   final monthController = TextEditingController();
   final dayController = TextEditingController();
-  late List<ExerciseResultController> controllers;
 
-  void onSave() {
+  void onSave(List<ExerciseResultController> controllers) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -42,37 +42,35 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       workoutMonth: monthController.text.toOutput(),
       workoutDay: dayController.text.toOutput(),
     );
-    final results = controllers.map((controller) => ExerciseResult(
-        targetOutput: controller.exercise.target,
-        exerciseName: controller.exercise.name,
-        measurementUnit: controller.exercise.unit,
-        actualOutput: controller.actualOutput));
-    // context.read<WorkoutsProvider>().add(workout);
-    navigate(context).back();
+    int workoutId = await WorkoutDao.from(context).addWorkout(workout);
+
+    for (var controller in controllers) {
+      final exerciseResult = ExerciseResult(
+          targetOutput: controller.exercise.target,
+          exerciseName: controller.exercise.name,
+          measurementUnit: controller.exercise.unit,
+          actualOutput: controller.actualOutput,
+          workoutId: workoutId);
+      if (mounted) {
+        await ExerciseResultDao.from(context).addExerciseResult(exerciseResult);
+      }
+    }
+
+    if (mounted) {
+      navigate(context).home();
+    }
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-
-    if (widget.controllers != null) {
-      controllers = widget.controllers!;
-    } else {
-      final exercises =
-          await widget.workoutPlan.exercises(context.read<ExerciseDao>());
-
-      controllers = exercises
-          .map((exercise) => ExerciseResultController(
-              exercise: exercise, controller: TextEditingController()))
-          .toList();
-    }
 
     yearController.text = _today.year.toString();
     monthController.text = _today.month.toString();
     dayController.text = _today.day.toString();
   }
 
-  Column get formContent {
+  Column formContent(List<ExerciseResultController> controllers) {
     return Column(children: [
       ListTile(
           title: ReadonlyTextField(
@@ -110,9 +108,9 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
     ]);
   }
 
-  Widget get bottomWidget {
+  Widget bottomWidget(List<ExerciseResultController> controllers) {
     return FilledButton(
-      onPressed: onSave,
+      onPressed: () => onSave(controllers),
       key: Key('validateFormBtnKey'),
       style: flatButtonStyle,
       child: Text('Save Workout'),
@@ -121,6 +119,33 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
 
   @override
   Widget build(BuildContext context) {
-    return Form(key: _formKey, child: formContent);
+    Future<List<ExerciseResultController>> future() async {
+      if (widget.controllers != null) {
+        return widget.controllers!;
+      }
+      final exercises =
+          await widget.workoutPlan.exercises(ExerciseDao.from(context));
+      return exercises
+          .map((exercise) => ExerciseResultController(
+              exercise: exercise, controller: TextEditingController()))
+          .toList();
+    }
+
+    Widget builder(
+        context, AsyncSnapshot<List<ExerciseResultController>> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return CircularProgressIndicator();
+      }
+
+      final controllers = snapshot.data!;
+      return CommonScaffold(
+        title: 'Record Workout',
+        subtitle: 'Enter Output',
+        content: Form(key: _formKey, child: formContent(controllers)),
+        bottomWidget: bottomWidget(controllers),
+      );
+    }
+
+    return FutureBuilder(future: future(), builder: builder);
   }
 }
