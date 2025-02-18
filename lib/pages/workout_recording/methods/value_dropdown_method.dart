@@ -13,7 +13,7 @@ class BasePlusMinusMethod extends StatefulWidget {
 }
 
 class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
-    with DropdownMenuItemsMixin<int>, ValidateOutputMixin {
+    with DropdownMenuMixin<int>, ValidateOutputMixin {
   final units = [for (var i = 1; i <= 60; i++) i];
 
   void onChanged(int value) {

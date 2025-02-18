@@ -7,7 +7,7 @@ import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
 import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
 import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
-import 'package:homework/pages/workout_recording/workout_recording_page.dart';
+import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:provider/provider.dart';
 

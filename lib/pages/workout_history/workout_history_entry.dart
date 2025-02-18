@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
 

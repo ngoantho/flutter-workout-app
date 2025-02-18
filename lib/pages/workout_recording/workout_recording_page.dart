@@ -1,122 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:homework/mixins/flat_button.dart';
-import 'package:homework/mixins/navigate_to.dart';
-import 'package:homework/mixins/validate_output.dart';
-import 'package:homework/models/exercise_result.dart';
-import 'package:homework/typedefs/output.dart';
-import 'package:homework/models/workout.dart';
-import 'package:homework/dao/workouts.dart';
-import 'package:homework/widgets/readonly_textfield.dart';
-import 'package:homework/classes/exercise_result_controller.dart';
+import 'package:homework/dao/workout_plans.dart';
+import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:homework/pages/workout_recording/workout_recording_card.dart';
+import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/widgets/common_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutRecordingPage extends StatefulWidget {
-  final WorkoutPlan workoutPlan;
-  final List<ExerciseResultController>? controllers;
-
-  const WorkoutRecordingPage(this.workoutPlan, {this.controllers, super.key});
+  const WorkoutRecordingPage({super.key});
 
   @override
   State<WorkoutRecordingPage> createState() => _WorkoutRecordingPageState();
 }
 
 class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
-    with NavigateMixin, ValidateOutputMixin, FlatButtonStyle {
-  final _formKey = GlobalKey<FormState>();
-  final _today = DateTime.now();
-  final yearController = TextEditingController();
-  final monthController = TextEditingController();
-  final dayController = TextEditingController();
-  late List<ExerciseResultController> controllers;
+    with DropdownMenuMixin<WorkoutPlan> {
+  WorkoutPlan? selectedPlan;
 
-  void onSave() {
-    if (!_formKey.currentState!.validate()) {
-      return;
+  PreferredSize dropdownMenu(List<WorkoutPlan> plans) {
+    onChange(WorkoutPlan? val) {
+      setState(() {
+        selectedPlan = val;
+      });
     }
 
-    final workout = Workout(
-      workoutYear: yearController.text.toOutput(),
-      workoutMonth: monthController.text.toOutput(),
-      workoutDay: dayController.text.toOutput(),
-    );
-    final results = controllers
-        .map((controller) => ExerciseResult(
-            targetOutput: controller.exercise.target,
-            exerciseName: controller.exercise.name,
-            measurementUnit: controller.exercise.unit,
-            actualOutput: controller.actualOutput))
-        .toList();
-    // context.read<WorkoutsProvider>().add(workout);
-    navigate(context).back();
-  }
+    debugPrint("workout plans: ${plans.length}");
 
-  @override
-  void initState() {
-    super.initState();
-
-    // TODO get exercises from database
-    // controllers = widget.controllers ??
-    //     widget.workoutPlan.exercises
-    //         .map((exercise) => ExerciseResultController(
-    //             exercise: exercise, controller: TextEditingController()))
-    //         .toList();
-
-    yearController.text = _today.year.toString();
-    monthController.text = _today.month.toString();
-    dayController.text = _today.day.toString();
-  }
-
-  Column get formContent {
-    return Column(children: [
-      ListTile(
-          title: ReadonlyTextField(
-              labelText: 'Workout Plan', value: widget.workoutPlan.name),
-          subtitle: Row(
-            children: [
-              Flexible(
-                  child: TextFormField(
-                controller: yearController,
-                decoration: InputDecoration(labelText: 'year'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              )),
-              Flexible(
-                  child: TextFormField(
-                controller: monthController,
-                decoration: InputDecoration(labelText: 'month'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              )),
-              Flexible(
-                  child: TextFormField(
-                controller: dayController,
-                decoration: InputDecoration(labelText: 'day'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              ))
-            ],
-          )),
-      Expanded(
-          child: ListView.builder(
-              itemBuilder: (context, index) => WorkoutRecordingCard(
-                  controllers[index].exercise, controllers[index].controller),
-              itemCount: controllers.length)),
-    ]);
+    return PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: DropdownButtonFormField(
+          value: selectedPlan,
+          items: toDropdownMenuItemList(plans),
+          onChanged: onChange,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-        title: 'Record Workout',
-        bottomWidget: FilledButton(
-          onPressed: onSave,
-          key: Key('validateFormBtnKey'),
-          style: flatButtonStyle,
-          child: Text('Save Workout'),
-        ),
-        content: Form(key: _formKey, child: formContent));
+    // final recordingForm = WorkoutRecordingForm(workoutPlan);
+
+    return FutureBuilder<List<WorkoutPlan>>(
+      future: context.read<WorkoutPlanDao>().getAllWorkoutPlans(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        final plans = snapshot.data!;
+        return CommonScaffold(
+          title: 'Record Workout',
+          topWidget: dropdownMenu(plans),
+        );
+      },
+    );
   }
 }

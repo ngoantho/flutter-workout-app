@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-mixin DropdownMenuItemsMixin<T> {
+mixin DropdownMenuMixin<T> {
   List<DropdownMenuItem<T>> toDropdownMenuItemList(List<T> values) {
-    return values
-        .map((value) => toDropdownMenuItem(value))
-        .toList();
+    return values.map((value) => toDropdownMenuItem(value)).toList();
   }
 
   DropdownMenuItem<T> toDropdownMenuItem(T value) {

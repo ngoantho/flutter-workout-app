@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:homework/examples/sample_workout_plan.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
-import 'package:homework/dao/workouts.dart';
 import 'package:homework/widgets/common_scaffold.dart';
-import 'package:provider/provider.dart';
 
 class WorkoutHistoryPage extends StatelessWidget
     with NavigateMixin, FlatButtonStyle {
@@ -35,8 +32,7 @@ class WorkoutHistoryPage extends StatelessWidget
           icon: Icon(Icons.download),
         ),
         OutlinedButton.icon(
-          onPressed: () =>
-              navigate(context).to(WorkoutRecordingPage(sampleWorkoutPlan)),
+          onPressed: () => navigate(context).to(WorkoutRecordingPage()),
           label: Text("Record Workout"),
           icon: Icon(Icons.run_circle_outlined),
         )
