@@ -7,6 +7,7 @@ import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
 import 'package:homework/utils/common_scaffold.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutHistoryPage extends StatelessWidget
     with NavigateMixin, FlatButtonStyle {
@@ -15,7 +16,7 @@ class WorkoutHistoryPage extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: WorkoutDao.from(context).getAllWorkouts(),
+      future: context.watch<WorkoutProvider>().getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

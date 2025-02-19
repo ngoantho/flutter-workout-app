@@ -174,14 +174,14 @@ class _$WorkoutDao extends WorkoutDao {
 
   @override
   Future<List<Workout>> getWorkoutsByDate(
-    int day,
-    int month,
     int year,
+    int month,
+    int day,
   ) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM workout WHERE workout_day = ?1 AND workout_month = ?2 AND workout_year = ?3',
+        'SELECT * FROM workout WHERE workout_day = ?3 AND workout_month = ?2 AND workout_year = ?1',
         mapper: (Map<String, Object?> row) => Workout(id: row['id'] as int?, workoutDay: row['workout_day'] as int, workoutMonth: row['workout_month'] as int, workoutYear: row['workout_year'] as int),
-        arguments: [day, month, year]);
+        arguments: [year, month, day]);
   }
 
   @override

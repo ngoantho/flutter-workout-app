@@ -16,15 +16,19 @@ class Workout {
   @ColumnInfo(name: 'workout_year')
   int workoutYear;
 
-  Workout({
-    this.id,
-    required this.workoutDay,
-    required this.workoutMonth,
-    required this.workoutYear,
-  });
+  Workout(
+      {this.id,
+      required this.workoutDay,
+      required this.workoutMonth,
+      required this.workoutYear});
 
-  Future<List<ExerciseResult>> results(ExerciseResultDao dao) {
-    return dao.getExerciseResultsByWorkoutId(id!);
+  Workout.fromDate({this.id, required DateTime date})
+      : workoutYear = date.year,
+        workoutMonth = date.month,
+        workoutDay = date.day;
+
+  Future<List<ExerciseResult>> results(ExerciseResultProvider provider) {
+    return provider.getExerciseResultsByWorkoutId(id!);
   }
 
   DateTime get date => DateTime(workoutYear, workoutMonth, workoutDay);

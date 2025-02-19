@@ -5,6 +5,7 @@ import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/utils/common_scaffold.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutRecordingPage extends StatefulWidget {
   const WorkoutRecordingPage({super.key});
@@ -20,7 +21,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<WorkoutPlan>>(
-      future: WorkoutPlanDao.from(context).getAllWorkoutPlans(),
+      future: context.watch<WorkoutPlanProvider>().getAllWorkoutPlans(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

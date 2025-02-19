@@ -9,8 +9,8 @@ class WorkoutPlan {
 
   String name;
 
-  Future<List<Exercise>> exercises(ExerciseDao dao) {
-    return dao.getExercisesByWorkoutPlanId(id!);
+  Future<List<Exercise>> exercises(ExerciseProvider provider) {
+    return provider.getExercisesByWorkoutPlanId(id!);
   }
 
   WorkoutPlan({this.id, required this.name});

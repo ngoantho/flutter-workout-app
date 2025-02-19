@@ -3,6 +3,7 @@ import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
+import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   const RecentPerformance({super.key});
@@ -10,7 +11,7 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: WorkoutDao.from(context).getAllWorkouts(),
+      future: context.watch<WorkoutProvider>().getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return buildListTile('Loading...');
@@ -33,7 +34,7 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
           },
         );
 
-        final exerciseResultDao = ExerciseResultDao.from(context);
+        final exerciseResultDao = context.watch<ExerciseResultProvider>();
         Future<List<ExerciseResult>> future() async {
           final results = await exerciseResultDao.getAllExerciseResults();
           return results

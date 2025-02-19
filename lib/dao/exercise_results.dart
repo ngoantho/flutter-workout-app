@@ -13,8 +13,23 @@ abstract class ExerciseResultDao {
 
   @Insert()
   Future<int> addExerciseResult(ExerciseResult exerciseResult);
+}
 
-  static ExerciseResultDao from(BuildContext context) {
-    return context.read<ExerciseResultDao>();
+class ExerciseResultProvider with ChangeNotifier {
+  final ExerciseResultDao dao;
+
+  ExerciseResultProvider(this.dao);
+
+  Future<List<ExerciseResult>> getExerciseResultsByWorkoutId(int workoutId) {
+    return dao.getExerciseResultsByWorkoutId(workoutId);
+  }
+
+  Future<List<ExerciseResult>> getAllExerciseResults() {
+    return dao.getAllExerciseResults();
+  }
+
+  Future<int> addExerciseResult(ExerciseResult exerciseResult) {
+    notifyListeners();
+    return dao.addExerciseResult(exerciseResult);
   }
 }

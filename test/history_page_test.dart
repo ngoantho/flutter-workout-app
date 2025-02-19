@@ -4,17 +4,28 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/dao/workouts.dart';
+import 'package:homework/db.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  late Future<AppDatabase> database;
+  late WorkoutDao workoutDao;
+
+  setUp(() {
+    database = $FloorAppDatabase.inMemoryDatabaseBuilder().build();
+  });
+
+  tearDown(() async {
+    (await database).close();
+  });
+
   testWidgets(
       "WorkoutHistoryPage shows multiple entries when there are multiple Workouts in the shared state",
       (tester) async {
-    /*
-    final workoutsProvider = WorkoutsProvider();
+    workoutDao = (await database).workoutDao;
 
-    await tester.pumpWidget(ChangeNotifierProvider.value(
-        value: workoutsProvider,
+    await tester.pumpWidget(Provider.value(
+        value: workoutDao,
         child: MaterialApp(
           home: WorkoutHistoryPage(),
         )));
@@ -22,13 +33,12 @@ void main() {
     // expect nothing shows up
     expect(find.byType(WorkoutHistoryEntry), findsNothing);
 
-    workoutsProvider.add(Workout(date: DateTime.now(), results: []));
+    await workoutDao.addWorkout(Workout.fromDate(date: DateTime.now()));
     await tester.pumpAndSettle();
     expect(find.byType(WorkoutHistoryEntry), findsOne);
 
-    workoutsProvider.add(Workout(date: DateTime.now(), results: []));
-    await tester.pumpAndSettle();
-    expect(find.byType(WorkoutHistoryEntry), findsNWidgets(2));
-    */
+    // workoutDao.addWorkout(Workout.fromDate(date: DateTime.now()));
+    // await tester.pumpAndSettle();
+    // expect(find.byType(WorkoutHistoryEntry), findsNWidgets(2));
   });
 }

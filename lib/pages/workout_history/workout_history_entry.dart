@@ -3,6 +3,7 @@ import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
 import 'package:homework/typedefs/output.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutHistoryEntry extends StatelessWidget {
   final Workout workout;
@@ -12,7 +13,7 @@ class WorkoutHistoryEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: workout.results(ExerciseResultDao.from(context)),
+      future: workout.results(context.read<ExerciseResultProvider>()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

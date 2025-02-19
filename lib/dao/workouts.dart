@@ -10,12 +10,27 @@ abstract class WorkoutDao {
 
   @Query(
       'SELECT * FROM workout WHERE workout_day = :day AND workout_month = :month AND workout_year = :year')
-  Future<List<Workout>> getWorkoutsByDate(int day, int month, int year);
+  Future<List<Workout>> getWorkoutsByDate(int year, int month, int day);
 
   @Insert()
   Future<int> addWorkout(Workout workout);
+}
 
-  static WorkoutDao from(BuildContext context) {
-    return context.read<WorkoutDao>();
+class WorkoutProvider with ChangeNotifier {
+  final WorkoutDao dao;
+
+  WorkoutProvider(this.dao);
+
+  Future<List<Workout>> getAllWorkouts() {
+    return dao.getAllWorkouts();
+  }
+
+  Future<List<Workout>> getWorkoutsByDate(int year, int month, int day) {
+    return dao.getWorkoutsByDate(year, month, day);
+  }
+
+  Future<int> addWorkout(Workout workout) {
+    notifyListeners();
+    return dao.addWorkout(workout);
   }
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/dao/exercises.dart';
+import 'package:homework/dao/workout_plans.dart';
+import 'package:homework/dao/workouts.dart';
 import 'package:homework/db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +28,14 @@ Future<void> main() async {
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   runApp(MultiProvider(providers: [
-    Provider(create: (_) => database.workoutDao),
-    Provider(
-      create: (_) => database.exerciseResultDao,
+    ChangeNotifierProvider(create: (_) => WorkoutProvider(database.workoutDao)),
+    ChangeNotifierProvider(
+      create: (_) => ExerciseResultProvider(database.exerciseResultDao),
     ),
-    Provider(create: (_) => database.exerciseDao),
-    Provider(create: (_) => database.workoutPlanDao),
+    ChangeNotifierProvider(
+        create: (_) => WorkoutPlanProvider(database.workoutPlanDao)),
+    ChangeNotifierProvider(
+        create: (_) => ExerciseProvider(database.exerciseDao)),
   ], child: const MyApp()));
 }
 

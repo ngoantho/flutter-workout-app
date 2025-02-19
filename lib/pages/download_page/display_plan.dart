@@ -5,6 +5,7 @@ import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/utils/common_scaffold.dart';
+import 'package:provider/provider.dart';
 
 class DisplayPlanPage extends StatelessWidget with NavigateMixin {
   final WorkoutPlan workoutPlan;
@@ -14,8 +15,8 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final workoutPlanDao = WorkoutPlanDao.from(context);
-    final exerciseDao = ExerciseDao.from(context);
+    final workoutPlanDao = context.read<WorkoutPlanProvider>();
+    final exerciseDao = context.read<ExerciseProvider>();
     final messenger = ScaffoldMessenger.of(context);
 
     showMessage(String message) {

@@ -16,8 +16,28 @@ abstract class WorkoutPlanDao {
 
   @delete
   Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan);
+}
 
-  static WorkoutPlanDao from(BuildContext context) {
-    return context.read<WorkoutPlanDao>();
+class WorkoutPlanProvider with ChangeNotifier {
+  final WorkoutPlanDao dao;
+
+  WorkoutPlanProvider(this.dao);
+
+  Future<List<WorkoutPlan>> getAllWorkoutPlans() {
+    return dao.getAllWorkoutPlans();
+  }
+
+  Future<int?> getWorkoutPlanByName(String name) {
+    return dao.getWorkoutPlanByName(name);
+  }
+
+  Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {
+    notifyListeners();
+    return dao.addWorkoutPlan(workoutPlan);
+  }
+
+  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan) {
+    notifyListeners();
+    return dao.deleteWorkoutPlan(workoutPlan);
   }
 }

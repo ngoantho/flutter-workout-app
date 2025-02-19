@@ -13,6 +13,7 @@ import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/utils/common_scaffold.dart';
+import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
@@ -37,12 +38,13 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       return;
     }
 
-    final workout = Workout(
-      workoutYear: yearController.text.toOutput(),
-      workoutMonth: monthController.text.toOutput(),
-      workoutDay: dayController.text.toOutput(),
-    );
-    int workoutId = await WorkoutDao.from(context).addWorkout(workout);
+    final workout = Workout.fromDate(
+        date: DateTime(
+      yearController.text.toOutput(),
+      monthController.text.toOutput(),
+      dayController.text.toOutput(),
+    ));
+    int workoutId = await context.read<WorkoutProvider>().addWorkout(workout);
 
     for (var controller in controllers) {
       final exerciseResult = ExerciseResult(
@@ -52,7 +54,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           actualOutput: controller.actualOutput,
           workoutId: workoutId);
       if (mounted) {
-        await ExerciseResultDao.from(context).addExerciseResult(exerciseResult);
+        await context.read<ExerciseResultProvider>().addExerciseResult(exerciseResult);
       }
     }
 
@@ -124,7 +126,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
         return widget.controllers!;
       }
       final exercises =
-          await widget.workoutPlan.exercises(ExerciseDao.from(context));
+          await widget.workoutPlan.exercises(context.read<ExerciseProvider>());
       return exercises
           .map((exercise) => ExerciseResultController(
               exercise: exercise, controller: TextEditingController()))
