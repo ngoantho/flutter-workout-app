@@ -8,11 +8,11 @@ import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/widgets/readonly_textfield.dart';
+import 'package:homework/utils/readonly_textfield.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
-import 'package:homework/widgets/common_scaffold.dart';
+import 'package:homework/utils/common_scaffold.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;

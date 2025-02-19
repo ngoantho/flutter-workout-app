@@ -3,7 +3,7 @@ import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
 import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
 import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
-import 'package:homework/widgets/readonly_textfield.dart';
+import 'package:homework/utils/readonly_textfield.dart';
 import 'package:homework/models/exercise.dart';
 
 class WorkoutRecordingCard extends StatefulWidget {

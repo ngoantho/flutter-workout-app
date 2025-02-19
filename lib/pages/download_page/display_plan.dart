@@ -4,7 +4,7 @@ import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:homework/widgets/common_scaffold.dart';
+import 'package:homework/utils/common_scaffold.dart';
 
 class DisplayPlanPage extends StatelessWidget with NavigateMixin {
   final WorkoutPlan workoutPlan;

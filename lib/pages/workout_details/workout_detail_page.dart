@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/widgets/common_scaffold.dart';
+import 'package:homework/utils/common_scaffold.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 

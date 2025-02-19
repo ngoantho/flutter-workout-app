@@ -4,7 +4,7 @@ import 'package:homework/models/exercise_result.dart';
 import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/dao/workouts.dart';
-import 'package:homework/widgets/recent_performance.dart';
+import 'package:homework/recent_performance.dart';
 import 'package:provider/provider.dart';
 
 void main() {

@@ -6,9 +6,9 @@ import 'package:homework/pages/download_page/display_plan.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/navigate_to.dart';
-import 'package:homework/widgets/common_scaffold.dart';
-import 'package:homework/widgets/min_height_column.dart';
-import 'package:homework/widgets/sized_box/sized_box_with_height.dart';
+import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/min_height_column.dart';
+import 'package:homework/utils/sized_box/sized_box_with_height.dart';
 import 'package:validators/validators.dart';
 
 class DownloadPlanPage extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
-import 'package:homework/widgets/common_scaffold.dart';
+import 'package:homework/utils/common_scaffold.dart';
 
 class WorkoutHistoryPage extends StatelessWidget
     with NavigateMixin, FlatButtonStyle {
