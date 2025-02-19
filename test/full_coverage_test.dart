@@ -23,7 +23,7 @@ import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/utils/common_scaffold.dart';
 import 'package:homework/utils/readonly_textfield.dart';
-import 'package:homework/recent_performance.dart';
+import 'package:homework/recent_perf.dart';
 import 'package:homework/utils/sized_box/sized_box_with_height.dart';
 import 'package:homework/utils/sized_box/sized_box_with_width.dart';
 

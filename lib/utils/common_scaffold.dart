@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/utils/min_height_column.dart';
-import 'package:homework/recent_performance.dart';
+import 'package:homework/recent_perf.dart';
 
 class CommonScaffold extends StatelessWidget with NavigateMixin {
   final String title;

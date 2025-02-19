@@ -233,6 +233,19 @@ class _$ExerciseResultDao extends ExerciseResultDao {
   }
 
   @override
+  Future<List<ExerciseResult>> getAllExerciseResults() async {
+    return _queryAdapter.queryList('SELECT * FROM exercise_result',
+        mapper: (Map<String, Object?> row) => ExerciseResult(
+            id: row['id'] as int?,
+            workoutId: row['workout_id'] as int?,
+            actualOutput: row['actualOutput'] as int,
+            targetOutput: row['targetOutput'] as int,
+            exerciseName: row['exerciseName'] as String,
+            measurementUnit:
+                MeasurementUnit.values[row['measurementUnit'] as int]));
+  }
+
+  @override
   Future<int> addExerciseResult(ExerciseResult exerciseResult) {
     return _exerciseResultInsertionAdapter.insertAndReturnId(
         exerciseResult, OnConflictStrategy.abort);
