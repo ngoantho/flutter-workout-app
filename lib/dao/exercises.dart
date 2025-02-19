@@ -1,6 +1,5 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/exercise.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 @dao

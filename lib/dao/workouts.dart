@@ -1,7 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/models/workout.dart';
-import 'package:provider/provider.dart';
 
 @dao
 abstract class WorkoutDao {
