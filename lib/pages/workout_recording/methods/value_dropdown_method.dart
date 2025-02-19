@@ -30,6 +30,8 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
 
   @override
   Widget build(BuildContext context) {
+    final icon = IconButton(
+        onPressed: clearOutput, icon: Icon(Icons.settings_backup_restore));
     final dropdown = DropdownButtonFormField(
       items: toDropdownMenuItemList(units),
       value: switch (widget.controller.hasOutput) {
@@ -40,21 +42,31 @@ class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
       decoration: InputDecoration(
         labelText: "Output",
         suffixIcon: switch (widget.controller.hasOutput) {
-          true => IconButton(
-              onPressed: clearOutput,
-              icon: Icon(Icons.settings_backup_restore)),
+          true => icon,
           false => null
         },
       ),
     );
-    return Stack(
-      children: [
-        TextFormField(
-            controller: widget.controller,
-            validator: validateOutput,
-            style: TextStyle(color: Colors.transparent)),
-        dropdown,
-      ],
+    final textField = TextFormField(
+      controller: widget.controller,
+      validator: validateOutput,
+      decoration: InputDecoration(labelText: "Output", suffixIcon: icon),
     );
+    return DefaultTabController(
+        length: 2,
+        child: Column(children: [
+          TabBar(tabs: [
+            Tab(
+              text: 'Dropdown',
+            ),
+            Tab(
+              text: 'Manual',
+            )
+          ]),
+          SizedBox(
+            height: 50,
+            child: TabBarView(children: [dropdown, textField]),
+          )
+        ]));
   }
 }
