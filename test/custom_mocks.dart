@@ -1,5 +1,7 @@
 import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workouts.dart';
+import 'package:homework/models/exercise.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 
@@ -48,5 +50,27 @@ class MockExerciseResultDao extends ExerciseResultDao {
   Future<List<ExerciseResult>> getExerciseResultsByWorkoutId(
       int workoutId) async {
     return results.where((result) => result.workoutId == workoutId).toList();
+  }
+}
+
+class MockExerciseDao extends ExerciseDao {
+  List<Exercise> exercises = [];
+
+  @override
+  Future<int> addExercise(Exercise exercise) async {
+    exercises.add(exercise);
+    return exercises.length;
+  }
+
+  @override
+  Future<void> deleteExercise(Exercise exercise) async {
+    exercises.remove(exercise);
+  }
+
+  @override
+  Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) async {
+    return exercises
+        .where((exercise) => exercise.workoutPlanId == workoutPlanId)
+        .toList();
   }
 }

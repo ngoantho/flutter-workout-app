@@ -17,9 +17,8 @@ import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
-  final List<ExerciseResultController>? controllers;
 
-  const WorkoutRecordingForm(this.workoutPlan, {this.controllers, super.key});
+  const WorkoutRecordingForm(this.workoutPlan, {super.key});
 
   @override
   State<WorkoutRecordingForm> createState() => _WorkoutRecordingFormState();
@@ -54,7 +53,9 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           actualOutput: controller.actualOutput,
           workoutId: workoutId);
       if (mounted) {
-        await context.read<ExerciseResultProvider>().addExerciseResult(exerciseResult);
+        await context
+            .read<ExerciseResultProvider>()
+            .addExerciseResult(exerciseResult);
       }
     }
 
@@ -122,9 +123,6 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   @override
   Widget build(BuildContext context) {
     Future<List<ExerciseResultController>> future() async {
-      if (widget.controllers != null) {
-        return widget.controllers!;
-      }
       final exercises =
           await widget.workoutPlan.exercises(context.read<ExerciseProvider>());
       return exercises
