@@ -74,3 +74,6 @@ doc/api/
 
 # Coverage
 coverage
+
+# Generated native code
+android/app/.cxx/
