@@ -3,16 +3,16 @@ import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/typedefs/output.dart';
 
-class BasePlusMinusMethod extends StatefulWidget {
+class ValueDropdownMethod extends StatefulWidget {
   final TextEditingController controller;
 
-  const BasePlusMinusMethod(this.controller, {super.key});
+  const ValueDropdownMethod(this.controller, {super.key});
 
   @override
-  State<BasePlusMinusMethod> createState() => _BasePlusMinusMethodState();
+  State<ValueDropdownMethod> createState() => _ValueDropdownMethodState();
 }
 
-class _BasePlusMinusMethodState extends State<BasePlusMinusMethod>
+class _ValueDropdownMethodState extends State<ValueDropdownMethod>
     with DropdownMenuMixin<int>, ValidateOutputMixin {
   final units = [for (var i = 1; i <= 60; i++) i];
 

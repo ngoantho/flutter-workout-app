@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:homework/enums/measurement_unit.dart';
-import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
-import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
-import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
-import 'package:homework/utils/readonly_textfield.dart';
 import 'package:homework/models/exercise.dart';
+import 'package:homework/pages/workout_recording/methods/minus_value_plus_method.dart';
+import 'package:homework/pages/workout_recording/methods/value_dropdown_method.dart';
+import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
+import 'package:homework/utils/readonly_textfield.dart';
 
 class WorkoutRecordingCard extends StatefulWidget {
   final Exercise exercise;
@@ -39,9 +39,9 @@ class _WorkoutRecordingCardState extends State<WorkoutRecordingCard> {
           ),
           subtitle: switch (widget.exercise.unit) {
             MeasurementUnit.seconds =>
-              BasePlusMinusMethod(widget.controller), // base +/- modifier
+              ValueDropdownMethod(widget.controller), // dropdown / text field
             MeasurementUnit.meters =>
-              ValueInputMethod(widget.controller), // value dropdown +/-
+              ValueInputMethod(widget.controller), // value text field
             MeasurementUnit.repetitions =>
               MinusValuePlusMethod(widget.controller) // - value +
           }),
