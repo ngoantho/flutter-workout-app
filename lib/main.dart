@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/dao/exercise_results.dart';
@@ -8,7 +10,6 @@ import 'package:homework/db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

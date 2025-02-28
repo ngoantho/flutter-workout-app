@@ -41,6 +41,7 @@ class _ValueDropdownMethodState extends State<ValueDropdownMethod>
       onChanged: (unit) => onChanged(unit!),
       decoration: InputDecoration(
         labelText: "Output",
+        hintText: "1 to 60",
         suffixIcon: switch (widget.controller.hasOutput) {
           true => icon,
           false => null

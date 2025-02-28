@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workouts.dart';
@@ -6,19 +7,19 @@ import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/typedefs/output.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/utils/readonly_textfield.dart';
-import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
+import 'package:homework/typedefs/output.dart';
 import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/readonly_textfield.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
+  final List<ExerciseResultController>? controllers;
 
-  const WorkoutRecordingForm(this.workoutPlan, {super.key});
+  const WorkoutRecordingForm(this.workoutPlan, {super.key, this.controllers});
 
   @override
   State<WorkoutRecordingForm> createState() => _WorkoutRecordingFormState();
@@ -123,6 +124,10 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   @override
   Widget build(BuildContext context) {
     Future<List<ExerciseResultController>> future() async {
+      if (widget.controllers != null) {
+        return (widget.controllers!).toList();
+      }
+
       final exercises =
           await widget.workoutPlan.exercises(context.read<ExerciseProvider>());
       return exercises

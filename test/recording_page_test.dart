@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workouts.dart';
@@ -32,14 +33,31 @@ void main() {
     final workoutPlan = WorkoutPlan(name: 'Test Plan', id: 1);
 
     final exerciseProvider = ExerciseProvider(exerciseDao);
-    exerciseProvider.addExercise(
-        Exercise(name: 'seconds', target: 30, unit: seconds, workoutPlanId: 1));
-    exerciseProvider.addExercise(Exercise(
-        name: 'repetitions', target: 10, unit: repetitions, workoutPlanId: 1));
-    exerciseProvider.addExercise(
-        Exercise(name: 'meters', target: 100, unit: meters, workoutPlanId: 1));
-
     final resultsProvider = ExerciseResultProvider(resultDao);
+
+    final controllers = <ExerciseResultController>[
+      ExerciseResultController(
+          exercise: Exercise(
+              name: 'Swim 30 seconds',
+              target: 30,
+              unit: seconds,
+              workoutPlanId: 1),
+          controller: TextEditingController()),
+      ExerciseResultController(
+          exercise: Exercise(
+              name: 'Jump 10 times',
+              target: 10,
+              unit: repetitions,
+              workoutPlanId: 1),
+          controller: TextEditingController()),
+      ExerciseResultController(
+          exercise: Exercise(
+              name: 'Run 100 meters',
+              target: 100,
+              unit: meters,
+              workoutPlanId: 1),
+          controller: TextEditingController())
+    ];
 
     await tester.pumpWidget(MultiProvider(
         providers: [
@@ -50,13 +68,14 @@ void main() {
         child: MaterialApp(
             home: WorkoutRecordingForm(
           workoutPlan,
+          controllers: controllers,
         ))));
 
     await tester.pumpAndSettle();
 
     expect(find.byType(ValueDropdownMethod), findsOne); // seconds
     expect(find.byType(MinusValuePlusMethod), findsOne); // repetitions
-    // expect(find.byType(ValueInputMethod), findsOne); // meters
+    expect(find.byType(ValueInputMethod), findsOne); // meters
   });
 
   testWidgets(

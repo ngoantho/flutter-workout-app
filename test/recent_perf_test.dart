@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:homework/models/exercise_result.dart';
-import 'package:homework/enums/measurement_unit.dart';
-import 'package:homework/models/workout.dart';
-import 'package:homework/dao/workouts.dart';
 import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/dao/workouts.dart';
+import 'package:homework/enums/measurement_unit.dart';
+import 'package:homework/models/exercise_result.dart';
+import 'package:homework/models/workout.dart';
 import 'package:homework/recent_perf.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ void main() {
             value: exerciseResultProvider,
             child: MaterialApp(
                 home: Scaffold(
-              appBar: RecentPerformance(),
+              bottomNavigationBar: RecentPerformance(),
             )))));
 
     // Act: Add a workout
@@ -52,7 +52,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Assert: Verify the expected text appears
-    expect(find.text('Successful: 1'), findsOneWidget);
+    expect(find.textContaining('Successful: 1'), findsOneWidget);
 
     var workout2 = Workout.fromDate(
         date: DateTime.now().subtract(Duration(days: 1)), id: 2);
@@ -68,7 +68,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Successful: 2'), findsOne);
+    expect(find.textContaining('Successful: 2'), findsOne);
   });
 
   testWidgets(
@@ -83,7 +83,7 @@ void main() {
             value: resultsProvider,
             child: MaterialApp(
                 home: Scaffold(
-              appBar: RecentPerformance(),
+              bottomNavigationBar: RecentPerformance(),
             )))));
 
     var pastWorkout = Workout.fromDate(
@@ -99,6 +99,6 @@ void main() {
     resultsProvider.addExerciseResult(pastResult);
 
     await tester.pumpAndSettle();
-    expect(find.text('Successful: 0'), findsOne);
+    expect(find.textContaining('Successful: 0'), findsOne);
   });
 }

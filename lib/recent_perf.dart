@@ -5,7 +5,7 @@ import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:provider/provider.dart';
 
-class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
+class RecentPerformance extends StatelessWidget {
   const RecentPerformance({super.key});
 
   @override
@@ -65,14 +65,16 @@ class RecentPerformance extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
   Widget buildListTile(String s) {
     return ListTile(
-      title: Text('Recent Performance over past 7 days',
-          textAlign: TextAlign.center),
-      subtitle: Text(s, textAlign: TextAlign.center),
+      title: Text(
+        'Recent Performance',
+        textAlign: TextAlign.end,
+      ),
+      subtitle: Text(
+        'Past 7 days • $s',
+        textAlign: TextAlign.end,
+      ),
     );
   }
 }
