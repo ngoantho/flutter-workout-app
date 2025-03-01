@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "windows": true,
+    "android": true
+  }
+}
