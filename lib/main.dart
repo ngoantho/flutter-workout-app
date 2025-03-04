@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
+import 'package:homework/providers/exercises.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 

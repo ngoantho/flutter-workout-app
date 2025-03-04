@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/dao/exercises.dart';
+import 'package:homework/providers/exercises.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';

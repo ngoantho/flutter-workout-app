@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/dao/exercises.dart';
+import 'package:homework/providers/exercises.dart';
 import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';

@@ -12,6 +12,7 @@ import 'package:homework/pages/workout_recording/methods/value_dropdown_method.d
 import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
 import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/providers/exercise_results.dart';
+import 'package:homework/providers/exercises.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_mocks.dart';
