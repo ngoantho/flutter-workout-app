@@ -33,7 +33,7 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
 
     saveWorkoutPlan() async {
       int? workoutPlanId =
-          await workoutPlanDao.getWorkoutPlanByURL(workoutPlan.url!);
+          await workoutPlanDao.getWorkoutPlanByURL(workoutPlan.url);
       if (workoutPlanId != null) {
         debugPrint("workout plan already exists");
         showMessage("'${workoutPlan.name}' already exists");

@@ -106,7 +106,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `exercise` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workout_plan_id` INTEGER, `name` TEXT NOT NULL, `target` INTEGER NOT NULL, `unit` INTEGER NOT NULL, FOREIGN KEY (`workout_plan_id`) REFERENCES `workout_plan` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `workout_plan` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `url` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `workout_plan` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `url` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `workout` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workout_day` INTEGER NOT NULL, `workout_month` INTEGER NOT NULL, `workout_year` INTEGER NOT NULL)');
 
@@ -351,7 +351,7 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
     return _queryAdapter.queryList('SELECT * FROM workout_plan',
         mapper: (Map<String, Object?> row) => WorkoutPlan(
             id: row['id'] as int?,
-            url: row['url'] as String?,
+            url: row['url'] as String,
             name: row['name'] as String));
   }
 
