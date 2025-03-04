@@ -4,7 +4,8 @@ import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/common_appbar.dart';
+import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
 class DisplayPlanPage extends StatelessWidget with NavigateMixin {
@@ -16,7 +17,7 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
   @override
   Widget build(BuildContext context) {
     final workoutPlanDao = context.read<WorkoutPlanProvider>();
-    final exerciseDao = context.read<ExerciseProvider>();
+    final exerciseDao = context.read<Exercises>();
     final messenger = ScaffoldMessenger.of(context);
 
     showMessage(String message) {
@@ -49,13 +50,14 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
       showMessage("'${workoutPlan.name}' added");
     }
 
-    return CommonScaffold(
-      title: workoutPlan.name,
-      content: ListView.builder(
+    return Scaffold(
+      appBar: CommonAppBar(workoutPlan.name),
+      body: ListView.builder(
         itemBuilder: (context, index) => _PlanEntry(exercises[index]),
         itemCount: exercises.length,
       ),
-      bottomWidget: Row(
+      bottomNavigationBar: RecentPerformance(
+          top: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           OutlinedButton.icon(
@@ -69,7 +71,7 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
             icon: Icon(Icons.save),
           )
         ],
-      ),
+      )),
     );
   }
 }

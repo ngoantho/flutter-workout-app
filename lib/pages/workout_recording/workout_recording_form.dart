@@ -11,8 +11,9 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/typedefs/output.dart';
-import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/utils/readonly_textfield.dart';
+import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
@@ -54,9 +55,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           actualOutput: controller.actualOutput,
           workoutId: workoutId);
       if (mounted) {
-        await context
-            .read<ExerciseResults>()
-            .add(exerciseResult);
+        await context.read<ExerciseResults>().add(exerciseResult);
       }
     }
 
@@ -129,7 +128,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       }
 
       final exercises =
-          await widget.workoutPlan.exercises(context.read<ExerciseProvider>());
+          await widget.workoutPlan.exercises(context.read<Exercises>());
       return exercises
           .map((exercise) => ExerciseResultController(
               exercise: exercise, controller: TextEditingController()))
@@ -143,11 +142,12 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       }
 
       final controllers = snapshot.data!;
-      return CommonScaffold(
-        title: 'Record Workout',
-        subtitle: 'Enter Output',
-        content: Form(key: _formKey, child: formContent(controllers)),
-        bottomWidget: bottomWidget(controllers),
+      return Scaffold(
+        appBar: CommonAppBar('Record Workout'),
+        body: Form(key: _formKey, child: formContent(controllers)),
+        bottomNavigationBar: RecentPerformance(
+          top: bottomWidget(controllers),
+        ),
       );
     }
 

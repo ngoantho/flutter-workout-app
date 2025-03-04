@@ -6,7 +6,9 @@ import 'package:homework/typedefs/output.dart';
 import 'package:provider/provider.dart';
 
 class RecentPerformance extends StatelessWidget {
-  const RecentPerformance({super.key});
+  final Widget? top;
+
+  const RecentPerformance({super.key, this.top});
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +69,16 @@ class RecentPerformance extends StatelessWidget {
 
   Widget buildListTile(String s) {
     return ListTile(
-      title: Text(
-        'Recent Performance',
-        textAlign: TextAlign.end,
-      ),
-      subtitle: Text(
-        'Past 7 days • $s',
-        textAlign: TextAlign.end,
+      title: top,
+      subtitle: ListTile(
+        title: Text(
+          'Recent Performance',
+          textAlign: TextAlign.center,
+        ),
+        subtitle: Text(
+          'Past 7 days • $s',
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

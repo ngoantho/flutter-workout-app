@@ -6,7 +6,7 @@ import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/recent_perf.dart';
+import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_mocks.dart';

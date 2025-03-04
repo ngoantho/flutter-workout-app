@@ -4,7 +4,8 @@ import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_form.dart';
-import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/common_appbar.dart';
+import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutRecordingPage extends StatefulWidget {
@@ -28,11 +29,12 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
         }
 
         final plans = snapshot.data!;
-        return CommonScaffold(
-          title: 'Record Workout',
-          subtitle: 'Choose Plan',
-          content: radioMenu(plans),
-          bottomWidget: submitButton(plans),
+        return Scaffold(
+          appBar: CommonAppBar('Record Workout'),
+          body: radioMenu(plans),
+          bottomNavigationBar: RecentPerformance(
+            top: submitButton(plans),
+          ),
         );
       },
     );

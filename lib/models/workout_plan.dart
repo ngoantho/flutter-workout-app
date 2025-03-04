@@ -11,7 +11,7 @@ class WorkoutPlan {
 
   String url;
 
-  Future<List<Exercise>> exercises(ExerciseProvider provider) {
+  Future<List<Exercise>> exercises(Exercises provider) {
     return provider.getExercisesByWorkoutPlanId(id!);
   }
 

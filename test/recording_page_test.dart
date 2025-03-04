@@ -33,7 +33,7 @@ void main() {
     final workoutsProvider = WorkoutProvider(workoutDao);
     final workoutPlan = WorkoutPlan(name: 'Test Plan', id: 1);
 
-    final exerciseProvider = ExerciseProvider(exerciseDao);
+    final exerciseProvider = Exercises(exerciseDao);
     final resultsProvider = ExerciseResults(resultDao);
 
     final controllers = <ExerciseResultController>[
@@ -85,7 +85,7 @@ void main() {
     final workoutsProvider = WorkoutProvider(workoutDao);
     final workoutPlan = WorkoutPlan(name: "Test Plan", id: 2);
 
-    final exerciseProvider = ExerciseProvider(exerciseDao);
+    final exerciseProvider = Exercises(exerciseDao);
     exerciseProvider.addExercise(Exercise(
         name: 'Jump 10 times',
         target: 10,

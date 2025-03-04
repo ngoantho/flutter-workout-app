@@ -19,7 +19,10 @@ Future<void> main() async {
 
     final windowSize = Size(480, 900);
     final windowOptions = WindowOptions(
-        size: windowSize, minimumSize: windowSize, maximumSize: windowSize);
+        size: windowSize,
+        minimumSize: windowSize,
+        maximumSize: windowSize,
+        center: true);
 
     await windowManager.waitUntilReadyToShow(windowOptions);
     await windowManager.show();
@@ -35,8 +38,7 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider(
         create: (_) => WorkoutPlanProvider(database.workoutPlanDao)),
-    ChangeNotifierProvider(
-        create: (_) => ExerciseProvider(database.exerciseDao)),
+    ChangeNotifierProvider(create: (_) => Exercises(database.exerciseDao)),
   ], child: const MyApp()));
 }
 

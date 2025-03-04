@@ -14,10 +14,10 @@ abstract class ExerciseDao {
   Future<void> deleteExercise(Exercise exercise);
 }
 
-class ExerciseProvider with ChangeNotifier {
+class Exercises with ChangeNotifier {
   final ExerciseDao dao;
 
-  ExerciseProvider(this.dao);
+  Exercises(this.dao);
 
   Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) {
     return dao.getExercisesByWorkoutPlanId(workoutPlanId);

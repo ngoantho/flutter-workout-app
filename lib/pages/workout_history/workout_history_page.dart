@@ -6,7 +6,8 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
-import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/common_appbar.dart';
+import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutHistoryPage extends StatelessWidget
@@ -23,10 +24,12 @@ class WorkoutHistoryPage extends StatelessWidget
         }
 
         List<Workout> workouts = snapshot.data!;
-        return CommonScaffold(
-          title: 'Workout History',
-          bottomWidget: navMenu(context),
-          content: listContent(workouts),
+        return Scaffold(
+          appBar: CommonAppBar('Workout History'),
+          bottomNavigationBar: RecentPerformance(
+            top: navMenu(context),
+          ),
+          body: listContent(workouts),
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/utils/common_scaffold.dart';
+import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 
@@ -12,9 +12,9 @@ class WorkoutDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-        title: 'Workout: ${workout.date.formatMonthDayYear()}',
-        content: ListView.separated(
+    return Scaffold(
+        appBar: CommonAppBar('Workout: ${workout.date.formatMonthDayYear()}'),
+        body: ListView.separated(
             itemBuilder: (context, index) => WorkoutDetails(results[index]),
             separatorBuilder: (context, index) => SizedBox(height: 50),
             itemCount: results.length));
