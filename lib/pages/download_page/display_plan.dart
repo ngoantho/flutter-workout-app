@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/providers/exercises.dart';
-import 'package:homework/dao/workout_plans.dart';
+import 'package:homework/local_db/exercises.dart';
+import 'package:homework/local_db/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -16,7 +16,7 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final workoutPlanDao = context.read<WorkoutPlanProvider>();
+    final workoutPlanDao = context.read<WorkoutPlans>();
     final exerciseDao = context.read<Exercises>();
     final messenger = ScaffoldMessenger.of(context);
 

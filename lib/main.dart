@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/dao/workout_plans.dart';
-import 'package:homework/dao/workouts.dart';
-import 'package:homework/db.dart';
+import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/local_db/local_db.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
-import 'package:homework/providers/exercises.dart';
+import 'package:homework/local_db/exercises.dart';
+import 'package:homework/local_db/workout_plans.dart';
+import 'package:homework/local_db/workouts.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -31,15 +31,17 @@ Future<void> main() async {
 
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => WorkoutProvider(database.workoutDao)),
+  final localDbProviders = [
+    ChangeNotifierProvider(create: (_) => Workouts(database.workoutDao)),
     ChangeNotifierProvider(
       create: (_) => ExerciseResults(database.exerciseResultDao),
     ),
     ChangeNotifierProvider(
-        create: (_) => WorkoutPlanProvider(database.workoutPlanDao)),
+        create: (_) => WorkoutPlans(database.workoutPlanDao)),
     ChangeNotifierProvider(create: (_) => Exercises(database.exerciseDao)),
-  ], child: const MyApp()));
+  ];
+
+  runApp(MultiProvider(providers: localDbProviders, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

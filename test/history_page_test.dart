@@ -5,7 +5,8 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/dao/workouts.dart';
-import 'package:homework/providers/exercise_results.dart';
+import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/local_db/workouts.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_mocks.dart';
@@ -22,7 +23,7 @@ void main() {
   testWidgets(
       "WorkoutHistoryPage shows multiple entries when there are multiple Workouts in the shared state",
       (tester) async {
-    final workoutProvider = WorkoutProvider(workoutDao);
+    final workoutProvider = Workouts(workoutDao);
     final workout = Workout.fromDate(date: DateTime.now(), id: 1);
     final workout2 = Workout.fromDate(date: DateTime.now(), id: 2);
 

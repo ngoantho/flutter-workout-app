@@ -1,6 +1,5 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:flutter/material.dart';
 
 @dao
 abstract class WorkoutPlanDao {
@@ -15,28 +14,4 @@ abstract class WorkoutPlanDao {
 
   @delete
   Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan);
-}
-
-class WorkoutPlanProvider with ChangeNotifier {
-  final WorkoutPlanDao dao;
-
-  WorkoutPlanProvider(this.dao);
-
-  Future<List<WorkoutPlan>> getAllWorkoutPlans() {
-    return dao.getAllWorkoutPlans();
-  }
-
-  Future<int?> getWorkoutPlanByURL(String name) {
-    return dao.getWorkoutPlanByURL(name);
-  }
-
-  Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {
-    notifyListeners();
-    return dao.addWorkoutPlan(workoutPlan);
-  }
-
-  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan) {
-    notifyListeners();
-    return dao.deleteWorkoutPlan(workoutPlan);
-  }
 }

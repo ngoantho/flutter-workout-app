@@ -5,7 +5,8 @@ import 'package:homework/dao/workouts.dart';
 import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
-import 'package:homework/providers/exercise_results.dart';
+import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/local_db/workouts.dart';
 import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ void main() {
   testWidgets(
       "Recent Performance widget displays a metric based on the Workouts in the shared state",
       (tester) async {
-    final workoutsProvider = WorkoutProvider(workoutDao);
+    final workoutsProvider = Workouts(workoutDao);
     final exerciseResultProvider = ExerciseResults(exerciseResultDao);
 
     var workout1 = Workout.fromDate(
@@ -75,7 +76,7 @@ void main() {
   testWidgets(
       "Recent Performance widget displays some default message or metric when no workouts have been done in the past seven days",
       (tester) async {
-    final workoutsProvider = WorkoutProvider(workoutDao);
+    final workoutsProvider = Workouts(workoutDao);
     final resultsProvider = ExerciseResults(exerciseResultDao);
 
     await tester.pumpWidget(ChangeNotifierProvider.value(

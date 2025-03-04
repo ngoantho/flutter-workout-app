@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/dao/workout_plans.dart';
+import 'package:homework/local_db/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/to_dropdown.dart';
 import 'package:homework/models/workout_plan.dart';
@@ -22,7 +22,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<WorkoutPlan>>(
-      future: context.watch<WorkoutPlanProvider>().getAllWorkoutPlans(),
+      future: context.watch<WorkoutPlans>().getAllWorkoutPlans(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -30,7 +30,10 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
 
         final plans = snapshot.data!;
         return Scaffold(
-          appBar: CommonAppBar('Record Workout'),
+          appBar: CommonAppBar(
+            'Record Workout',
+            subtitle: 'Choose Plan',
+          ),
           body: radioMenu(plans),
           bottomNavigationBar: RecentPerformance(
             top: submitButton(plans),

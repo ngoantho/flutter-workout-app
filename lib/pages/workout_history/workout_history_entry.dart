@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/providers/exercise_results.dart';
+import 'package:homework/local_db/exercise_results.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
 import 'package:homework/typedefs/output.dart';

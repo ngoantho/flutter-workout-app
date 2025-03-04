@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/dao/workouts.dart';
+import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/local_db/workouts.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class RecentPerformance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.watch<WorkoutProvider>().getAllWorkouts(),
+      future: context.watch<Workouts>().getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return buildListTile('Loading...');

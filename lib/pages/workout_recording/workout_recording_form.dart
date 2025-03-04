@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
-import 'package:homework/providers/exercise_results.dart';
-import 'package:homework/providers/exercises.dart';
-import 'package:homework/dao/workouts.dart';
+import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/local_db/exercises.dart';
+import 'package:homework/local_db/workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
@@ -12,7 +12,6 @@ import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:homework/utils/common_appbar.dart';
-import 'package:homework/utils/readonly_textfield.dart';
 import 'package:homework/utils/recent_perf.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +44,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       monthController.text.toOutput(),
       dayController.text.toOutput(),
     ));
-    int workoutId = await context.read<WorkoutProvider>().addWorkout(workout);
+    int workoutId = await context.read<Workouts>().addWorkout(workout);
 
     for (var controller in controllers) {
       final exerciseResult = ExerciseResult(
@@ -76,33 +75,31 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   Column formContent(List<ExerciseResultController> controllers) {
     return Column(children: [
       ListTile(
-          title: ReadonlyTextField(
-              labelText: 'Workout Plan', value: widget.workoutPlan.name),
-          subtitle: Row(
-            children: [
-              Flexible(
-                  child: TextFormField(
-                controller: yearController,
-                decoration: InputDecoration(labelText: 'year'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              )),
-              Flexible(
-                  child: TextFormField(
-                controller: monthController,
-                decoration: InputDecoration(labelText: 'month'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              )),
-              Flexible(
-                  child: TextFormField(
-                controller: dayController,
-                decoration: InputDecoration(labelText: 'day'),
-                keyboardType: TextInputType.number,
-                validator: validateOutput,
-              ))
-            ],
+          title: Row(
+        children: [
+          Flexible(
+              child: TextFormField(
+            controller: yearController,
+            decoration: InputDecoration(labelText: 'year'),
+            keyboardType: TextInputType.number,
+            validator: validateOutput,
           )),
+          Flexible(
+              child: TextFormField(
+            controller: monthController,
+            decoration: InputDecoration(labelText: 'month'),
+            keyboardType: TextInputType.number,
+            validator: validateOutput,
+          )),
+          Flexible(
+              child: TextFormField(
+            controller: dayController,
+            decoration: InputDecoration(labelText: 'day'),
+            keyboardType: TextInputType.number,
+            validator: validateOutput,
+          ))
+        ],
+      )),
       Expanded(
           child: ListView.builder(
               itemBuilder: (context, index) => WorkoutRecordingCard(
@@ -143,7 +140,10 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
 
       final controllers = snapshot.data!;
       return Scaffold(
-        appBar: CommonAppBar('Record Workout'),
+        appBar: CommonAppBar(
+          'Record Workout',
+          subtitle: widget.workoutPlan.name,
+        ),
         body: Form(key: _formKey, child: formContent(controllers)),
         bottomNavigationBar: RecentPerformance(
           top: bottomWidget(controllers),
