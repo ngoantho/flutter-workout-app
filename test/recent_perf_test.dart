@@ -5,6 +5,7 @@ import 'package:homework/dao/workouts.dart';
 import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
+import 'package:homework/providers/exercise_results.dart';
 import 'package:homework/recent_perf.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ void main() {
       "Recent Performance widget displays a metric based on the Workouts in the shared state",
       (tester) async {
     final workoutsProvider = WorkoutProvider(workoutDao);
-    final exerciseResultProvider = ExerciseResultProvider(exerciseResultDao);
+    final exerciseResultProvider = ExerciseResults(exerciseResultDao);
 
     var workout1 = Workout.fromDate(
         date: DateTime.now().subtract(Duration(days: 1)), id: 1);
@@ -46,7 +47,7 @@ void main() {
 
     // Act: Add a workout
     workoutsProvider.addWorkout(workout1);
-    exerciseResultProvider.addExerciseResult(result1);
+    exerciseResultProvider.add(result1);
 
     // Ensure UI rebuilds
     await tester.pumpAndSettle();
@@ -64,7 +65,7 @@ void main() {
         workoutId: 2);
 
     workoutsProvider.addWorkout(workout2);
-    exerciseResultProvider.addExerciseResult(result2);
+    exerciseResultProvider.add(result2);
 
     await tester.pumpAndSettle();
 
@@ -75,7 +76,7 @@ void main() {
       "Recent Performance widget displays some default message or metric when no workouts have been done in the past seven days",
       (tester) async {
     final workoutsProvider = WorkoutProvider(workoutDao);
-    final resultsProvider = ExerciseResultProvider(exerciseResultDao);
+    final resultsProvider = ExerciseResults(exerciseResultDao);
 
     await tester.pumpWidget(ChangeNotifierProvider.value(
         value: workoutsProvider,
@@ -96,7 +97,7 @@ void main() {
         workoutId: 1);
 
     workoutsProvider.addWorkout(pastWorkout);
-    resultsProvider.addExerciseResult(pastResult);
+    resultsProvider.add(pastResult);
 
     await tester.pumpAndSettle();
     expect(find.textContaining('Successful: 0'), findsOne);

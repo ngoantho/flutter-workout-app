@@ -7,8 +7,8 @@ abstract class WorkoutPlanDao {
   @Query('SELECT * FROM workout_plan')
   Future<List<WorkoutPlan>> getAllWorkoutPlans();
 
-  @Query('SELECT id FROM workout_plan WHERE name = :name')
-  Future<int?> getWorkoutPlanByName(String name);
+  @Query('SELECT id FROM workout_plan WHERE url = :url')
+  Future<int?> getWorkoutPlanByURL(String url);
 
   @insert
   Future<int> addWorkoutPlan(WorkoutPlan workoutPlan);
@@ -26,8 +26,8 @@ class WorkoutPlanProvider with ChangeNotifier {
     return dao.getAllWorkoutPlans();
   }
 
-  Future<int?> getWorkoutPlanByName(String name) {
-    return dao.getWorkoutPlanByName(name);
+  Future<int?> getWorkoutPlanByURL(String name) {
+    return dao.getWorkoutPlanByURL(name);
   }
 
   Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {

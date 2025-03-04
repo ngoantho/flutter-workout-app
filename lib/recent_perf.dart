@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/providers/exercise_results.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
@@ -34,9 +34,9 @@ class RecentPerformance extends StatelessWidget {
           },
         );
 
-        final exerciseResultDao = context.watch<ExerciseResultProvider>();
+        final exerciseResultDao = context.watch<ExerciseResults>();
         Future<List<ExerciseResult>> future() async {
-          final results = await exerciseResultDao.getAllExerciseResults();
+          final results = await exerciseResultDao.getAll();
           return results
               .where(
                   (result) => workoutsPastSevenDays.contains(result.workoutId))

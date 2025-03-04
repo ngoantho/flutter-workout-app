@@ -36,18 +36,18 @@ class MockExerciseResultDao extends ExerciseResultDao {
   List<ExerciseResult> results = [];
 
   @override
-  Future<int> addExerciseResult(ExerciseResult exerciseResult) async {
+  Future<int> add(ExerciseResult exerciseResult) async {
     results.add(exerciseResult);
     return results.length;
   }
 
   @override
-  Future<List<ExerciseResult>> getAllExerciseResults() async {
+  Future<List<ExerciseResult>> getAll() async {
     return results;
   }
 
   @override
-  Future<List<ExerciseResult>> getExerciseResultsByWorkoutId(
+  Future<List<ExerciseResult>> getAllByWorkoutId(
       int workoutId) async {
     return results.where((result) => result.workoutId == workoutId).toList();
   }

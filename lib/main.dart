@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/providers/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workout_plans.dart';
 import 'package:homework/dao/workouts.dart';
@@ -31,7 +31,7 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => WorkoutProvider(database.workoutDao)),
     ChangeNotifierProvider(
-      create: (_) => ExerciseResultProvider(database.exerciseResultDao),
+      create: (_) => ExerciseResults(database.exerciseResultDao),
     ),
     ChangeNotifierProvider(
         create: (_) => WorkoutPlanProvider(database.workoutPlanDao)),

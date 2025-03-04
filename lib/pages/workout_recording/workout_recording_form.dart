@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
-import 'package:homework/dao/exercise_results.dart';
+import 'package:homework/providers/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
@@ -55,8 +55,8 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           workoutId: workoutId);
       if (mounted) {
         await context
-            .read<ExerciseResultProvider>()
-            .addExerciseResult(exerciseResult);
+            .read<ExerciseResults>()
+            .add(exerciseResult);
       }
     }
 

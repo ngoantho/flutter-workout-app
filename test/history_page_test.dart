@@ -5,6 +5,7 @@ import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/dao/workouts.dart';
+import 'package:homework/providers/exercise_results.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_mocks.dart';
@@ -25,7 +26,7 @@ void main() {
     final workout = Workout.fromDate(date: DateTime.now(), id: 1);
     final workout2 = Workout.fromDate(date: DateTime.now(), id: 2);
 
-    final exerciseResultProvider = ExerciseResultProvider(exerciseResultDao);
+    final exerciseResultProvider = ExerciseResults(exerciseResultDao);
 
     await tester.pumpWidget(ChangeNotifierProvider.value(
         value: workoutProvider,

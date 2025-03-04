@@ -59,7 +59,7 @@ class _DownloadPlanPageState extends State<DownloadPlanPage>
         errorText = null;
         if (isJSON(response)) {
           Map<String, dynamic> json = jsonDecode(response!);
-          final workoutPlan = WorkoutPlan.fromJson(json);
+          final workoutPlan = WorkoutPlan.fromJson(json, controller.text);
           final exercises = List.from(json['exercises'])
               .map((e) => Exercise.fromJson(e))
               .toList();

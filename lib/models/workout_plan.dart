@@ -9,14 +9,16 @@ class WorkoutPlan {
 
   String name;
 
+  String? url;
+
   Future<List<Exercise>> exercises(ExerciseProvider provider) {
     return provider.getExercisesByWorkoutPlanId(id!);
   }
 
-  WorkoutPlan({this.id, required this.name});
+  WorkoutPlan({this.id, this.url, required this.name});
 
-  factory WorkoutPlan.fromJson(Map<String, dynamic> json) {
-    return WorkoutPlan(name: json['name']);
+  factory WorkoutPlan.fromJson(Map<String, dynamic> json, String url) {
+    return WorkoutPlan(name: json['name'], url: url);
   }
 
   @override
