@@ -4,12 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/local_db/exercise_results.dart';
 import 'package:homework/local_db/local_db.dart';
-import 'package:homework/pages/workout_history/workout_history_page.dart';
 import 'package:homework/local_db/exercises.dart';
 import 'package:homework/local_db/workout_plans.dart';
 import 'package:homework/local_db/workouts.dart';
+import 'package:homework/start_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +43,14 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => Exercises(database.exerciseDao)),
   ];
 
-  runApp(MultiProvider(providers: localDbProviders, child: const MyApp()));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  final firebaseProviders = [];
+
+  runApp(MultiProvider(
+      providers: [...localDbProviders, ...firebaseProviders],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -73,7 +82,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             brightness: Brightness.dark),
         debugShowCheckedModeBanner: false,
-        routes: {'/': (context) => WorkoutHistoryPage()},
+        routes: {'/': (context) => StartSignIn()},
         initialRoute: '/');
   }
 }

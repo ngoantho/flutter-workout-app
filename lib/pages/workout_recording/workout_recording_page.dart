@@ -31,8 +31,7 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
         final plans = snapshot.data!;
         return Scaffold(
           appBar: CommonAppBar(
-            'Record Workout',
-            subtitle: 'Choose Plan',
+            'Choose Plan'
           ),
           body: radioMenu(plans),
           bottomNavigationBar: RecentPerformance(

@@ -75,7 +75,8 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   Column formContent(List<ExerciseResultController> controllers) {
     return Column(children: [
       ListTile(
-          title: Row(
+          title: Text('Plan: ${widget.workoutPlan.name}'),
+          subtitle: Row(
         children: [
           Flexible(
               child: TextFormField(
@@ -142,7 +143,6 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       return Scaffold(
         appBar: CommonAppBar(
           'Record Workout',
-          subtitle: widget.workoutPlan.name,
         ),
         body: Form(key: _formKey, child: formContent(controllers)),
         bottomNavigationBar: RecentPerformance(

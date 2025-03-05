@@ -1,24 +1,34 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String? subtitle;
 
-  const CommonAppBar(this.title, {super.key, this.subtitle});
+  const CommonAppBar(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(title),
-      centerTitle: true,
-      actions: [homeButton(context)],
-      bottom: (subtitle != null) ? subtitleWidget() : null,
+      // centerTitle: true,
+      actions: [homeButton(context), profileAction(context)],
     );
   }
 
-  PreferredSizeWidget subtitleWidget() => PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight / 2),
-      child: Text(subtitle!));
+  Widget profileAction(BuildContext context) => StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        final user = snapshot.data!;
+
+        viewUID() {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(user.uid, textAlign: TextAlign.center,), duration: Duration(seconds: 1),));
+        }
+        return OutlinedButton(onPressed: viewUID, child: Text('View UID'));
+      });
 
   IconButton homeButton(BuildContext context) => IconButton(
       onPressed: () {
