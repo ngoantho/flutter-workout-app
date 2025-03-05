@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:homework/local_db/exercises.dart';
-import 'package:homework/local_db/workout_plans.dart';
+import 'package:homework/solo_local_db/exercises.dart';
+import 'package:homework/solo_local_db/workout_plans.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/utils/common_appbar.dart';
-import 'package:homework/utils/recent_perf.dart';
+import 'package:homework/utils/common_navbar.dart';
 import 'package:provider/provider.dart';
 
 class DisplayPlanPage extends StatelessWidget with NavigateMixin {
@@ -56,16 +56,16 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
         itemBuilder: (context, index) => _PlanEntry(exercises[index]),
         itemCount: exercises.length,
       ),
-      bottomNavigationBar: RecentPerformance(
+      bottomNavigationBar: CommonNavbar(
           top: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           OutlinedButton.icon(
-            onPressed: () => navigate(context).back(),
+            onPressed: () => navigate(context).back(null),
             label: Text('Discard'),
             icon: Icon(Icons.delete),
           ),
-          OutlinedButton.icon(
+          FilledButton.icon(
             onPressed: saveWorkoutPlan,
             label: Text('Save'),
             icon: Icon(Icons.save),

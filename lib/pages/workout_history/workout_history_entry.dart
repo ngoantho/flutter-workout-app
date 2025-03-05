@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/workout_details/workout_detail_page.dart';
 import 'package:homework/typedefs/output.dart';
@@ -13,7 +13,7 @@ class WorkoutHistoryEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: workout.results(context.read<ExerciseResults>()),
+      future: workout.results(context.read<SoloExerciseResults>()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

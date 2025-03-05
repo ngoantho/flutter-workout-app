@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/models/exercise_result.dart';
 
-class ExerciseResults extends ExerciseResultDao with ChangeNotifier {
+class SoloExerciseResults extends ExerciseResultDao with ChangeNotifier {
   final ExerciseResultDao dao;
 
-  ExerciseResults(this.dao);
+  SoloExerciseResults(this.dao);
 
   @override
   Future<int> add(ExerciseResult exerciseResult) {

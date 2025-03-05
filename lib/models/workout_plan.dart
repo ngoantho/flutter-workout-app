@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/exercise.dart';
-import 'package:homework/local_db/exercises.dart';
+import 'package:homework/solo_local_db/exercises.dart';
 
 @Entity(tableName: 'workout_plan')
 class WorkoutPlan {

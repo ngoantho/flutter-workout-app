@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/local_db/exercise_results.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
 
 @Entity(tableName: 'workout')
 class Workout {
@@ -27,7 +27,7 @@ class Workout {
         workoutMonth = date.month,
         workoutDay = date.day;
 
-  Future<List<ExerciseResult>> results(ExerciseResults provider) {
+  Future<List<ExerciseResult>> results(SoloExerciseResults provider) {
     return provider.getAllByWorkoutId(id!);
   }
 

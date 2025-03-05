@@ -6,8 +6,8 @@ import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/download_page/display_plan.dart';
 import 'package:homework/utils/common_appbar.dart';
+import 'package:homework/utils/common_navbar.dart';
 import 'package:homework/utils/min_height_column.dart';
-import 'package:homework/utils/recent_perf.dart';
 import 'package:homework/utils/sized_box/sized_box_with_height.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
@@ -133,7 +133,7 @@ class _DownloadPlanPageState extends State<DownloadPlanPage>
         key: _formKey,
         child: formContent,
       ),
-      bottomNavigationBar: RecentPerformance(),
+      bottomNavigationBar: CommonNavbar(),
     );
   }
 }

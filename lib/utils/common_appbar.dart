@@ -11,11 +11,11 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(title),
       // centerTitle: true,
-      actions: [homeButton(context), profileAction(context)],
+      actions: [profileAction],
     );
   }
 
-  Widget profileAction(BuildContext context) => StreamBuilder(
+  Widget get profileAction => StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -25,16 +25,17 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         final user = snapshot.data!;
 
         viewUID() {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(user.uid, textAlign: TextAlign.center,), duration: Duration(seconds: 1),));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              user.uid,
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(seconds: 1),
+          ));
         }
+
         return OutlinedButton(onPressed: viewUID, child: Text('View UID'));
       });
-
-  IconButton homeButton(BuildContext context) => IconButton(
-      onPressed: () {
-        Navigator.of(context).pushReplacementNamed('/');
-      },
-      icon: Icon(Icons.home));
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);

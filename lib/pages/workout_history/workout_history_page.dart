@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/local_db/workouts.dart';
+import 'package:homework/enums/workout_type.dart';
+import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/workout.dart';
@@ -7,17 +8,19 @@ import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
 import 'package:homework/utils/common_appbar.dart';
-import 'package:homework/utils/recent_perf.dart';
+import 'package:homework/utils/common_navbar.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutHistoryPage extends StatelessWidget
     with NavigateMixin, FlatButtonStyle {
-  const WorkoutHistoryPage({super.key});
+  final WorkoutType workoutType;
+
+  const WorkoutHistoryPage(this.workoutType, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.watch<Workouts>().getAllWorkouts(),
+      future: context.watch<SoloWorkouts>().getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -26,7 +29,7 @@ class WorkoutHistoryPage extends StatelessWidget
         List<Workout> workouts = snapshot.data!;
         return Scaffold(
           appBar: CommonAppBar('Workout History'),
-          bottomNavigationBar: RecentPerformance(
+          bottomNavigationBar: CommonNavbar(
             top: navMenu(context),
           ),
           body: listContent(workouts),
@@ -45,7 +48,8 @@ class WorkoutHistoryPage extends StatelessWidget
           icon: Icon(Icons.download),
         ),
         OutlinedButton.icon(
-          onPressed: () => navigate(context).to(WorkoutRecordingPage()),
+          onPressed: () =>
+              navigate(context).to(WorkoutRecordingPage(workoutType)),
           label: Text("Record Workout"),
           icon: Icon(Icons.run_circle_outlined),
         )

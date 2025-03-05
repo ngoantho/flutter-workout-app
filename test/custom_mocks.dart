@@ -18,18 +18,6 @@ class MockWorkoutDao extends WorkoutDao {
   Future<List<Workout>> getAllWorkouts() async {
     return workouts;
   }
-
-  @override
-  Future<List<Workout>> getWorkoutsByDate(int year, int month, int day) async {
-    return workouts
-        .where(
-          (workout) =>
-              workout.workoutYear == year &&
-              workout.workoutMonth == month &&
-              workout.workoutDay == day,
-        )
-        .toList();
-  }
 }
 
 class MockExerciseResultDao extends ExerciseResultDao {
@@ -47,8 +35,7 @@ class MockExerciseResultDao extends ExerciseResultDao {
   }
 
   @override
-  Future<List<ExerciseResult>> getAllByWorkoutId(
-      int workoutId) async {
+  Future<List<ExerciseResult>> getAllByWorkoutId(int workoutId) async {
     return results.where((result) => result.workoutId == workoutId).toList();
   }
 }

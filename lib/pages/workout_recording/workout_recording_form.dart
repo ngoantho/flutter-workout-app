@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
-import 'package:homework/local_db/exercise_results.dart';
-import 'package:homework/local_db/exercises.dart';
-import 'package:homework/local_db/workouts.dart';
+import 'package:homework/enums/workout_type.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
+import 'package:homework/solo_local_db/exercises.dart';
+import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
@@ -12,14 +13,16 @@ import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:homework/utils/common_appbar.dart';
-import 'package:homework/utils/recent_perf.dart';
+import 'package:homework/utils/common_navbar.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
   final List<ExerciseResultController>? controllers;
+  final WorkoutType workoutType;
 
-  const WorkoutRecordingForm(this.workoutPlan, {super.key, this.controllers});
+  const WorkoutRecordingForm(this.workoutPlan, this.workoutType,
+      {super.key, this.controllers});
 
   @override
   State<WorkoutRecordingForm> createState() => _WorkoutRecordingFormState();
@@ -33,7 +36,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   final monthController = TextEditingController();
   final dayController = TextEditingController();
 
-  void onSave(List<ExerciseResultController> controllers) async {
+  void onSaveSolo(List<ExerciseResultController> controllers) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -44,7 +47,8 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       monthController.text.toOutput(),
       dayController.text.toOutput(),
     ));
-    int workoutId = await context.read<Workouts>().addWorkout(workout);
+
+    int workoutId = await context.read<SoloWorkouts>().addWorkout(workout);
 
     for (var controller in controllers) {
       final exerciseResult = ExerciseResult(
@@ -54,12 +58,25 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           actualOutput: controller.actualOutput,
           workoutId: workoutId);
       if (mounted) {
-        await context.read<ExerciseResults>().add(exerciseResult);
+        await context.read<SoloExerciseResults>().add(exerciseResult);
       }
     }
 
     if (mounted) {
-      navigate(context).home();
+      Navigator.of(context).pushNamed('/solo');
+    }
+  }
+
+  void onSave(List<ExerciseResultController> controllers) {
+    switch (widget.workoutType) {
+      case WorkoutType.solo:
+        onSaveSolo(controllers);
+      case WorkoutType.collaborative:
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case WorkoutType.competitive:
+        // TODO: Handle this case.
+        throw UnimplementedError();
     }
   }
 
@@ -77,30 +94,30 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       ListTile(
           title: Text('Plan: ${widget.workoutPlan.name}'),
           subtitle: Row(
-        children: [
-          Flexible(
-              child: TextFormField(
-            controller: yearController,
-            decoration: InputDecoration(labelText: 'year'),
-            keyboardType: TextInputType.number,
-            validator: validateOutput,
+            children: [
+              Flexible(
+                  child: TextFormField(
+                controller: yearController,
+                decoration: InputDecoration(labelText: 'year'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              )),
+              Flexible(
+                  child: TextFormField(
+                controller: monthController,
+                decoration: InputDecoration(labelText: 'month'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              )),
+              Flexible(
+                  child: TextFormField(
+                controller: dayController,
+                decoration: InputDecoration(labelText: 'day'),
+                keyboardType: TextInputType.number,
+                validator: validateOutput,
+              ))
+            ],
           )),
-          Flexible(
-              child: TextFormField(
-            controller: monthController,
-            decoration: InputDecoration(labelText: 'month'),
-            keyboardType: TextInputType.number,
-            validator: validateOutput,
-          )),
-          Flexible(
-              child: TextFormField(
-            controller: dayController,
-            decoration: InputDecoration(labelText: 'day'),
-            keyboardType: TextInputType.number,
-            validator: validateOutput,
-          ))
-        ],
-      )),
       Expanded(
           child: ListView.builder(
               itemBuilder: (context, index) => WorkoutRecordingCard(
@@ -113,7 +130,6 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
     return FilledButton(
       onPressed: () => onSave(controllers),
       key: Key('validateFormBtnKey'),
-      style: flatButtonStyle,
       child: Text('Save Workout'),
     );
   }
@@ -145,7 +161,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           'Record Workout',
         ),
         body: Form(key: _formKey, child: formContent(controllers)),
-        bottomNavigationBar: RecentPerformance(
+        bottomNavigationBar: CommonNavbar(
           top: bottomWidget(controllers),
         ),
       );

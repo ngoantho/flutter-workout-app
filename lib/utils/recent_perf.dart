@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/local_db/exercise_results.dart';
-import 'package:homework/local_db/workouts.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
+import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class RecentPerformance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.watch<Workouts>().getAllWorkouts(),
+      future: context.watch<SoloWorkouts>().getAllWorkouts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return buildListTile('Loading...');
@@ -36,7 +36,7 @@ class RecentPerformance extends StatelessWidget {
           },
         );
 
-        final exerciseResultDao = context.watch<ExerciseResults>();
+        final exerciseResultDao = context.watch<SoloExerciseResults>();
         Future<List<ExerciseResult>> future() async {
           final results = await exerciseResultDao.getAll();
           return results

@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/models/workout.dart';
 
-class Workouts with ChangeNotifier {
+class SoloWorkouts extends WorkoutDao with ChangeNotifier {
   final WorkoutDao dao;
 
-  Workouts(this.dao);
+  SoloWorkouts(this.dao);
 
+  @override
   Future<List<Workout>> getAllWorkouts() {
     return dao.getAllWorkouts();
   }
 
-  Future<List<Workout>> getWorkoutsByDate(int year, int month, int day) {
-    return dao.getWorkoutsByDate(year, month, day);
-  }
-
+  @override
   Future<int> addWorkout(Workout workout) {
     notifyListeners();
     return dao.addWorkout(workout);
