@@ -11,7 +11,4 @@ abstract class WorkoutPlanDao {
 
   @insert
   Future<int> addWorkoutPlan(WorkoutPlan workoutPlan);
-
-  @delete
-  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan);
 }

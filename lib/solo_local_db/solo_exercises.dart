@@ -17,10 +17,4 @@ class Exercises extends ExerciseDao with ChangeNotifier {
     notifyListeners();
     return dao.addExercise(exercise);
   }
-
-  @override
-  Future<void> deleteExercise(Exercise exercise) {
-    notifyListeners();
-    return dao.deleteExercise(exercise);
-  }
 }

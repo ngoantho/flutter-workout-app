@@ -108,7 +108,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `workout_plan` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `url` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `workout` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workout_day` INTEGER NOT NULL, `workout_month` INTEGER NOT NULL, `workout_year` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `workout` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `workout_day` INTEGER NOT NULL, `workout_month` INTEGER NOT NULL, `workout_year` INTEGER NOT NULL, `workoutType` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -151,7 +151,8 @@ class _$WorkoutDao extends WorkoutDao {
                   'id': item.id,
                   'workout_day': item.workoutDay,
                   'workout_month': item.workoutMonth,
-                  'workout_year': item.workoutYear
+                  'workout_year': item.workoutYear,
+                  'workoutType': item.workoutType.index
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -169,7 +170,8 @@ class _$WorkoutDao extends WorkoutDao {
             id: row['id'] as int?,
             workoutDay: row['workout_day'] as int,
             workoutMonth: row['workout_month'] as int,
-            workoutYear: row['workout_year'] as int));
+            workoutYear: row['workout_year'] as int,
+            workoutType: WorkoutType.values[row['workoutType'] as int]));
   }
 
   @override
@@ -293,11 +295,6 @@ class _$ExerciseDao extends ExerciseDao {
   Future<int> addExercise(Exercise exercise) {
     return _exerciseInsertionAdapter.insertAndReturnId(
         exercise, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteExercise(Exercise exercise) async {
-    await _exerciseDeletionAdapter.delete(exercise);
   }
 }
 

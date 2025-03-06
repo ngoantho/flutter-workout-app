@@ -13,7 +13,7 @@ import 'package:homework/pages/workout_recording/methods/value_dropdown_method.d
 import 'package:homework/pages/workout_recording/methods/value_input_method.dart';
 import 'package:homework/pages/workout_recording/workout_recording_form.dart';
 import 'package:homework/solo_local_db/solo_exercise_results.dart';
-import 'package:homework/solo_local_db/exercises.dart';
+import 'package:homework/solo_local_db/solo_exercises.dart';
 import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:provider/provider.dart';
 

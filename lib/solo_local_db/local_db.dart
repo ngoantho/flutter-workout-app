@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:floor/floor.dart';
 import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/exercises.dart';
@@ -8,8 +10,9 @@ import 'package:homework/models/exercise.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'dart:async';
 import 'package:sqflite/sqflite.dart' as sqflite;
+
+import '../enums/workout_type.dart';
 
 part 'local_db.g.dart';
 

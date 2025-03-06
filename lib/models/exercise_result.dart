@@ -1,8 +1,8 @@
-import 'package:homework/models/exercise.dart';
+import 'package:floor/floor.dart';
 import 'package:homework/enums/measurement_unit.dart';
+import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/typedefs/output.dart';
-import 'package:floor/floor.dart';
 
 @Entity(tableName: 'exercise_result', foreignKeys: [
   ForeignKey(
@@ -27,6 +27,25 @@ class ExerciseResult {
       required this.targetOutput,
       required this.exerciseName,
       required this.measurementUnit});
+
+  ExerciseResult.fromJson(Map<String, dynamic> json)
+      : actualOutput = json['actualOutput'],
+        targetOutput = json['targetOutput'],
+        exerciseName = json['exerciseName'],
+        measurementUnit = MeasurementUnit.fromString(
+          json['measurementUnit'],
+        ),
+        workoutId = json['workout_id'];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'actualOutput': actualOutput,
+      'targetOutput': targetOutput,
+      'exerciseName': exerciseName,
+      'measurementUnit': measurementUnit.index,
+      'workout_id': workoutId
+    };
+  }
 
   Exercise get exercise =>
       Exercise(name: exerciseName, target: targetOutput, unit: measurementUnit);

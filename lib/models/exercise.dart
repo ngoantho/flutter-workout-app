@@ -1,7 +1,7 @@
+import 'package:floor/floor.dart';
+import 'package:homework/enums/measurement_unit.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/typedefs/output.dart';
-import 'package:homework/enums/measurement_unit.dart';
-import 'package:floor/floor.dart';
 
 @Entity(tableName: 'exercise', foreignKeys: [
   ForeignKey(
@@ -27,12 +27,19 @@ class Exercise {
       required this.target,
       required this.unit});
 
-  factory Exercise.fromJson(Map<String, dynamic> json) {
-    return Exercise(
-      name: json['name'],
-      target: json['target'],
-      unit: MeasurementUnit.fromString(json['unit']),
-    );
+  Exercise.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        target = json['target'],
+        unit = MeasurementUnit.fromString(json['unit']),
+        workoutPlanId = json['workout_plan_id'];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'target': target,
+      'unit': unit.index,
+      'workout_plan_id': workoutPlanId
+    };
   }
 
   @override

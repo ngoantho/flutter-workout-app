@@ -22,10 +22,4 @@ class WorkoutPlans extends WorkoutPlanDao with ChangeNotifier {
     notifyListeners();
     return dao.addWorkoutPlan(workoutPlan);
   }
-
-  @override
-  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan) {
-    notifyListeners();
-    return dao.deleteWorkoutPlan(workoutPlan);
-  }
 }

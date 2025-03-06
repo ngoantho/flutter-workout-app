@@ -8,7 +8,4 @@ abstract class ExerciseDao {
 
   @insert
   Future<int> addExercise(Exercise exercise);
-
-  @delete
-  Future<void> deleteExercise(Exercise exercise);
 }

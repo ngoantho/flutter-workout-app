@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:homework/models/exercise.dart';
-import 'package:homework/solo_local_db/exercises.dart';
+import 'package:homework/solo_local_db/solo_exercises.dart';
 
 @Entity(tableName: 'workout_plan')
 class WorkoutPlan {
@@ -17,9 +17,8 @@ class WorkoutPlan {
 
   WorkoutPlan({this.id, this.url = '', required this.name});
 
-  factory WorkoutPlan.fromJson(Map<String, dynamic> json, String url) {
-    return WorkoutPlan(name: json['name'], url: url);
-  }
+  WorkoutPlan.fromJson(Map<String, dynamic> json, this.url)
+      : name = json['name'];
 
   @override
   String toString() {

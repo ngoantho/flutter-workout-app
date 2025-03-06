@@ -50,11 +50,6 @@ class MockExerciseDao extends ExerciseDao {
   }
 
   @override
-  Future<void> deleteExercise(Exercise exercise) async {
-    exercises.remove(exercise);
-  }
-
-  @override
   Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) async {
     return exercises
         .where((exercise) => exercise.workoutPlanId == workoutPlanId)

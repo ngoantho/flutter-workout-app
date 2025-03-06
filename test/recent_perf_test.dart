@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homework/dao/exercise_results.dart';
 import 'package:homework/dao/workouts.dart';
 import 'package:homework/enums/measurement_unit.dart';
+import 'package:homework/enums/workout_type.dart';
 import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/solo_local_db/solo_exercise_results.dart';
@@ -28,7 +29,7 @@ void main() {
     final exerciseResultProvider = SoloExerciseResults(exerciseResultDao);
 
     var workout1 = Workout.fromDate(
-        date: DateTime.now().subtract(Duration(days: 1)), id: 1);
+        date: DateTime.now().subtract(Duration(days: 1)), id: 1, type: solo);
 
     final result1 = ExerciseResult(
         exerciseName: '10 seconds',
@@ -57,7 +58,7 @@ void main() {
     expect(find.textContaining('Successful: 1'), findsOneWidget);
 
     var workout2 = Workout.fromDate(
-        date: DateTime.now().subtract(Duration(days: 1)), id: 2);
+        date: DateTime.now().subtract(Duration(days: 1)), id: 2, type: solo);
     final result2 = ExerciseResult(
         exerciseName: 'Row 10 meters',
         targetOutput: 10,
@@ -89,7 +90,7 @@ void main() {
             )))));
 
     var pastWorkout = Workout.fromDate(
-        date: DateTime.now().subtract(Duration(days: 8)), id: 1);
+        date: DateTime.now().subtract(Duration(days: 8)), id: 1, type: solo);
     var pastResult = ExerciseResult(
         exerciseName: '10 seconds',
         targetOutput: 10,

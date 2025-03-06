@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/enums/workout_type.dart';
-import 'package:homework/solo_local_db/solo_exercise_results.dart';
-import 'package:homework/solo_local_db/exercises.dart';
-import 'package:homework/solo_local_db/solo_workouts.dart';
+import 'package:homework/firebase/firebase_workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/mixins/validate_output.dart';
@@ -11,6 +9,9 @@ import 'package:homework/models/exercise_result.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/models/workout_plan.dart';
 import 'package:homework/pages/workout_recording/workout_recording_card.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
+import 'package:homework/solo_local_db/solo_exercises.dart';
+import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/utils/common_navbar.dart';
@@ -36,19 +37,28 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   final monthController = TextEditingController();
   final dayController = TextEditingController();
 
-  void onSaveSolo(List<ExerciseResultController> controllers) async {
+  void onSave(List<ExerciseResultController> controllers) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
     final workout = Workout.fromDate(
         date: DateTime(
-      yearController.text.toOutput(),
-      monthController.text.toOutput(),
-      dayController.text.toOutput(),
-    ));
+          yearController.text.toOutput(),
+          monthController.text.toOutput(),
+          dayController.text.toOutput(),
+        ),
+        type: widget.workoutType);
 
-    int workoutId = await context.read<SoloWorkouts>().addWorkout(workout);
+    // fix for accessing context in switch
+    final soloWorkoutProvider = context.read<SoloWorkouts>();
+    final firebaseWorkoutProvider = context.read<FirebaseWorkouts>();
+
+    int workoutId = switch (widget.workoutType) {
+      solo => await soloWorkoutProvider.addWorkout(workout),
+      collaborative => await firebaseWorkoutProvider.addWorkout(workout),
+      competitive => await firebaseWorkoutProvider.addWorkout(workout),
+    };
 
     for (var controller in controllers) {
       final exerciseResult = ExerciseResult(
@@ -64,19 +74,6 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
 
     if (mounted) {
       Navigator.of(context).pushNamed('/solo');
-    }
-  }
-
-  void onSave(List<ExerciseResultController> controllers) {
-    switch (widget.workoutType) {
-      case WorkoutType.solo:
-        onSaveSolo(controllers);
-      case WorkoutType.collaborative:
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case WorkoutType.competitive:
-        // TODO: Handle this case.
-        throw UnimplementedError();
     }
   }
 

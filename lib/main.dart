@@ -1,16 +1,19 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/solo_local_db/solo_exercise_results.dart';
+import 'package:homework/firebase/firebase_results.dart';
 import 'package:homework/solo_local_db/local_db.dart';
-import 'package:homework/solo_local_db/exercises.dart';
-import 'package:homework/solo_local_db/workout_plans.dart';
+import 'package:homework/solo_local_db/solo_exercise_results.dart';
+import 'package:homework/solo_local_db/solo_exercises.dart';
 import 'package:homework/solo_local_db/solo_workouts.dart';
+import 'package:homework/solo_local_db/workout_plans.dart';
 import 'package:homework/start_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+import 'firebase/firebase_workouts.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -47,13 +50,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final firebaseProviders = [
-    Provider()
+    ChangeNotifierProvider(create: (_) => FirebaseWorkouts()),
+    ChangeNotifierProvider(create: (_) => FirebaseResults())
   ];
 
-  final collabProviders = [];
-
   runApp(MultiProvider(
-      providers: [...localDbProviders, ...collabProviders, ...firebaseProviders],
+      providers: [...localDbProviders, ...firebaseProviders],
       child: const MyApp()));
 }
 
