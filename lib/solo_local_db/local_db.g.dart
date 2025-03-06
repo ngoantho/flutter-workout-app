@@ -255,17 +255,6 @@ class _$ExerciseDao extends ExerciseDao {
                   'name': item.name,
                   'target': item.target,
                   'unit': item.unit.index
-                }),
-        _exerciseDeletionAdapter = DeletionAdapter(
-            database,
-            'exercise',
-            ['id'],
-            (Exercise item) => <String, Object?>{
-                  'id': item.id,
-                  'workout_plan_id': item.workoutPlanId,
-                  'name': item.name,
-                  'target': item.target,
-                  'unit': item.unit.index
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -275,8 +264,6 @@ class _$ExerciseDao extends ExerciseDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Exercise> _exerciseInsertionAdapter;
-
-  final DeletionAdapter<Exercise> _exerciseDeletionAdapter;
 
   @override
   Future<List<Exercise>> getExercisesByWorkoutPlanId(int workoutPlanId) async {
@@ -310,15 +297,6 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
                   'id': item.id,
                   'name': item.name,
                   'url': item.url
-                }),
-        _workoutPlanDeletionAdapter = DeletionAdapter(
-            database,
-            'workout_plan',
-            ['id'],
-            (WorkoutPlan item) => <String, Object?>{
-                  'id': item.id,
-                  'name': item.name,
-                  'url': item.url
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -328,8 +306,6 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<WorkoutPlan> _workoutPlanInsertionAdapter;
-
-  final DeletionAdapter<WorkoutPlan> _workoutPlanDeletionAdapter;
 
   @override
   Future<List<WorkoutPlan>> getAllWorkoutPlans() async {
@@ -351,10 +327,5 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
   Future<int> addWorkoutPlan(WorkoutPlan workoutPlan) {
     return _workoutPlanInsertionAdapter.insertAndReturnId(
         workoutPlan, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteWorkoutPlan(WorkoutPlan workoutPlan) async {
-    await _workoutPlanDeletionAdapter.delete(workoutPlan);
   }
 }

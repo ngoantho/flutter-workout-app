@@ -11,14 +11,17 @@ class WorkoutPlan {
 
   String url;
 
+  WorkoutPlan({this.id, this.url = '', required this.name});
+
+  WorkoutPlan.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        url = json['url'];
+
+  Map<String, dynamic> toJson() => {'name': name, 'url': url};
+
   Future<List<Exercise>> exercises(Exercises provider) {
     return provider.getExercisesByWorkoutPlanId(id!);
   }
-
-  WorkoutPlan({this.id, this.url = '', required this.name});
-
-  WorkoutPlan.fromJson(Map<String, dynamic> json, this.url)
-      : name = json['name'];
 
   @override
   String toString() {

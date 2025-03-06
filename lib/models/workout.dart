@@ -42,7 +42,8 @@ class Workout {
     return {
       'workout_day': workoutDay,
       'workout_month': workoutMonth,
-      'workout_year': workoutYear
+      'workout_year': workoutYear,
+      'workout_type': workoutType
     };
   }
 
