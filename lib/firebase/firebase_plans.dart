@@ -24,7 +24,7 @@ class FirebasePlans extends WorkoutPlanDao with ChangeNotifier {
   @override
   Future<int?> getWorkoutPlanByURL(String url) async {
     final query = await FirebaseFirestore.instance
-        .collection("workoutPlans")
+        .collection("workout_plans")
         .where("url", isEqualTo: url)
         .get();
     return query.docs.isEmpty ? null : int.parse(query.docs.first.id);

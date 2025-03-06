@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
-import 'package:homework/solo_local_db/solo_exercises.dart';
+import 'package:homework/solo_local_db/exercises.dart';
 import 'package:homework/solo_local_db/workout_plans.dart';
 import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/utils/common_navbar.dart';
