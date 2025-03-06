@@ -10,12 +10,28 @@ class FirebaseWorkouts extends WorkoutDao with ChangeNotifier {
     DocumentReference ref = await FirebaseFirestore.instance
         .collection("workouts")
         .add(workout.toJson());
-    return int.parse(ref.id);
+    return ref.id.hashCode;
   }
 
   @override
   Future<List<Workout>> getAllWorkouts() async {
     final query = await FirebaseFirestore.instance.collection("workouts").get();
+    return query.docs.map((e) => Workout.fromJson(e.data())).toList();
+  }
+
+  Future<List<Workout>> getAllCollaborative() async {
+    final query = await FirebaseFirestore.instance
+        .collection("workouts")
+        .where("workout_type", isEqualTo: "collaborative")
+        .get();
+    return query.docs.map((e) => Workout.fromJson(e.data())).toList();
+  }
+
+  Future<List<Workout>> getAllCompetitive() async {
+    final query = await FirebaseFirestore.instance
+        .collection("workouts")
+        .where("workout_type", isEqualTo: "competitive")
+        .get();
     return query.docs.map((e) => Workout.fromJson(e.data())).toList();
   }
 }

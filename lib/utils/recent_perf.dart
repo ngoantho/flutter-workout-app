@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:homework/models/exercise_result.dart';
 import 'package:homework/solo_local_db/solo_exercise_results.dart';
 import 'package:homework/solo_local_db/solo_workouts.dart';
-import 'package:homework/models/exercise_result.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,10 @@ class RecentPerformance extends StatelessWidget {
           return buildListTile('Loading...');
         }
 
-        final workouts = snapshot.data!;
+        final workouts = snapshot.data;
+        if (workouts == null) {
+          return buildListTile('No data');
+        }
 
         final today = DateTime.now();
         final sevenDaysAgo = today.subtract(Duration(days: 7));

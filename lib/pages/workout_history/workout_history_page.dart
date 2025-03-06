@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:homework/enums/workout_type.dart';
-import 'package:homework/solo_local_db/solo_workouts.dart';
+import 'package:homework/firebase/firebase_workouts.dart';
 import 'package:homework/mixins/flat_button.dart';
 import 'package:homework/mixins/navigate_to.dart';
 import 'package:homework/models/workout.dart';
 import 'package:homework/pages/download_page/download_plan.dart';
 import 'package:homework/pages/workout_history/workout_history_entry.dart';
 import 'package:homework/pages/workout_recording/workout_recording_page.dart';
+import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/utils/common_navbar.dart';
 import 'package:provider/provider.dart';
@@ -20,19 +21,25 @@ class WorkoutHistoryPage extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: context.watch<SoloWorkouts>().getAllWorkouts(),
+      future: switch (workoutType) {
+        WorkoutType.solo => context.watch<SoloWorkouts>().getAllWorkouts(),
+        WorkoutType.collaborative =>
+          context.watch<FirebaseWorkouts>().getAllCollaborative(),
+        WorkoutType.competitive =>
+          context.watch<FirebaseWorkouts>().getAllCompetitive(),
+      },
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
 
-        List<Workout> workouts = snapshot.data!;
+        List<Workout>? workouts = snapshot.data;
         return Scaffold(
           appBar: CommonAppBar('Workout History'),
           bottomNavigationBar: CommonNavbar(
             top: navMenu(context),
           ),
-          body: listContent(workouts),
+          body: (workouts != null) ? listContent(workouts) : null,
         );
       },
     );

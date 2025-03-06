@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:homework/classes/exercise_result_controller.dart';
 import 'package:homework/enums/workout_type.dart';
@@ -15,7 +18,10 @@ import 'package:homework/solo_local_db/solo_workouts.dart';
 import 'package:homework/typedefs/output.dart';
 import 'package:homework/utils/common_appbar.dart';
 import 'package:homework/utils/common_navbar.dart';
+import 'package:homework/utils/readonly_textfield.dart';
 import 'package:provider/provider.dart';
+
+import '../../firebase/firebase_results.dart';
 
 class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
@@ -36,6 +42,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   final yearController = TextEditingController();
   final monthController = TextEditingController();
   final dayController = TextEditingController();
+  final workoutId = Random.secure().nextInt(100000);
 
   void onSave(List<ExerciseResultController> controllers) async {
     if (!_formKey.currentState!.validate()) {
@@ -48,17 +55,25 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           monthController.text.toOutput(),
           dayController.text.toOutput(),
         ),
-        type: widget.workoutType);
+        type: widget.workoutType,
+        id: workoutId);
 
     // fix for accessing context in switch
     final soloWorkoutProvider = context.read<SoloWorkouts>();
     final firebaseWorkoutProvider = context.read<FirebaseWorkouts>();
+    final firebaseResultsProvider = context.read<FirebaseResults>();
 
-    int workoutId = switch (widget.workoutType) {
-      solo => await soloWorkoutProvider.addWorkout(workout),
-      collaborative => await firebaseWorkoutProvider.addWorkout(workout),
-      competitive => await firebaseWorkoutProvider.addWorkout(workout),
-    };
+    switch (widget.workoutType) {
+      case WorkoutType.solo:
+        await soloWorkoutProvider.addWorkout(workout);
+        break;
+      case WorkoutType.collaborative:
+        await firebaseWorkoutProvider.addWorkout(workout);
+        break;
+      case WorkoutType.competitive:
+        await firebaseWorkoutProvider.addWorkout(workout);
+        break;
+    }
 
     for (var controller in controllers) {
       final exerciseResult = ExerciseResult(
@@ -68,12 +83,32 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           actualOutput: controller.actualOutput,
           workoutId: workoutId);
       if (mounted) {
-        await context.read<SoloExerciseResults>().add(exerciseResult);
+        switch (widget.workoutType) {
+          case WorkoutType.solo:
+            await context.read<SoloExerciseResults>().add(exerciseResult);
+            break;
+          case WorkoutType.collaborative:
+            await firebaseResultsProvider.add(exerciseResult);
+            break;
+          case WorkoutType.competitive:
+            await firebaseResultsProvider.add(exerciseResult);
+            break;
+        }
       }
     }
 
     if (mounted) {
-      Navigator.of(context).pushNamed('/solo');
+      switch (widget.workoutType) {
+        case WorkoutType.solo:
+          Navigator.of(context).pushNamed('/solo');
+          break;
+        case WorkoutType.collaborative:
+          Navigator.of(context).pushNamed('/collaborative');
+          break;
+        case WorkoutType.competitive:
+          Navigator.of(context).pushNamed('/competitive');
+          break;
+      }
     }
   }
 
@@ -146,6 +181,34 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
           .toList();
     }
 
+    Widget shareWorkout() {
+      onPressed() {
+        String encodedWorkout = base64Encode(utf8.encode(jsonEncode({
+          'workoutPlan': widget.workoutPlan.toJson(),
+          'workout': workoutId
+        })));
+
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: ReadonlyTextField(
+                  labelText: 'Copy This',
+                  value: encodedWorkout,
+                  enabled: true,
+                ),
+                actions: [
+                  FilledButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Close'))
+                ],
+              );
+            });
+      }
+
+      return FilledButton(onPressed: onPressed, child: Text('Share Workout'));
+    }
+
     Widget builder(
         context, AsyncSnapshot<List<ExerciseResultController>> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -155,7 +218,12 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       final controllers = snapshot.data!;
       return Scaffold(
         appBar: CommonAppBar(
-          'Record Workout',
+          'Record',
+          additionalActions: [
+            if (widget.workoutType == collaborative ||
+                widget.workoutType == competitive)
+              shareWorkout()
+          ],
         ),
         body: Form(key: _formKey, child: formContent(controllers)),
         bottomNavigationBar: CommonNavbar(

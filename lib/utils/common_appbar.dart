@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final List<Widget>? additionalActions;
 
-  const CommonAppBar(this.title, {super.key});
+  const CommonAppBar(this.title, {super.key, this.additionalActions});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(title),
-      // centerTitle: true,
-      actions: [profileAction],
+      actions: [profileAction, ...?additionalActions],
     );
   }
 

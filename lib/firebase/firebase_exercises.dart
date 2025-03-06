@@ -10,7 +10,7 @@ class FirebaseExercises extends ExerciseDao with ChangeNotifier {
     DocumentReference ref = await FirebaseFirestore.instance
         .collection("exercises")
         .add(exercise.toJson());
-    return int.parse(ref.id);
+    return ref.id.hashCode;
   }
 
   @override

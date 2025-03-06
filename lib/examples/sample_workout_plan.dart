@@ -1,8 +1,8 @@
-import 'package:homework/models/exercise.dart';
 import 'package:homework/enums/measurement_unit.dart';
+import 'package:homework/models/exercise.dart';
 import 'package:homework/models/workout_plan.dart';
 
-final sampleWorkoutPlan = WorkoutPlan(name: 'February 2025', id: 1);
+final sampleWorkoutPlan = WorkoutPlan(name: 'February 2025', id: 1, url: '');
 
 final sampleExercises = [
   Exercise(name: 'Run 100 meters', target: 100, unit: meters, workoutPlanId: 1),

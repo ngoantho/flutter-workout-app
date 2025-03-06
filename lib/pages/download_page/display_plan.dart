@@ -33,15 +33,15 @@ class DisplayPlanPage extends StatelessWidget with NavigateMixin {
     }
 
     saveWorkoutPlan() async {
-      int? workoutPlanId =
-          await workoutPlanDao.getWorkoutPlanByURL(workoutPlan.url);
-      if (workoutPlanId != null) {
-        debugPrint("workout plan already exists");
-        showMessage("'${workoutPlan.name}' already exists");
-        return;
-      }
+      // int? workoutPlanId =
+      //     await workoutPlanDao.getWorkoutPlanByURL(workoutPlan.url);
+      // if (workoutPlanId != null) {
+      //   debugPrint("workout plan already exists");
+      //   showMessage("'${workoutPlan.name}' already exists");
+      //   return;
+      // }
 
-      workoutPlanId = await workoutPlanDao.addWorkoutPlan(workoutPlan);
+      int workoutPlanId = await workoutPlanDao.addWorkoutPlan(workoutPlan);
       for (var e in exercises) {
         e.workoutPlanId = workoutPlanId;
         await exerciseDao.addExercise(e);

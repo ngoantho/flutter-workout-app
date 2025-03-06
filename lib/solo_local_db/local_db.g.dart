@@ -312,8 +312,8 @@ class _$WorkoutPlanDao extends WorkoutPlanDao {
     return _queryAdapter.queryList('SELECT * FROM workout_plan',
         mapper: (Map<String, Object?> row) => WorkoutPlan(
             id: row['id'] as int?,
-            url: row['url'] as String,
-            name: row['name'] as String));
+            name: row['name'] as String,
+            url: row['url'] as String));
   }
 
   @override

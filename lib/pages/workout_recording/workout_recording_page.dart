@@ -24,6 +24,20 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
 
   @override
   Widget build(BuildContext context) {
+    Widget joinWorkout() {
+      onPressed() {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Join Workout'),
+              );
+            });
+      }
+
+      return FilledButton(onPressed: onPressed, child: Text('Join Workout'));
+    }
+
     return FutureBuilder<List<WorkoutPlan>>(
       future: context.watch<WorkoutPlans>().getAllWorkoutPlans(),
       builder: (context, snapshot) {
@@ -31,12 +45,20 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
           return CircularProgressIndicator();
         }
 
-        final plans = snapshot.data!;
+        final plans = snapshot.data;
+
         return Scaffold(
-          appBar: CommonAppBar('Choose Plan'),
-          body: radioMenu(plans),
+          appBar: CommonAppBar(
+            'Choose Plan',
+            additionalActions: [
+              if (widget.workoutType == collaborative ||
+                  widget.workoutType == competitive)
+                joinWorkout()
+            ],
+          ),
+          body: (plans != null) ? radioMenu(plans) : Text('No plans found'),
           bottomNavigationBar: CommonNavbar(
-            top: submitButton(plans),
+            top: (plans != null) ? submitButton(plans) : null,
           ),
         );
       },

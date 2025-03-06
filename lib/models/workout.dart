@@ -1,7 +1,8 @@
 import 'package:floor/floor.dart';
 import 'package:homework/enums/workout_type.dart';
 import 'package:homework/models/exercise_result.dart';
-import 'package:homework/solo_local_db/solo_exercise_results.dart';
+
+import '../dao/exercise_results.dart';
 
 @Entity(tableName: 'workout')
 class Workout {
@@ -36,19 +37,21 @@ class Workout {
       : workoutDay = json['workout_day'],
         workoutMonth = json['workout_month'],
         workoutYear = json['workout_year'],
-        workoutType = WorkoutType.fromString(json['workout_type']);
+        workoutType = WorkoutType.fromString(json['workout_type']),
+        id = json['id'];
 
   Map<String, dynamic> toJson() {
     return {
       'workout_day': workoutDay,
       'workout_month': workoutMonth,
       'workout_year': workoutYear,
-      'workout_type': workoutType
+      'workout_type': workoutType.toString(),
+      'id': id
     };
   }
 
-  Future<List<ExerciseResult>> results(SoloExerciseResults provider) {
-    return provider.getAllByWorkoutId(id!);
+  Future<List<ExerciseResult>> results(ExerciseResultDao provider) {
+    return (id != null) ? provider.getAllByWorkoutId(id!) : Future.value([]);
   }
 
   DateTime get date => DateTime(workoutYear, workoutMonth, workoutDay);

@@ -10,7 +10,7 @@ class FirebaseResults extends ExerciseResultDao with ChangeNotifier {
     DocumentReference ref = await FirebaseFirestore.instance
         .collection("results")
         .add(exerciseResult.toJson());
-    return int.parse(ref.id);
+    return ref.id.hashCode;
   }
 
   @override

@@ -31,14 +31,16 @@ class Exercise {
       : name = json['name'],
         target = json['target'],
         unit = MeasurementUnit.fromString(json['unit']),
-        workoutPlanId = json['workout_plan_id'];
+        workoutPlanId = json['workout_plan_id'],
+        id = json['id'];
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'target': target,
-      'unit': unit.index,
-      'workout_plan_id': workoutPlanId
+      'unit': unit.toString(),
+      'workout_plan_id': workoutPlanId,
+      'id': id
     };
   }
 

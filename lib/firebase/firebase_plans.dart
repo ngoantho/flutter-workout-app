@@ -11,7 +11,7 @@ class FirebasePlans extends WorkoutPlanDao with ChangeNotifier {
     final ref = await FirebaseFirestore.instance
         .collection("workoutPlans")
         .add(workoutPlan.toJson());
-    return int.parse(ref.id);
+    return ref.id.hashCode;
   }
 
   @override

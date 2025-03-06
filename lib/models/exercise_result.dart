@@ -35,15 +35,17 @@ class ExerciseResult {
         measurementUnit = MeasurementUnit.fromString(
           json['measurementUnit'],
         ),
-        workoutId = json['workout_id'];
+        workoutId = json['workout_id'],
+        id = json['id'];
 
   Map<String, dynamic> toJson() {
     return {
       'actualOutput': actualOutput,
       'targetOutput': targetOutput,
       'exerciseName': exerciseName,
-      'measurementUnit': measurementUnit.index,
-      'workout_id': workoutId
+      'measurementUnit': measurementUnit.toString(),
+      'workout_id': workoutId,
+      'id': id
     };
   }
 

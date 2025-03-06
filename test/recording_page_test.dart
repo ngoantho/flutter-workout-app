@@ -34,7 +34,7 @@ void main() {
       "WorkoutRecordingPage shows a separate input for each exercise in the workout plan it's given",
       (tester) async {
     final workoutsProvider = SoloWorkouts(workoutDao);
-    final workoutPlan = WorkoutPlan(name: 'Test Plan', id: 1);
+    final workoutPlan = WorkoutPlan(name: 'Test Plan', id: 1, url: '');
 
     final exerciseProvider = Exercises(exerciseDao);
     final resultsProvider = SoloExerciseResults(resultDao);
@@ -87,7 +87,7 @@ void main() {
       "WorkoutRecordingPage adds a Workout to the shared state when the user fills out and ends a workout",
       (tester) async {
     final workoutsProvider = SoloWorkouts(workoutDao);
-    final workoutPlan = WorkoutPlan(name: "Test Plan", id: 2);
+    final workoutPlan = WorkoutPlan(name: "Test Plan", id: 2, url: '');
 
     final exerciseProvider = Exercises(exerciseDao);
     exerciseProvider.addExercise(Exercise(
