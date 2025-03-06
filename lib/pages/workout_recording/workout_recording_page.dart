@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:homework/enums/workout_type.dart';
 import 'package:homework/mixins/navigate_to.dart';
@@ -29,8 +31,33 @@ class _WorkoutRecordingPageState extends State<WorkoutRecordingPage>
         showDialog(
             context: context,
             builder: (context) {
+              final controller = TextEditingController();
               return AlertDialog(
-                title: Text('Join Workout'),
+                title: TextFormField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      hintText: 'Enter code',
+                    )),
+                actions: [
+                  OutlinedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel')),
+                  FilledButton(
+                      onPressed: () {
+                        final decodedBase64 = base64Decode(controller.text);
+                        final workoutPlanObj =
+                            jsonDecode(utf8.decode(decodedBase64));
+
+                        navigate(context).to(WorkoutRecordingForm(
+                          WorkoutPlan.fromJson(workoutPlanObj['workoutPlan']),
+                          widget.workoutType,
+                          workoutId: workoutPlanObj['workoutId'],
+                        ));
+                      },
+                      child: Text(''))
+                ],
               );
             });
       }

@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? additionalActions;
+  final PreferredSizeWidget? bottom;
 
-  const CommonAppBar(this.title, {super.key, this.additionalActions});
+  const CommonAppBar(this.title,
+      {super.key, this.additionalActions, this.bottom});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
-      actions: [profileAction, ...?additionalActions],
-    );
+        title: Text(title),
+        actions: [profileAction, ...?additionalActions],
+        bottom: bottom);
   }
 
   Widget get profileAction => StreamBuilder(

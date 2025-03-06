@@ -27,9 +27,10 @@ class WorkoutRecordingForm extends StatefulWidget {
   final WorkoutPlan workoutPlan;
   final List<ExerciseResultController>? controllers;
   final WorkoutType workoutType;
+  final int? workoutId;
 
   const WorkoutRecordingForm(this.workoutPlan, this.workoutType,
-      {super.key, this.controllers});
+      {super.key, this.controllers, this.workoutId});
 
   @override
   State<WorkoutRecordingForm> createState() => _WorkoutRecordingFormState();
@@ -42,7 +43,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
   final yearController = TextEditingController();
   final monthController = TextEditingController();
   final dayController = TextEditingController();
-  final workoutId = Random.secure().nextInt(100000);
+  late int workoutId;
 
   void onSave(List<ExerciseResultController> controllers) async {
     if (!_formKey.currentState!.validate()) {
@@ -119,6 +120,12 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
     yearController.text = _today.year.toString();
     monthController.text = _today.month.toString();
     dayController.text = _today.day.toString();
+
+    if (widget.workoutId != null) {
+      workoutId = widget.workoutId!;
+    } else {
+      workoutId = Random().nextInt(1000000);
+    }
   }
 
   Column formContent(List<ExerciseResultController> controllers) {
@@ -185,7 +192,7 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       onPressed() {
         String encodedWorkout = base64Encode(utf8.encode(jsonEncode({
           'workoutPlan': widget.workoutPlan.toJson(),
-          'workout': workoutId
+          'workoutId': workoutId
         })));
 
         showDialog(
@@ -219,6 +226,9 @@ class _WorkoutRecordingFormState extends State<WorkoutRecordingForm>
       return Scaffold(
         appBar: CommonAppBar(
           'Record',
+          bottom: PreferredSize(
+              preferredSize: Size.fromHeight(kToolbarHeight),
+              child: Text('Workout ID: $workoutId')),
           additionalActions: [
             if (widget.workoutType == collaborative ||
                 widget.workoutType == competitive)
